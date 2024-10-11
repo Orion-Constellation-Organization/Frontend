@@ -1,0 +1,72 @@
+$primary-color: #e1e1e3;
+$secondary-color: #fff;
+$tertiary-color: #a3a3a3;
+$hover-color: #000048;
+$text-color: #000000;
+
+
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+h2 {
+    font-size: 50px;
+    margin-bottom: 10px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body,
+.text-login,
+.text-btn {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.modal-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 64px;
+    position: relative;
+    justify-content: center;
+    margin: 0 auto;
+    width: auto;
+    height: auto;
+    max-width: 50%;
+    box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+    border-radius: 16px;
+}
+.close {
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0;
+    color: $text-color;
+    position: absolute; 
+    top: 16px; 
+    right: 16px;
+}
+.close:hover{
+    background-color: transparent;
+}
+.btn-login {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: $tertiary-color;
+    color: $secondary-color;
+    border: 1px solid $text-color;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: $hover-color;
+}

@@ -1,0 +1,25 @@
+<div class="toolbar" role="banner">
+  <img width="40" alt="Logo" src=" "> <span>Home</span>
+</div>
+
+<body>
+  <ng-container *ngIf="mostrar">
+    <div class="modal-login" @modal>
+      <div class="modal-header">
+        <button class="close" (click)="closeModal()">X</button>
+
+        <h2>Bem-vindo(a)</h2>
+        <p>Faça seu login para entrar na plataforma</p>
+      </div>
+      <section class="btn-login">
+        <button class="text-btn">Login Tutor</button>
+        <button class="text-btn">Login Aluno</button>
+        <button class="text-btn">Criar Cadastro</button>
+      </section>
+      <div class="modal-body">
+      </div>
+    </div>
+    <ng-content></ng-content>
+    <div (click)="toggle()"  @overlay class="overlay"></div>
+  </ng-container>
+</body>
