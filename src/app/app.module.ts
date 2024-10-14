@@ -4,10 +4,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { CadastroAlunoComponent } from './pages/cadastro-aluno/cadastro-aluno.component';
-import { CadastroConcluidoDialogComponent } from './components/cadastro-concluido-dialog/cadastro-concluido-dialog.component';
+import { StudentRegistrationFormComponent } from './pages/student-registration-form/student-registration-form.component';
+import { RegistrationSuccessModalComponent } from './components/registration-success-modal/registration-success-modal.component';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,11 +20,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
-    CadastroAlunoComponent,
-    CadastroConcluidoDialogComponent
+    RegistrationSuccessModalComponent,
+    StudentRegistrationFormComponent,
+    RegistrationSuccessModalComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatIconModule,
     MatButtonModule,
     MatDialogModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
