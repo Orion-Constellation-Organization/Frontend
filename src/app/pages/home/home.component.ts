@@ -1,14 +1,15 @@
 import { Component,ViewChild  } from '@angular/core';
-import { LoginComponent } from './login/login.component'; 
+import { LoginComponent } from '../login/login.component'; 
 
 
 @Component({
   selector: 'app-root',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  styleUrls: ['../../styles/theme.scss'],
+  
 })
 export class HomeComponent {
-  title = 'Reforca-o-bem';
+  title = 'Reforca o bem';
   acaoPrimaria(){};
 
   @ViewChild('modal') modalComponent!: LoginComponent;

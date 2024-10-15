@@ -9,7 +9,7 @@ import {
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+   styleUrls: ['../../styles/theme.scss'],
   animations: [
     // fundo escuro que fica atrás do modal
     trigger('overlay', [

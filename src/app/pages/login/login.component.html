@@ -4,7 +4,7 @@
 
 <body>
   <ng-container *ngIf="mostrar">
-    <div class="modal-login" @modal>
+    <div class="modal" @modal>
       <div class="modal-header">
         <button class="close" (click)="closeModal()">X</button>
 
@@ -16,10 +16,8 @@
         <button class="text-btn">Login Aluno</button>
         <button class="text-btn">Criar Cadastro</button>
       </section>
-      <div class="modal-body">
-      </div>
     </div>
     <ng-content></ng-content>
-    <div (click)="toggle()"  @overlay class="overlay"></div>
+    <div (click)="toggle()" @overlay class="overlay"></div>
   </ng-container>
 </body>

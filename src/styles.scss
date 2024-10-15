@@ -1,10 +1,2 @@
-$primary-color: #e1e1e3;
-$secondary-color: #fff;
-$tertiary-color: #a3a3a3;
-$hover-color: #000048;
-$text-color: #000000;
-
-
-*{
-    background-color: $primary-color ;
-}
+@import '../src/app/styles/variables.scss';
+@import '../src/app/styles/theme.scss';
