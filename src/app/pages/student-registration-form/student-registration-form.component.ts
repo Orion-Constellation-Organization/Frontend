@@ -19,7 +19,7 @@ export class StudentRegistrationFormComponent {
   errorMessage: string = '';
 
   @Input() isOpen = false;
-  @Output() fechar = new EventEmitter<void>();
+  @Output() closer = new EventEmitter<void>();
 
 
   @ViewChild(RegistrationSuccessModalComponent) registrationSuccessModal!: RegistrationSuccessModalComponent;
@@ -78,7 +78,7 @@ export class StudentRegistrationFormComponent {
   closeRegistrationSuccessDialog() {
     this.registrationSuccessModal.isOpen = false; 
     this.registrationForm.reset(); 
-    this.fechar.emit();
+    this.closer.emit();
   }
 
   togglePasswordVisibility() {
