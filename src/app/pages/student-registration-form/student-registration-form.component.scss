@@ -1,9 +1,29 @@
+@import '../../styles/variables.scss';
+
+div.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s 0.3s;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
 div.modal {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
+  background-color: $primary-color;
   padding: 24px;
   border-radius: 16px;
   width: 90%;
@@ -27,10 +47,12 @@ div.modal {
   div.container {
     box-sizing: border-box;
 
+
     .logo-container {
       display: flex;
       justify-content: center;
       margin-bottom: 16px;
+
 
       img {
         max-width: 100px;
@@ -42,8 +64,8 @@ div.modal {
       text-align: center;
       margin-bottom: 20px;
 
-      div.content-header {
 
+      div.content-header {
         h2 {
           font-size: 2rem;
           margin-bottom: 10px;
@@ -51,7 +73,7 @@ div.modal {
 
         p {
           font-size: 1rem;
-          color: #000000;
+          color: $text-color;
         }
       }
     }
@@ -62,10 +84,15 @@ div.modal {
       flex-direction: column;
       gap: 16px;
 
+
+      mat-error {
+        margin-bottom: 10px;
+      }
+
       mat-form-field {
         width: 100%;
-        margin-bottom: 20px;
       }
+
 
       div.btn-container {
         display: flex;
@@ -97,3 +124,5 @@ div.modal {
     }
   }
 }
+
+

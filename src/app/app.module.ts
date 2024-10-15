@@ -17,6 +17,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core'; 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { HomeComponent } from './pages/home/home.component';
 
 
 
@@ -27,7 +28,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     AppComponent,
     RegistrationSuccessModalComponent,
     StudentRegistrationFormComponent,
-    RegistrationSuccessModalComponent
+    RegistrationSuccessModalComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
