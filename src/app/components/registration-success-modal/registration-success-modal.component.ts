@@ -6,7 +6,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./registration-success-modal.component.scss']
 })
 export class RegistrationSuccessModalComponent {
-  @Input() isOpen: boolean = false; 
+  @Input() isOpen = false; 
   @Output() onClose = new EventEmitter<void>(); 
 
   closeDialog() {

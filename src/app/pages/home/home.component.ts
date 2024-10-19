@@ -10,7 +10,9 @@ import { LoginComponent } from '../login/login.component';
 })
 export class HomeComponent {
   title = 'Reforca o bem';
-  acaoPrimaria(){};
+  acaoPrimaria(){
+    // ah
+  }
 
   @ViewChild('modal') modalComponent!: LoginComponent;
   mostrarModal() {

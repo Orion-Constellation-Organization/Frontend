@@ -1,23 +1,66 @@
 <div class="toolbar" role="banner">
-  <img width="40" alt="Logo" src=" "> <span>Home</span>
+  <img width="40" alt="Logo" src=" " /> <span>Home</span>
 </div>
 
-<body>
-  <ng-container *ngIf="mostrar">
-    <div class="modal" @modal>
+<ng-container *ngIf="show">
+  <div class="modal" @modal>
+    <ng-container *ngIf="loginStep === 'login'">
       <div class="modal-header">
-        <button class="close" (click)="closeModal()">X</button>
+        <button class="close" (click)="closeModal()" tabindex="0">X</button>
 
         <h2>Bem-vindo(a)</h2>
         <p>Faça seu login para entrar na plataforma</p>
       </div>
-      <section class="btn-login">
-        <button class="text-btn">Login Tutor</button>
-        <button class="text-btn">Login Aluno</button>
-        <button class="text-btn">Criar Cadastro</button>
+      <section class="login-form">
+        <form [formGroup]="loginForm" class="form-container">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" placeholder="Digite seu email" />
+            <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+              Email é obrigatório.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Senha</mat-label>
+            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required />
+            <button-icon mat-icon-button matSuffix (click)="togglePasswordVisibility()">
+              <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+            </button-icon>
+            <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+              Senha é obrigatória.
+          </mat-error>
+          </mat-form-field>
+        </form>
       </section>
-    </div>
-    <ng-content></ng-content>
-    <div (click)="toggle()" @overlay class="overlay"></div>
-  </ng-container>
-</body>
+      <section class="btnNavigate">
+        <button class="text-btn" (click)="login()" (keyup.enter)="login()">Efetuar Login</button>
+        <button class="text-btn" (click)="loginStep = 'signUp'">Criar Cadastro</button>
+      </section>
+
+      <ng-content></ng-content>
+    </ng-container>
+
+    <ng-container *ngIf="loginStep === 'signUp'">
+      <section class="btnNavigate">
+        <button class="text-btn" (click)="loginStep = 'tutorSignUp'">
+          Cadastro Tutor
+        </button>
+        <button class="text-btn" (click)="loginStep = 'studentSignUp'">
+          Cadastro Aluno
+        </button>
+        <button class="text-btn" (click)="loginStep = 'login'">Voltar</button>
+      </section>
+    </ng-container>
+
+    <ng-container *ngIf="loginStep === 'tutorSignUp'">
+      <app-tutor-registration-form />
+    </ng-container>
+
+    <ng-container *ngIf="loginStep === 'studentSignUp'">
+      <app-student-registration-form />
+    </ng-container>
+
+    <div (click)="toggle()" (keydown.enter)="toggle()" tabindex="0" @overlay class="overlay"></div>
+  </div>
+</ng-container>

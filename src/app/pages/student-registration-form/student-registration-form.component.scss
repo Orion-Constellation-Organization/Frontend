@@ -1,102 +1,95 @@
 @import '../../styles/variables.scss';
+@import '../../styles/theme.scss';
 
-div.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); 
-  z-index: 999;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0s 0.3s;
-
-  &.active {
-    opacity: 1;
-    visibility: visible;
-  }
-}
-
+// Modal
 div.modal {
+  background-color: $background-body-color;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: $primary-color;
-  padding: 24px;
-  border-radius: 16px;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
-  max-height: 90vh;
-  z-index: 1000;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0s 0.3s;
+  align-items: center;
+  text-align: center;
+  background-color:
+    $background-body-color;
+  border-radius: 16px;
+  box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+  width: 180%;
+  padding: 20px;
+}
 
-  &.active {
-    opacity: 1;
-    visibility: visible;
+div.container {
+  .logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+
+    img {
+      max-width: 100px;
+      height: auto;
+    }
   }
 
-  div.container {
-    box-sizing: border-box;
+  div.container-header {
+    text-align: center;
+    margin-bottom: 10px;
 
+    .close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      padding: 8px;
+      border: none;
+      cursor: pointer;
+      color: $button-enable-text-color;
+      background-color: transparent;
+    }
+ 
+  }
+  
 
-    .logo-container {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 16px;
+  form.form-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 10px;
 
-
-      img {
-        max-width: 100px;
-        height: auto;
-      }
+    mat-error {
+      margin-bottom: 5px;
     }
 
-    div.container-header {
-      text-align: center;
-      margin-bottom: 20px;
-
-
-      div.content-header {
-        h2 {
-          font-size: 2rem;
-          margin-bottom: 10px;
-        }
-
-        p {
-          font-size: 1rem;
-          color: $text-color;
-        }
-      }
-    }
-
-    form.form-container {
+    mat-form-field {
       width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+      margin: 10px;
+      position: relative;
+      height: 20px;
 
+      .mat-input-element {
+        padding-right: 48px;
 
-      mat-error {
-        margin-bottom: 10px;
+        .btn-container {
+          position: absolute;
+          right: 10px;
+          top: 50%;
+          transform: translateY(-50%);
+          display: flex;
+          align-items: center;
+
+          button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+          }
+        }
       }
-
-      mat-form-field {
-        width: 100%;
-      }
-
 
       div.btn-container {
         display: flex;
-        justify-content: space-between;
         gap: 12px;
 
         button {
@@ -106,23 +99,23 @@ div.modal {
         }
       }
     }
-  }
-}
 
-@media (max-width: 600px) {
-  .modal {
-    width: 95%;
-    padding: 20px;
+
   }
 
-  .btn-container {
-    flex-direction: column;
-
-    button {
+  @media (max-width: 600px) {
+    .modal {
       width: 100%;
-      margin-bottom: 8px;
+      padding: 20px;
+    }
+
+    .btn-container {
+      flex-direction: column;
+
+      button {
+        width: 100%;
+        margin-bottom: 8px;
+      }
     }
   }
 }
-
-

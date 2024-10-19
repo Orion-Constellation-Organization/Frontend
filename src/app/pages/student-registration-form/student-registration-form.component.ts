@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { RegistrationSuccessModalComponent } from 'src/app/components/registration-success-modal/registration-success-modal.component';
+import { StudentService } from '../../providers/student.service';
 
 @Component({
   selector: 'app-student-registration-form',
@@ -16,18 +17,17 @@ export class StudentRegistrationFormComponent {
   hidePassword = true;
   hideConfirmPassword = true;
   educationLevels = ['Fundamental', 'Ensino Médio', 'Pré Vestibular'];
-  errorMessage: string = '';
+  errorMessage ='';
 
   @Input() isOpen = false;
-  @Output() closer = new EventEmitter<void>();
-
-
+  @Output() closeModal = new EventEmitter<void>();
   @ViewChild(RegistrationSuccessModalComponent) registrationSuccessModal!: RegistrationSuccessModalComponent;
 
   constructor(
     private fb: FormBuilder,
     private datePipe: DatePipe,
-    private router: Router
+    private router: Router,
+    private studentService: StudentService
   ) {
     this.registrationForm = this.fb.group({
       fullName: ['', Validators.required],
@@ -56,16 +56,18 @@ export class StudentRegistrationFormComponent {
     return password === confirmPassword ? null : { passwordMismatch: true };
   }
 
-  onSubmit() {
+ async onSubmit() {
     this.emailAlreadyRegistered = false;
     this.errorMessage = '';
 
     if (this.registrationForm.valid) {
       const registrationData = this.registrationForm.value;
-      localStorage.setItem('studentRegistration', JSON.stringify(registrationData));
 
-      console.log('Cadastro realizado com sucesso:', registrationData);
-
+      await this.studentService.createStudent(registrationData).then(resp => {
+        localStorage.setItem('studentRegistration', JSON.stringify(registrationData));
+  
+        console.log('Cadastro realizado com sucesso:', registrationData);
+      })
       
       this.openRegistrationSuccessDialog();
     }
@@ -78,8 +80,9 @@ export class StudentRegistrationFormComponent {
   closeRegistrationSuccessDialog() {
     this.registrationSuccessModal.isOpen = false; 
     this.registrationForm.reset(); 
-    this.closer.emit();
+    this.closeModal.emit();
   }
+
 
   togglePasswordVisibility() {
     this.hidePassword = !this.hidePassword;

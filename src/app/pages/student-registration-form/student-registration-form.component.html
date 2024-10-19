@@ -1,15 +1,16 @@
-<div class="overlay" [class.active]="isOpen"></div> <!-- Overlay para a modal -->
+<div class="toolbar" role="banner">
+    <img width="40" alt="Logo" src=" " /> <span>Home</span>
+</div>
+
+<div class="overlay" [class.active]="isOpen"></div>
 
 <div class="modal" [class.active]="isOpen">
     <div class="container">
-        <div class="logo-container">
-            <img class="img-logo" src="../../../assets/Logo.svg" alt="Logo do Reforça o Bem" />
-        </div>
         <div class="container-header">
-            <div class="content-header">
-                <h2>Bem-vindo(a)</h2>
-                <p>Vamos iniciar seu cadastro a partir de algumas informações básicas.</p>
-            </div>
+            <button-close class="close" (click)="closeModal.emit()" tabindex="0">X</button-close>
+
+            <h2>Bem-vindo(a)</h2>
+            <p>Vamos iniciar seu cadastro a partir de algumas informações básicas.</p>
         </div>
 
         <form class="form-container" [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
@@ -55,9 +56,9 @@
             <mat-form-field appearance="outline">
                 <mat-label>Senha</mat-label>
                 <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required />
-                <button type="button" mat-icon-button matSuffix (click)="togglePasswordVisibility()">
-                    <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
+                <button-icon mat-icon-button matSuffix (click)="togglePasswordVisibility()">
+                    <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+                </button-icon>
                 <mat-error *ngIf="registrationForm.get('password')?.hasError('minlength')">
                     A senha deve ter pelo menos 6 caracteres.
                 </mat-error>
@@ -73,9 +74,9 @@
                 <mat-label>Confirme sua Senha</mat-label>
                 <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmPassword"
                     required />
-                <button type="button" mat-icon-button matSuffix (click)="toggleConfirmPasswordVisibility()">
-                    <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
+                <button-icon mat-icon-button matSuffix (click)="togglePasswordVisibility()">
+                    <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+                </button-icon>
                 <mat-error *ngIf="registrationForm.hasError('passwordMismatch')">
                     As senhas não coincidem.
                 </mat-error>
@@ -103,9 +104,8 @@
             </div>
         </form>
 
-     
-        <app-registration-success-modal 
-            (onClose)="closeRegistrationSuccessDialog()">
+
+        <app-registration-success-modal (onClose)="closeRegistrationSuccessDialog()">
         </app-registration-success-modal>
     </div>
 </div>

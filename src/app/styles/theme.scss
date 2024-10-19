@@ -1,72 +1,39 @@
-@import 'variables';
+@import './variables.scss';
 
-// Definir cor de fundo global para todos os elementos
-* {
-    background-color: $background-home-color;
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
-// Layout base
+// Definir cor de fundo global para todos os elementos
+
 .toolbar {
     display: flex;
     align-items: center;
     padding: 10px;
+  }
+  
+
+body {
+    background-color:$background-body-color;
+    font-family: "Montserrat", sans-serif;
 }
 
 h2 {
-    font-size: 24px;
+    font-size: 40px;
     margin-bottom: 10px;
     font-family: 'Open Sans', sans-serif;
 }
 
-body,
 .text-login,
 .text-btn {
-    font-family: 'Montserrat', sans-serif;
-}
-
-// Modal
-.modal {
-    background-color: inherit;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 64px;
-    background-color: #fff;
-    border-radius: 16px;
-    box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-.modal-header {
-    background-color: transparent;
-}
-
-.modal-header h2,
-.modal-header p {
-  background-color: inherit;
-}
-
-.close {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    padding: 8px;
-    border: none;
-    cursor: pointer;
-}
-
-// Botões e interações
-.btn-login {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    background-color: inherit
+  font-family: 'Montserrat', sans-serif;
 }
 
 button {
+    font-family: 'Montserrat', sans-serif;
     padding: 10px 20px;
     background-color: $tertiary-color;
     color: $button-text-color;

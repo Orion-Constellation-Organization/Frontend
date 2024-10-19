@@ -1,0 +1,108 @@
+<div class="toolbar" role="banner">
+  <img width="40" alt="Logo" src=" " /> <span>Home</span>
+</div>
+
+<div class="overlay" [class.active]="isOpen"></div>
+
+<div class="modal" [class.active]="isOpen">
+  <div class="container">
+    <header class="container-header">
+      <button-close class="close" (click)="closeModal.emit()" tabindex="0">X</button-close>
+      <h2>Bem-vindo(a)</h2>
+      <p>Vamos iniciar seu cadastro a partir de algumas informações básicas.</p>
+    </header>
+
+    <form class="form-container" [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Nome Completo</mat-label>
+        <input matInput formControlName="fullName" required />
+        <mat-error *ngIf="registrationForm.get('fullName')?.hasError('required')">
+          Nome completo é obrigatório.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Nome de Usuário/Social</mat-label>
+        <input matInput formControlName="username" required />
+        <mat-error *ngIf="registrationForm.get('username')?.hasError('required')">
+          Nome de usuário é obrigatório.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Data de Nascimento</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="birthDate" required />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker startView="multi-year"></mat-datepicker>
+        <mat-error *ngIf="registrationForm.get('birthDate')?.hasError('required')">
+          Data de nascimento é obrigatória.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" required email />
+        <mat-error *ngIf="registrationForm.get('email')?.hasError('email')">
+          Insira um email válido.
+        </mat-error>
+        <mat-error *ngIf="registrationForm.get('email')?.hasError('required')">
+          Email é obrigatório.
+        </mat-error>
+      </mat-form-field>
+
+      <p class="error-message">{{ errorMessage }}</p>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required />
+        <button-icon mat-icon-button matSuffix (click)="togglePasswordVisibility()">
+          <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+        </button-icon>
+        <mat-error *ngIf="registrationForm.get('password')?.hasError('minlength')">
+          A senha deve ter pelo menos 6 caracteres.
+        </mat-error>
+        <mat-error *ngIf="registrationForm.get('password')?.hasError('pattern')">
+          A senha deve ter ao menos 1 letra maiúscula, 1 número e 1 caractere especial.
+        </mat-error>
+        <mat-error *ngIf="registrationForm.get('password')?.hasError('required')">
+          Senha é obrigatória.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Confirme sua Senha</mat-label>
+        <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmPassword" required />
+        <button-icon mat-icon-button matSuffix (click)="togglePasswordVisibility()">
+          <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+        </button-icon>
+        <mat-error *ngIf="registrationForm.hasError('passwordMismatch')">
+          As senhas não coincidem.
+        </mat-error>
+        <mat-error *ngIf="registrationForm.get('confirmPassword')?.hasError('required')">
+          Confirmação de senha obrigatória.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Matérias que deseja ser tutor</mat-label>
+        <mat-select formControlName="tutorSubjects" multiple required>
+          <mat-option *ngFor="let subject of tutorSubjects" [value]="subject">
+            {{ subject }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="registrationForm.get('tutorSubjects')?.hasError('required')">
+          Selecione pelo menos uma matéria.
+        </mat-error>
+      </mat-form-field>
+    </form>
+
+    <section class="btnNavigate">
+      <button tclass="text-btn" mat-button (click)="navigateToHome()">Home</button>
+      <button mat-raised-button class="text-btn" [disabled]="!registrationForm.valid">Cadastrar</button>
+    </section>
+
+    <ng-content></ng-content>
+
+    <app-registration-success-modal (onClose)="closeRegistrationSuccessDialog()"></app-registration-success-modal>
+  </div>
+</div>

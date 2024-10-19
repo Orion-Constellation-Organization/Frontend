@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { AppRoutingModule } from './home-routing.module';
+import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginModule } from '../login/login.module';
@@ -12,7 +12,7 @@ import { LoginModule } from '../login/login.module';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    HomeRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
     LoginModule,
@@ -20,4 +20,4 @@ import { LoginModule } from '../login/login.module';
   providers: [],
   bootstrap: [HomeComponent]
 })
-export class AppModule { }
+export class HomeModule { }
