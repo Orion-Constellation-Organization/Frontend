@@ -1,19 +1,25 @@
-import { Component,ViewChild  } from '@angular/core';
-import { LoginComponent } from '../login/login.component'; 
-
+import { Component, ViewChild } from '@angular/core';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['../../styles/theme.scss'],
-  
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
   title = 'Reforca o bem';
-  acaoPrimaria(){};
 
   @ViewChild('modal') modalComponent!: LoginComponent;
+
+  // ngAfterViewInit() {
+  //   // O @ViewChild estará disponível aqui
+  // }
+
   mostrarModal() {
-    this.modalComponent.toggle();
+    if (this.modalComponent) {
+      this.modalComponent.toggle(); // Agora pode chamar o método toggle
+    } else {
+      console.error('modalComponent não está disponível!');
+    }
   }
 }

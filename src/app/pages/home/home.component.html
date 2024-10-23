@@ -1,18 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reforça o bem </title>
-</head>
-<header>
-    <button (click)="mostrarModal()">Mostrar modal</button>
+<header class="header-container">
+    <div class="header-content">
+        <div class="header-box-image">
+            <img class="header-logo" src="../../../assets/images/RB Logo circular.png" alt="Logo Reforça o Bem">
+        </div>
+        <p class="header-text">Transforme o mundo através da educação</p>
+        <nav class="header-nav">
+            <button class="header-nav-btn">Saiba mais</button>
+            <button class="header-nav-btn" (click)="mostrarModal()">Login</button>
+        </nav>
+    </div>
 </header>
-
-<body>
-    <h1>{{ title }}</h1>
-    <app-login #modal></app-login>
-</body>
-
-</html>
+<app-login #modal></app-login>

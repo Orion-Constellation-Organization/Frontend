@@ -1,0 +1,18 @@
+<header class="header-container">
+    <div class="header-content">
+        <div class="header-box-image">
+            <img class="header-logo" src="../../../assets/images/RB Logo base.png" alt="logo Ambiente Principal">
+        </div>
+        <p class="header-text">Olá, Tutor {{tutor}}!</p>
+        <div class="header-user-control">
+            <div class="header-user-box-image" (click)="toggleMenu()">
+                <img class="header-user-icon" src="../../../assets/images/user-icon.png" alt="User Icon">
+            </div>
+            <div class="header-user-menu" *ngIf="menuOpen">
+                <button class="menu-item perfil" routerLink="/Perfil">Perfil</button>
+                <button class="menu-item home" routerLink="/home">Sair</button>
+            </div>
+        </div>
+    </div>
+</header>
+<app-main-menu [navMenuBtnTitleOne]="TitleOne" [navMenuBtnTitleTwo]="TitleTwo" [navMenuBtnTitleThree]="TitleThree"></app-main-menu>

@@ -1,0 +1,91 @@
+@import "../../../styles.scss";
+
+.main-nav-container {
+  display: flex;
+  flex-direction: column;
+  width: 192px;
+  margin-left: 40px;
+}
+
+.main-nav-box {
+  width: 192px;
+  min-height: 76px;
+}
+
+.main-nav-btn-primary {
+  font-size: 24px;
+  font-weight: 500;
+  color: $background-color;
+  width: 192px;
+  min-height: 76px;
+  cursor: pointer;
+  background: $light-blue-color;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 10px 10px 0 0;
+  &:hover {
+    background: $hover-light-blue-color;
+  }
+}
+
+.main-nav-btn-secondary {
+  font-size: 24px;
+  font-weight: 700;
+  color: $background-color;
+  width: 192px;
+  min-height: 76px;
+  background: $dark-blue-color;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  &:hover {
+    background: $hover-dark-blue-color;
+  }
+}
+
+.main-nav-btn-tertiary-click {
+  font-size: 24px;
+  font-weight: 500;
+  color: $black-color;
+  width: 192px;
+  min-height: 76px;
+  padding: 15px;
+  background: $background-color;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  &:hover {
+    background: $hover-gray-color;
+  }
+}
+
+.main-nav-btn-tertiary {
+  width: 192px;
+  min-height: 76px;
+  padding: 5px;
+  margin-top: -5px;
+  background: $background-color;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  &:hover {
+    background: $hover-gray-color;
+  }
+}
+
+.last {
+  border-radius: 0 0 10px 10px;
+}
+
+@media (max-width: 768px) {
+  .main-nav-container {
+    width: 140px;
+    margin-left: 40px;
+  }
+
+  .main-nav-box {
+    width: 140px;
+  }
+
+  .main-nav-btn-primary,
+  .main-nav-btn-secondary,
+  .main-nav-btn-tertiary,
+  .main-nav-btn-tertiary-click {
+    font-size: 20px;
+    width: 140px;
+  }
+}

@@ -1,2 +1,23 @@
-@import '../src/app/styles/variables.scss';
-@import '../src/app/styles/theme.scss';
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+$hover-gray-color: #eaeaec;
+$dark-blue-color: #000048;
+$hover-dark-blue-color: #000080;
+$light-blue-color: #4582c4;
+$hover-light-blue-color: #4191e0;
+$black-color: #000000;
+$background-color: #e1e1e3;
+$secondary-color: #fff;
+$tertiary-color: #a3a3a3;
+
+$button-text-color: $secondary-color;
+$button-enable-text-color: $black-color;
+$button-hover-color: $dark-blue-color;
+$background-body-color: $background-color;
