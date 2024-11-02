@@ -1,10 +1,10 @@
 <div class="modal-overlay" *ngIf="isOpen" (click)="closeDialog()"></div>
 
 <div class="dialog-container" *ngIf="isOpen">
-  <button class="close-button" (click)="closeDialog()">&#10006;</button>
+  <button class="close-button" (click)="closeDialog()">
+    <mat-icon>close</mat-icon>
+  </button>
   <div class="content">
-    <h2>Cadastro Concluído</h2>
-    <p>Seu cadastro foi realizado com sucesso!</p>
-    <button class="primary-button" (click)="closeDialog()">Continuar</button>
+    <h1>Cadastro efetuado com sucesso!</h1>
   </div>
 </div>

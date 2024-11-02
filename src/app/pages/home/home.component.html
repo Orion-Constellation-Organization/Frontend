@@ -6,8 +6,10 @@
         <p class="header-text">Transforme o mundo através da educação</p>
         <nav class="header-nav">
             <button class="header-nav-btn">Saiba mais</button>
-            <button class="header-nav-btn" (click)="mostrarModal()">Login</button>
+            <button class="header-nav-btn" (click)="showModal()">Login</button>
         </nav>
     </div>
 </header>
-<app-login #modal></app-login>
+<app-login #modalComponent></app-login>
+<app-registration-success-modal #registrationSucessModal [isOpen]="false">
+</app-registration-success-modal>

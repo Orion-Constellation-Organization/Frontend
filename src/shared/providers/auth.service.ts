@@ -1,18 +1,24 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { firstValueFrom } from 'rxjs'
+import { BaseService } from './base.service';
 
+/**
+ * Serviço de autenticação que estende as funcionalidades do serviço base.
+ *
+ * @service
+ */
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
-    serverUrl: string;
-
-    constructor(public http: HttpClient) {
-        this.serverUrl = 'https://3300-2804-14d-5cd5-945c-2da5-54b6-372b-3acd.ngrok-free.app/api';
-    }
-
-  async login(payload: { email: string; password: string }) { // Retorna um JWS TOken Novo
-    return firstValueFrom(this.http.post(`${this.serverUrl}/login`, payload));
+/**
+ * Método para realizar o login do usuário.
+ *
+ * @param {Object} payload - Dados de login do usuário.
+ * @param {string} payload.email - Email do usuário.
+ * @param {string} payload.password - Senha do usuário.
+ * @returns {Promise<any>} Promessa com a resposta da requisição de login.
+ */
+export class AuthService extends BaseService {
+  async login(payload: { email: string; password: string }) {
+    return this.call('POST', 'login', payload);
   }
 }

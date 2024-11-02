@@ -1,4 +1,4 @@
-@import "../../../styles.scss";
+@import "../../../app/styles/theme.scss";
 
 div.modal-overlay {
   position: fixed;
@@ -40,31 +40,10 @@ div.dialog-container {
     flex-direction: column;
     align-items: center;
 
-    h2 {
+    h1 {
       font-size: 24px;
       margin-bottom: 10px;
       color: #333;
-    }
-
-    p {
-      font-size: 16px;
-      margin-bottom: 30px;
-      color: #666;
-    }
-
-    button.primary-button {
-      width: 100%;
-      padding: 12px;
-      background-color: #3f51b5;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    button.primary-button:hover {
-      background-color: #303f9f;
     }
   }
 }

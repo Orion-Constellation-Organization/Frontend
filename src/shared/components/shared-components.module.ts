@@ -11,22 +11,23 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DynamicModalComponent } from './dynamic-modal/dynamic-modal.component';
 import { RegistrationSuccessModalComponent } from './registration-success-modal/registration-success-modal.component';
 import { StudentRegistrationFormComponent } from './student-registration-form/student-registration-form.component';
 import { TutorRegistrationFormComponent } from './tutor-registration-form/tutor-registration-form.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 
+const COMPONENTS = [
+  RegistrationSuccessModalComponent,
+  StudentRegistrationFormComponent,
+  TutorRegistrationFormComponent,
+  MainMenuComponent,
+] as const;
+
 @NgModule({
-  declarations: [
-    DynamicModalComponent,
-    RegistrationSuccessModalComponent,
-    StudentRegistrationFormComponent,
-    TutorRegistrationFormComponent,
-    MainMenuComponent,
-  ],
+  declarations: [...COMPONENTS],
   imports: [
     CommonModule,
     RouterModule,
@@ -42,13 +43,9 @@ import { MainMenuComponent } from './main-menu/main-menu.component';
     MatListModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxMaskDirective,
   ],
-  exports: [
-    DynamicModalComponent,
-    RegistrationSuccessModalComponent,
-    StudentRegistrationFormComponent,
-    TutorRegistrationFormComponent,
-    MainMenuComponent,
-  ],
+  exports: [...COMPONENTS],
+  providers: [provideNgxMask()],
 })
 export class SharedComponentsModule {}

@@ -1,57 +1,61 @@
-@import "../../../styles.scss";
+@import "../../../app/styles/theme.scss";
 
 .main-nav-container {
   display: flex;
   flex-direction: column;
   width: 192px;
   margin-left: 40px;
+
+  @media (max-width: 768px) {
+    width: 140px;
+    margin-left: 40px;
+  }
 }
 
 .main-nav-box {
   width: 192px;
   min-height: 76px;
+
+  @media (max-width: 768px) {
+    width: 140px;
+  }
 }
 
 .main-nav-btn-primary {
   font-size: 24px;
   font-weight: 500;
-  color: $background-color;
+  color: $color-background;
   width: 192px;
   min-height: 76px;
   cursor: pointer;
-  background: $light-blue-color;
+  background: $color-primary-light;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 10px 10px 0 0;
   &:hover {
-    background: $hover-light-blue-color;
+    background: $color-hover-light-primary;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+    width: 140px;
   }
 }
 
 .main-nav-btn-secondary {
   font-size: 24px;
   font-weight: 700;
-  color: $background-color;
+  color: $color-background;
   width: 192px;
   min-height: 76px;
-  background: $dark-blue-color;
+  background: $color-primary-dark;
   border: 1px solid rgba(0, 0, 0, 0.2);
   &:hover {
-    background: $hover-dark-blue-color;
+    background: $color-hover-dark-primary;
   }
-}
 
-.main-nav-btn-tertiary-click {
-  font-size: 24px;
-  font-weight: 500;
-  color: $black-color;
-  width: 192px;
-  min-height: 76px;
-  padding: 15px;
-  background: $background-color;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  &:hover {
-    background: $hover-gray-color;
+  @media (max-width: 768px) {
+    font-size: 20px;
+    width: 140px;
   }
 }
 
@@ -60,32 +64,38 @@
   min-height: 76px;
   padding: 5px;
   margin-top: -5px;
-  background: $background-color;
+  background: $color-background;
   border: 1px solid rgba(0, 0, 0, 0.2);
   &:hover {
-    background: $hover-gray-color;
+    background: $color-hover-light-gray;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+    width: 140px;
+  }
+}
+
+.main-nav-btn-tertiary-click {
+  font-size: 24px;
+  font-weight: 500;
+  color: $color-neutral-dark;
+  width: 192px;
+  min-height: 76px;
+  padding: 15px;
+  background: $color-background;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  &:hover {
+    background: $color-hover-light-gray;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+    width: 140px;
   }
 }
 
 .last {
   border-radius: 0 0 10px 10px;
-}
-
-@media (max-width: 768px) {
-  .main-nav-container {
-    width: 140px;
-    margin-left: 40px;
-  }
-
-  .main-nav-box {
-    width: 140px;
-  }
-
-  .main-nav-btn-primary,
-  .main-nav-btn-secondary,
-  .main-nav-btn-tertiary,
-  .main-nav-btn-tertiary-click {
-    font-size: 20px;
-    width: 140px;
-  }
 }

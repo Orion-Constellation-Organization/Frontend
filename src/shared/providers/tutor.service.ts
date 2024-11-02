@@ -1,33 +1,31 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
+import { BaseService } from './base.service';
+import { ICreateTutor } from '../interfaces/tutor.interface';
 
-interface ICreateTutor {
-  fullName: string;
-  username: string;
-  birthDate: string;
-  email: string;
-  cpf: string;
-  educationLevel: Array<number>;
-  password: string;
-  confirmPassword: string;
-}
-
+/**
+ * Serviço de gerenciamento de tutores que estende as funcionalidades do serviço base.
+ *
+ * @service
+ */
 @Injectable({
   providedIn: 'root',
 })
-export class TutorService {
-  serverUrl: string;
-
-  constructor(public http: HttpClient) {
-    this.serverUrl =
-      'https://3300-2804-14d-5cd5-945c-2da5-54b6-372b-3acd.ngrok-free.app/api';
-  }
-
+/**
+ * Método para criar um novo tutor.
+ *
+ * @param {ICreateTutor} payload - Dados do tutor a ser criado.
+ * @param {string} payload.fullName - Nome completo do tutor.
+ * @param {string} payload.username - Nome de usuário do tutor.
+ * @param {string} payload.email - Email do tutor.
+ * @param {string} payload.birthDate - Data de nascimento do tutor.
+ * @param {string} payload.cpf - CPF do tutor.
+ * @param {Array<number>} payload.educationLevelIds - IDs dos níveis de ensino do tutor.
+ * @param {string} payload.password - Senha do tutor.
+ * @param {string} payload.confirmPassword - Confirmação da senha do tutor.
+ * @returns {Promise<any>} Promessa com a resposta da requisição de criação do tutor.
+ */
+export class TutorService extends BaseService {
   async createTutor(payload: ICreateTutor) {
-    // Retorna um JWS TOken Novo
-    return firstValueFrom(
-      this.http.post(`${this.serverUrl}/register/tutor`, payload)
-    );
+    return this.call('POST', 'register/tutor', payload);
   }
 }

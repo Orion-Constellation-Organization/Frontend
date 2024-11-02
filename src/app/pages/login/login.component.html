@@ -1,16 +1,16 @@
-<!-- <div class="toolbar" role="banner">
-    <img width="40" alt="Logo" src=" " /> <span>Home</span>
-</div> -->
-
 <ng-container *ngIf="show">
-    <div class="modal" @modal>
-        <ng-container *ngIf="loginStep === 'login'">
+    <div class="modal" [ngClass]="{ 'modal-enter': show, 'modal-leave': !show }">
+        <ng-container *ngIf="loginStep === userState.login">
             <div class="modal-header">
-                <button class="close" (click)="closeModal()" tabindex="0">X</button>
-
-                <h2>Bem-vindo(a)</h2>
-                <p>Faça seu login para entrar na plataforma</p>
+                <button class="close" mat-icon-button (click)="closeModal()" tabindex="0" aria-label="Fechar Modal">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <div class="modal-header-content">
+                    <h2>Bem-vindo(a)</h2>
+                    <p>Faça seu login para entrar na plataforma</p>
+                </div>
             </div>
+
             <section class="login-form">
                 <form [formGroup]="loginForm" class="form-container">
                     <mat-form-field appearance="outline" class="full-width">
@@ -19,48 +19,71 @@
                         <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
                             Email é obrigatório.
                         </mat-error>
+                        <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+                            Email inválido.
+                        </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field appearance="outline" class="full-width">
+                    <mat-form-field appearance="outline" class="full-width rounded-input">
                         <mat-label>Senha</mat-label>
-                        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required />
-                        <button-icon mat-icon-button matSuffix (click)="togglePasswordVisibility()">
-                            <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
-                        </button-icon>
+                        <input matInput type="password" placeholder="Digite sua senha" formControlName="password" required />
                         <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
                             Senha é obrigatória.
                         </mat-error>
                     </mat-form-field>
                 </form>
+                <div class="forgot-password">
+                    <button class="btn-forgot-password">Esqueci minha senha</button>
+                    <span class="text-forgot-password">*Campos obrigatórios</span>
+                </div>
             </section>
+
             <section class="btnNavigate">
-                <button class="text-btn" (click)="login()" (keyup.enter)="login()">Efetuar Login</button>
-                <button class="text-btn" (click)="loginStep = 'signUp'">Criar Cadastro</button>
+                <button class="text-btn btn-login" (click)="login()" (keyup.enter)="login()" [disabled]="loginForm.invalid">
+                    Login Aluno
+                </button>
+                <button class="text-btn btn-login" (click)="login()" (keyup.enter)="login()" [disabled]="loginForm.invalid">
+                    Login Professor
+                </button>
+                <button class="text-btn btn-createRegistration" (click)="loginStep = userState.signUp">Fazer Cadastro</button>
             </section>
 
             <ng-content></ng-content>
         </ng-container>
 
-        <ng-container *ngIf="loginStep === 'signUp'">
-            <section class="btnNavigate">
-                <button class="text-btn" (click)="loginStep = 'tutorSignUp'">
-                    Cadastro Tutor
-                </button>
-                <button class="text-btn" (click)="loginStep = 'studentSignUp'">
-                    Cadastro Aluno
-                </button>
-                <button class="text-btn" (click)="loginStep = 'login'">Voltar</button>
+        <ng-container *ngIf="loginStep === userState.signUp">
+            <section class="modal-navigate">
+                <div class="modal-header">
+                    <button class="close" mat-icon-button (click)="closeModal()" tabindex="0" aria-label="Fechar Modal">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <div class="modal-header-content">
+                        <h2>Bem-vindo(a)</h2>
+                        <p>Para iniciar seu cadastro,_______</p>
+                    </div>
+                </div>
+                <div class="modal-navigate-controls">
+                    <section class="btnNavigate">
+                        <button class="text-btn btn-register" (click)="loginStep = userState.tutorSignUp">
+                            Cadastro Tutor
+                        </button>
+                        <button class="text-btn btn-register" (click)="loginStep = userState.studentSignUp">
+                            Cadastro Aluno
+                        </button>
+                        <button class="text-btn btn-back" (click)="loginStep = userState.login">Voltar</button>
+                    </section>
+                </div>
             </section>
         </ng-container>
 
-        <ng-container *ngIf="loginStep === 'tutorSignUp'">
-            <app-tutor-registration-form></app-tutor-registration-form>
+        <ng-container *ngIf="loginStep === userState.tutorSignUp">
+            <app-tutor-registration-form (closeModal)="loginStep = userState.login" (goBack)="loginStep = userState.login"></app-tutor-registration-form>
         </ng-container>
 
-        <ng-container *ngIf="loginStep === 'studentSignUp'">
-            <app-student-registration-form></app-student-registration-form>
+        <ng-container *ngIf="loginStep === userState.studentSignUp">
+            <app-student-registration-form (closeModal)="loginStep = userState.login" (goBack)="loginStep = userState.login"></app-student-registration-form>
         </ng-container>
-
-        <div (click)="toggle()" (keydown.enter)="toggle()" tabindex="0" @overlay class="overlay"></div>
+    </div>
+    <div class="overlay" [ngClass]="{ 'overlay-enter': show, 'overlay-leave': !show }" (click)="toggle()" (keydown.enter)="toggle()" tabindex="0">
     </div>
 </ng-container>

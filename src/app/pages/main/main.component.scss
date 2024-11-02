@@ -1,4 +1,4 @@
-@import "../../../styles.scss";
+@import "../../../app/styles/theme.scss";
 
 .header-content {
   display: flex;
@@ -7,6 +7,11 @@
 .header-box-image {
   width: 206px;
   margin: 55px 0 52px 40px;
+
+  @media (max-width: 768px) {
+    width: 140px;
+    margin: 45px 0 45px 40px;
+  }
 }
 
 .header-logo,
@@ -20,10 +25,19 @@
   font-weight: 500;
   line-height: 150%;
   margin: 100px 0 0 100px;
+
+  @media (max-width: 768px) {
+    font-size: 32px;
+    margin: 80px 0 0 60px;
+  }
 }
 
 .header-user-control {
   margin: 56px 56px 0 auto;
+
+  @media (max-width: 768px) {
+    margin: 56px 46px 0 auto;
+  }
 }
 
 .header-user-box-image {
@@ -31,17 +45,28 @@
   height: 50px;
   margin: 0 25px 0 auto;
   padding: 8px 4px 4px 4px;
-  border: 3px solid $light-blue-color;
+  border: 3px solid $color-primary-light;
   border-radius: 3px;
+
+  @media (max-width: 768px) {
+    width: 45px;
+    height: 45px;
+  }
 }
 
 .header-user-icon {
   cursor: pointer;
+
+  @media (max-width: 768px) {
+  }
 }
 
 .header-user-menu {
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+  }
 }
 
 .menu-item {
@@ -50,67 +75,46 @@
   font-size: 24px;
   font-weight: 500;
   line-height: 150%;
-  color: $background-color;
-  background-color: $light-blue-color;
+  color: $color-background;
+  background-color: $color-primary-light;
   border: 1px solid rgba(0, 0, 0, 0.2);
   cursor: pointer;
   &:hover {
-    background-color: $hover-light-blue-color;
+    background-color: $color-hover-light-primary;
+  }
+
+  @media (max-width: 768px) {
+    width: 150px;
+    height: 45px;
+    font-size: 20px;
+    &:hover {
+      background-color: $color-hover-light-primary;
+    }
   }
 }
 
 .perfil {
   border-radius: 10px 10px 0 0;
+
+  @media (max-width: 768px) {
+    border-radius: 10px 10px 0 0;
+  }
 }
 
 .home {
-  background-color: $background-color;
-  color: $black-color;
+  background-color: $color-background;
+  color: $color-neutral-dark;
   border-radius: 0 0 10px 10px;
   &:hover {
-    background-color: $hover-gray-color;
-  }
-}
-
-@media (max-width: 768px) {
-  .header-box-image {
-    width: 140px;
-    margin: 45px 0 45px 40px;
+    background-color: $color-hover-light-gray;
   }
 
-  .header-text {
-    font-size: 32px;
-    margin: 80px 0 0 60px;
-  }
-
-  .header-user-control {
-    margin: 56px 46px 0 auto;
-  }
-
-  .header-user-box-image {
-    width: 45px;
-    height: 45px;
-  }
-
-  .menu-item {
-    width: 150px;
-    height: 45px;
-    font-size: 20px;
-    &:hover {
-      background-color: $hover-light-blue-color;
-    }
-  }
-
-  .perfil {
-    border-radius: 10px 10px 0 0;
-  }
-
-  .home {
-    background-color: $background-color;
-    color: $black-color;
+  @media (max-width: 768px) {
+    background-color: $color-background;
+    color: $color-neutral-dark;
     border-radius: 0 0 10px 10px;
     &:hover {
-      background-color: $hover-gray-color;
+      background-color: $color-hover-light-gray;
     }
   }
 }
