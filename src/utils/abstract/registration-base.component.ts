@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -8,6 +9,8 @@ import {
 import { cpf } from 'cpf-cnpj-validator';
 import { ICreateStudent } from 'src/shared/interfaces/student.interface';
 import { ICreateTutor } from 'src/shared/interfaces/tutor.interface';
+import { IEducationLevel } from 'src/shared/interfaces/education-level.interface';
+import { EducationLevelService } from 'src/shared/providers/education-level.service';
 
 /**
  * Classe abstrata base para formulários de registro no sistema.
@@ -22,6 +25,9 @@ import { ICreateTutor } from 'src/shared/interfaces/tutor.interface';
  * @property {string[]} educationLevels - Lista de níveis educacionais disponíveis.
  */
 
+@Component({
+  template: '',
+})
 export abstract class RegistrationBaseComponent {
   registrationForm!: FormGroup;
   errorMessage = '';
@@ -34,15 +40,45 @@ export abstract class RegistrationBaseComponent {
     hasSpecialChar: false,
   };
 
-  educationLevels = ['Fundamental', 'Ensino Médio', 'Pré Vestibular'];
+  educationLevels: IEducationLevel[] = [];
 
   /**
    * Inicializa o componente base de registro.
    *
    * @param {FormBuilder} fb - Instância do FormBuilder para criar o formulário reativo.
    */
-  constructor(protected fb: FormBuilder) {
+  constructor(
+    protected fb: FormBuilder,
+    protected educationLevelService?: EducationLevelService
+  ) {
     this.initializeForm();
+  }
+
+  /**
+   * Método do ciclo de vida do Angular executado na inicialização do componente.
+   * Carrega os níveis educacionais se o serviço estiver disponível.
+   */
+  ngOnInit(): void {
+    if (this.educationLevelService) {
+      this.loadEducationLevels();
+    }
+  }
+
+  /**
+   * Carrega os níveis educacionais disponíveis através do serviço.
+   * Em caso de erro, exibe uma mensagem de erro no console e atualiza a mensagem de erro do componente.
+   *
+   * @private
+   */
+  private loadEducationLevels(): void {
+    this.educationLevelService?.getEducationLevels().subscribe({
+      next: (levels) => {
+        this.educationLevels = levels;
+      },
+      error: (error) => {
+        this.errorMessage = 'Erro ao carregar níveis educacionais';
+      },
+    });
   }
 
   /**
@@ -68,7 +104,7 @@ export abstract class RegistrationBaseComponent {
           ],
         ],
         confirmPassword: ['', Validators.required],
-        educationLevel: [[], Validators.required],
+        educationLevel: [null, Validators.required],
         cpf: ['', [Validators.required, this.cpfValidator]],
       },
       { validator: this.passwordMatchValidator }
@@ -133,19 +169,6 @@ export abstract class RegistrationBaseComponent {
   }
 
   /**
-   * Converte os níveis educacionais selecionados em seus respectivos IDs.
-   *
-   * @param {string[]} levels - Array de níveis educacionais selecionados.
-   * @returns {number[]} Array de IDs correspondentes aos níveis educacionais.
-   * @protected
-   */
-  protected convertEducationLevel(levels: string[]): number[] {
-    return levels
-      .map((level) => this.educationLevels.indexOf(level) + 1)
-      .filter((id) => id > 0);
-  }
-
-  /**
    * Formata a data de nascimento para o padrão dd/mm/yyyy.
    *
    * @param {string} dateString - String da data no formato ddmmyyyy
@@ -179,8 +202,8 @@ export abstract class RegistrationBaseComponent {
    */
   protected prepareDataForSubmissionTutor(formData: any): ICreateTutor {
     const birthDate = this.formatBirthDate(formData.birthDate);
-    const educationLevelArray = this.convertEducationLevel(
-      formData.educationLevel
+    const educationLevelIds = formData.educationLevel.map(
+      (level: IEducationLevel) => level.educationId
     );
 
     return {
@@ -191,7 +214,7 @@ export abstract class RegistrationBaseComponent {
       password: formData.password,
       cpf: formData.cpf,
       confirmPassword: formData.confirmPassword,
-      educationLevelIds: educationLevelArray,
+      educationLevelIds: educationLevelIds,
     };
   }
 
@@ -204,11 +227,7 @@ export abstract class RegistrationBaseComponent {
    */
   protected prepareDataForSubmissionStudent(formData: any): ICreateStudent {
     const birthDate = this.formatBirthDate(formData.birthDate);
-    const educationLevel = Array.isArray(formData.educationLevel)
-      ? formData.educationLevel[0]
-      : formData.educationLevel;
-
-    const educationLevelId = this.educationLevels.indexOf(educationLevel) + 1;
+    const educationLevelId = formData.educationLevel.educationId;
 
     return {
       fullName: formData.fullName.trim(),
@@ -217,7 +236,7 @@ export abstract class RegistrationBaseComponent {
       email: formData.email.trim().toLowerCase(),
       password: formData.password,
       confirmPassword: formData.confirmPassword,
-      educationLevelId: [educationLevelId],
+      educationLevelId: educationLevelId,
     };
   }
 }

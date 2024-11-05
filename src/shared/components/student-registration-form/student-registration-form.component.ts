@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { RegistrationSuccessModalComponent } from 'src/shared/components/registration-success-modal/registration-success-modal.component';
 import { StudentService } from '../../../shared/providers/student.service';
 import { RegistrationBaseComponent } from 'src/utils/abstract/registration-base.component';
+import { EducationLevelService } from '../../../shared/providers/education-level.service';
 
 /**
  * Componente de formulário de cadastro para alunos.
@@ -57,13 +58,15 @@ export class StudentRegistrationFormComponent extends RegistrationBaseComponent 
    * @param fb Instância do FormBuilder para criação e controle de formulários.
    * @param router Serviço de roteamento Angular.
    * @param tutorService Serviço responsável por operações relacionadas ao cadastro de alunos.
+   * @param educationLevelService Serviço responsável por operações relacionadas ao cadastro de níveis de educação.
    */
   constructor(
     fb: FormBuilder,
     private router: Router,
-    private studentService: StudentService
+    private studentService: StudentService,
+    educationLevelService: EducationLevelService
   ) {
-    super(fb);
+    super(fb, educationLevelService);
     this.removeCpfControl();
   }
 

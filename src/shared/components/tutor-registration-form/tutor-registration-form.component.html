@@ -12,7 +12,7 @@
     <form class="form-container" [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
       <div class="form-container-controls">
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Nome completo:</mat-label>
+          <mat-label>Nome completo: </mat-label>
           <input matInput formControlName="fullName" required />
           <mat-error *ngIf="registrationForm.get('fullName')?.hasError('required')">
             Nome completo é obrigatório.
@@ -20,7 +20,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Nome de usuário/nome social:</mat-label>
+          <mat-label>Nome de usuário/nome social: </mat-label>
           <input matInput formControlName="username" required />
           <mat-error *ngIf="registrationForm.get('username')?.hasError('required')">
             Nome de usuário/social é obrigatório.
@@ -28,7 +28,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>E-mail:</mat-label>
+          <mat-label>E-mail: </mat-label>
           <input matInput formControlName="email" required email />
           <mat-error *ngIf="registrationForm.get('email')?.hasError('email')">
             Insira um email válido.
@@ -39,7 +39,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Insira sua data de nascimento:</mat-label>
+          <mat-label>Insira sua data de nascimento: </mat-label>
           <input matInput formControlName="birthDate" required mask="00/00/0000" placeholder="dd/mm/yyyy" />
           <mat-error *ngIf="registrationForm.get('birthDate')?.hasError('required')">
             Data de nascimento é obrigatória.
@@ -58,10 +58,10 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Qual nível de ensino deseja ajudar?</mat-label>
+          <mat-label>Qual nível de ensino deseja ajudar? </mat-label>
           <mat-select class="custom-select" formControlName="educationLevel" multiple required>
             <mat-option *ngFor="let level of educationLevels" [value]="level">
-              {{ level }}
+              {{ level.levelType }}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="registrationForm.get('educationLevel')?.hasError('required')">
@@ -70,7 +70,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Crie sua senha:</mat-label>
+          <mat-label>Crie sua senha: </mat-label>
           <input matInput type="password" formControlName="password" required (focus)="onPasswordFocus()" />
         </mat-form-field>
         <div *ngIf="showPasswordCriteria" class="custom-position">
@@ -92,7 +92,7 @@
         </div>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Confirme sua Senha:</mat-label>
+          <mat-label>Confirme sua Senha: </mat-label>
           <input matInput type="password" formControlName="confirmPassword" required />
         </mat-form-field>
         <div class="custom-position">

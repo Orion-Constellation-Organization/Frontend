@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { EnvironmentMenuTitles } from 'src/utils/enum/environmentMenu.enum';
 
 /**
  * Componente principal da aplicação que gerencia o estado do menu e os títulos exibidos.
@@ -16,21 +17,21 @@ export class MainComponent {
    *
    * @type {string}
    */
-  titleOne = 'Agendadas';
+  titleOne = EnvironmentMenuTitles.SCHEDULED;
 
   /**
    * Título exibido para a seção de pedidos de tutoria.
    *
    * @type {string}
    */
-  titleTwo = 'Pedidos de Tutoria';
+  titleTwo = EnvironmentMenuTitles.TUTORING_REQUESTS;
 
   /**
    * Título exibido para a seção de aguardando confirmação do aluno.
    *
    * @type {string}
    */
-  titleThree = 'Aguardando confirmação do Aluno';
+  titleThree = EnvironmentMenuTitles.PENDING_STUDENT_CONFIRMATION;
 
   /**
    * Nome do tutor atualmente em uso.

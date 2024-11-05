@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { RegistrationBaseComponent } from '../../../utils/abstract/registration-base.component';
 import { RegistrationSuccessModalComponent } from 'src/shared/components/registration-success-modal/registration-success-modal.component';
 import { TutorService } from '../../../shared/providers/tutor.service';
+import { EducationLevelService } from '../../../shared/providers/education-level.service';
 
 /**
  * Componente de formulário de cadastro para tutores.
@@ -57,13 +58,15 @@ export class TutorRegistrationFormComponent extends RegistrationBaseComponent {
    * @param fb Instância do FormBuilder para criação e controle de formulários.
    * @param router Serviço de roteamento Angular.
    * @param tutorService Serviço responsável por operações relacionadas ao cadastro de tutores.
+   * @param educationLevelService Serviço responsável por operações relacionadas aos níveis de educação.
    */
   constructor(
     fb: FormBuilder,
     private router: Router,
-    private tutorService: TutorService
+    private tutorService: TutorService,
+    educationLevelService: EducationLevelService
   ) {
-    super(fb);
+    super(fb, educationLevelService);
   }
 
   /**
