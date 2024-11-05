@@ -85,16 +85,4 @@ describe('TutorRegistrationFormComponent', () => {
       component.registrationForm.controls['tutorSubjects'].hasError('required');
     expect(subjectError).toBeTruthy();
   });
-
-  // it('should toggle password visibility', () => {
-  //   expect(component.hidePassword).toBeTrue();
-  //   component.togglePasswordVisibility();
-  //   expect(component.hidePassword).toBeFalse();
-  // });
-
-  // it('should toggle confirm password visibility', () => {
-  //   expect(component.hideConfirmPassword).toBeTrue();
-  //   component.toggleConfirmPasswordVisibility();
-  //   expect(component.hideConfirmPassword).toBeFalse();
-  // });
 });

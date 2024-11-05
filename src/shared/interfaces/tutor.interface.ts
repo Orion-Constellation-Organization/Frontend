@@ -16,7 +16,7 @@ export interface ICreateTutor extends IBaseUser {
   /**
    * Lista de IDs dos níveis educacionais.
    *
-   * @type {Array<number>}
+   * @type {number[]}
    */
-  educationLevelIds: Array<number>;
+  educationLevelIds: number[];
 }

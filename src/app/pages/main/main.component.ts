@@ -17,21 +17,22 @@ export class MainComponent {
    *
    * @type {string}
    */
-  titleOne = EnvironmentMenuTitles.SCHEDULED;
+  scheduledTitle = EnvironmentMenuTitles.SCHEDULED;
 
   /**
    * Título exibido para a seção de pedidos de tutoria.
    *
    * @type {string}
    */
-  titleTwo = EnvironmentMenuTitles.TUTORING_REQUESTS;
+  tutoringRequestsTitle = EnvironmentMenuTitles.TUTORING_REQUESTS;
 
   /**
    * Título exibido para a seção de aguardando confirmação do aluno.
    *
    * @type {string}
    */
-  titleThree = EnvironmentMenuTitles.PENDING_STUDENT_CONFIRMATION;
+  pendingStudentConfirmationTitle =
+    EnvironmentMenuTitles.PENDING_STUDENT_CONFIRMATION;
 
   /**
    * Nome do tutor atualmente em uso.

@@ -7,9 +7,9 @@ import { IBaseUser } from './base-user.interface';
  */
 export interface ICreateStudent extends IBaseUser {
   /**
-   * ID do nível educacional.
+   * Lista de IDs dos níveis educacionais.
    *
-   * @type {number}
+   * @type {number[]}
    */
-  educationLevelId: number;
+  educationLevelId: number[];
 }
