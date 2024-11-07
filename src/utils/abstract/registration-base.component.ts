@@ -70,15 +70,16 @@ export abstract class RegistrationBaseComponent {
    *
    * @private
    */
-  private loadEducationLevels(): void {
-    this.educationLevelService?.getEducationLevels().subscribe({
-      next: (levels) => {
-        this.educationLevels = levels;
-      },
-      error: (error) => {
-        this.errorMessage = 'Erro ao carregar níveis educacionais';
-      },
-    });
+  private async loadEducationLevels(): Promise<void> {
+    try {
+      if (this.educationLevelService) {
+        this.educationLevels =
+          await this.educationLevelService.getEducationLevels();
+      }
+    } catch (error) {
+      console.error('Erro ao carregar níveis educacionais:', error);
+      this.errorMessage = 'Erro ao carregar níveis educacionais';
+    }
   }
 
   /**

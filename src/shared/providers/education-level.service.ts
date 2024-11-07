@@ -1,18 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { IEducationLevel } from '../interfaces/education-level.interface';
-import { environment } from 'src/environments/environment.development';
+import { BaseService } from '../providers/base.service';
 
+/**
+ * Serviço responsável por gerenciar operações relacionadas aos níveis de educação
+ */
 @Injectable({
   providedIn: 'root',
 })
-export class EducationLevelService {
-  private apiUrl = `${environment.urlBase}/get/educationLevel`;
+export class EducationLevelService extends BaseService {
+  /**
+   * Cria uma instância do EducationLevelService
+   * @param http - Instância do HttpClient para realizar requisições HTTP
+   */
+  constructor(http: HttpClient) {
+    super(http);
+  }
 
-  constructor(private http: HttpClient) {}
-
-  getEducationLevels(): Observable<IEducationLevel[]> {
-    return this.http.get<IEducationLevel[]>(this.apiUrl);
+  /**
+   * Obtém a lista de níveis de educação disponíveis
+   * @returns Promise contendo um array de níveis de educação
+   */
+  getEducationLevels(): Promise<IEducationLevel[]> {
+    return this.call('GET', 'get/educationLevel');
   }
 }
