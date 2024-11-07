@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EnvironmentMenuTitles } from 'src/utils/enum/environmentMenu.enum';
+import { EnvironmentButton } from 'src/utils/enum/environmentButton';
+import { AuthService } from 'src/shared/providers/auth.service';
 
 /**
  * Componente principal da aplicação que gerencia o estado do menu e os títulos exibidos.
@@ -11,7 +13,7 @@ import { EnvironmentMenuTitles } from 'src/utils/enum/environmentMenu.enum';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
 })
-export class MainComponent {
+export class MainComponent implements OnInit {
   /**
    * Título exibido para a seção de agendamentos.
    *
@@ -47,6 +49,55 @@ export class MainComponent {
    * @type {boolean}
    */
   menuOpen = false;
+
+  /**
+   * Nome do usuário logado (tutor ou aluno)
+   * @type {string}
+   */
+  userName = '';
+
+  /**
+   * Tipo do usuário logado
+   * @type {string}
+   */
+  userType = '';
+
+  /**
+   * Título do botão
+   * @type {string}
+   */
+  buttonTitle = EnvironmentButton.PRIMARY;
+
+  constructor(private authService: AuthService) {}
+
+  async ngOnInit() {
+    await this.loadUserData();
+  }
+
+  /**
+   * Carrega os dados do usuário do localStorage e atualiza o componente
+   */
+  private async loadUserData() {
+    try {
+      const userData = await this.authService.getCurrentUser();
+      console.log('userData recebido:', userData);
+
+      if (userData && userData.username && userData.role) {
+        this.userName = userData.username;
+        this.userType = userData.role;
+      } else {
+        console.warn('Dados do usuário incompletos ou inválidos');
+        console.log('username:', userData?.username);
+        console.log('role:', userData?.role);
+        this.userName = 'Usuário';
+        this.userType = 'Não definido';
+      }
+    } catch (error) {
+      console.error('Erro ao carregar dados do usuário:', error);
+      this.userName = 'Usuário';
+      this.userType = 'Não definido';
+    }
+  }
 
   /**
    * Alterna o estado de abertura do menu user.

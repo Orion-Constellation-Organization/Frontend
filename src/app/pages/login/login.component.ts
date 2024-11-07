@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/shared/providers/auth.service';
 import { userState } from 'src/utils/enum/userState.enum';
+import { Router } from '@angular/router';
+import { UserType } from 'src/utils/enum/userType.enum';
 
 /**
  * Componente responsável pela autenticação de usuários através do login.
@@ -57,12 +59,24 @@ export class LoginComponent implements OnInit {
   isRegistrationModalOpen: boolean | undefined;
 
   /**
+   * Enum para tipos de usuário disponível no template
+   */
+  UserType = UserType;
+
+  errorMessage: string = '';
+
+  /**
    * Construtor do componente, injetando o serviço de autenticação e o FormBuilder.
    *
-   * @param {AuthService} authService - Serviço de autenticação para gerenciar operações de login.
+   * @param {AuthService} authService - Serviço de autenticaão para gerenciar operações de login.
    * @param {FormBuilder} fb - Construtor do formulário.
+   * @param {Router} router - Serviço de roteamento para navegar entre rotas.
    */
-  constructor(private authService: AuthService, private fb: FormBuilder) {}
+  constructor(
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
 
   /**
    * Inicializa o componente, configurando o formulário de login.
@@ -94,6 +108,8 @@ export class LoginComponent implements OnInit {
 
         setTimeout(() => {
           this.show = false;
+          this.clearFormModal();
+          this.errorMessage = '';
           modal.classList.remove('modal-leave');
         }, 500);
       }
@@ -110,6 +126,7 @@ export class LoginComponent implements OnInit {
       setTimeout(() => {
         this.show = false;
         this.clearFormModal();
+        this.errorMessage = '';
         modal.classList.remove('modal-leave');
       }, 250);
     }
@@ -124,24 +141,27 @@ export class LoginComponent implements OnInit {
 
   /**
    * Realiza o login do usuário utilizando as credenciais fornecidas no formulário.
+   * @param userType - Tipo de usuário (student | tutor)
    */
-  async login() {
+  async login(userType: UserType) {
     if (this.loginForm.valid) {
       const loginData = this.loginForm.value;
+      this.errorMessage = '';
 
-      await this.authService
-        .login({
+      try {
+        const response = await this.authService.login({
           email: loginData.email,
           password: loginData.password,
-        })
-        .then((resp) => {
-          localStorage.setItem('TutorRegistration', JSON.stringify(loginData));
-          console.log('Resposta do login:', resp);
-          this.loginForm.reset();
-        })
-        .catch((err) => {
-          console.log(err);
+          userType: userType,
         });
+
+        this.loginForm.reset();
+        await this.router.navigate(['/main']);
+      } catch (error: any) {
+        console.error('Erro no login:', error);
+        this.errorMessage =
+          'Credenciais inválidas para o tipo de usuário selecionado';
+      }
     }
   }
 

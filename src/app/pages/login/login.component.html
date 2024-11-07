@@ -32,6 +32,11 @@
                         </mat-error>
                     </mat-form-field>
                 </form>
+
+                <div *ngIf="errorMessage" class="error-message-login">
+                    {{ errorMessage }}
+                </div>
+
                 <div class="forgot-password">
                     <button class="btn-forgot-password">Esqueci minha senha</button>
                     <span class="text-forgot-password">*Campos obrigatórios</span>
@@ -39,10 +44,10 @@
             </section>
 
             <section class="btnNavigate">
-                <button class="text-btn btn-login" (click)="login()" (keyup.enter)="login()" [disabled]="loginForm.invalid">
+                <button class="text-btn btn-login" (click)="login(UserType.STUDENT)" (keyup.enter)="login(UserType.STUDENT)" [disabled]="loginForm.invalid">
                     Login Aluno
                 </button>
-                <button class="text-btn btn-login" (click)="login()" (keyup.enter)="login()" [disabled]="loginForm.invalid">
+                <button class="text-btn btn-login" (click)="login(UserType.TUTOR)" (keyup.enter)="login(UserType.TUTOR)" [disabled]="loginForm.invalid">
                     Login Professor
                 </button>
                 <button class="text-btn btn-createRegistration" (click)="loginStep = userState.signUp">Fazer Cadastro</button>

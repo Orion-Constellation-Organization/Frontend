@@ -3,7 +3,7 @@
         <div class="header-box-image">
             <img class="header-logo" src="../../../assets/images/RB Logo base.png" alt="logo Ambiente Principal">
         </div>
-        <p class="header-text">Olá, Tutor {{tutor}}!</p>
+        <p class="header-text">Olá, {{userName}}!</p>
         <div class="header-user-control">
             <div class="header-user-box-image" (click)="toggleMenu()">
                 <img class="header-user-icon" src="../../../assets/images/user-icon.png" alt="User Icon">
@@ -15,4 +15,9 @@
         </div>
     </div>
 </header>
-<app-main-menu [navMenuBtnTitleOne]="scheduledTitle" [navMenuBtnTitleTwo]="tutoringRequestsTitle" [navMenuBtnTitleThree]="pendingStudentConfirmationTitle"></app-main-menu>
+<div class="main-container">
+    <app-main-menu [navMenuBtnTitleOne]="scheduledTitle" [navMenuBtnTitleTwo]="tutoringRequestsTitle" [navMenuBtnTitleThree]="pendingStudentConfirmationTitle"></app-main-menu>
+    <div class="main-container-button">
+        <app-button [label]="buttonTitle"></app-button>
+    </div>
+</div>

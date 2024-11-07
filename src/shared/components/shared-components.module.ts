@@ -18,12 +18,14 @@ import { RegistrationSuccessModalComponent } from './registration-success-modal/
 import { StudentRegistrationFormComponent } from './student-registration-form/student-registration-form.component';
 import { TutorRegistrationFormComponent } from './tutor-registration-form/tutor-registration-form.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
+import { ButtonComponent } from './button/button.component';
 
 const COMPONENTS = [
   RegistrationSuccessModalComponent,
   StudentRegistrationFormComponent,
   TutorRegistrationFormComponent,
   MainMenuComponent,
+  ButtonComponent,
 ] as const;
 
 @NgModule({

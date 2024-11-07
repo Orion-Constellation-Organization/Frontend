@@ -58,7 +58,7 @@
   }
 
   @media (max-width: 425px) {
-    max-height: 90vh;
+    max-height: 95vh;
     max-width: 90%;
     padding: 35px;
     gap: 15px;
@@ -379,4 +379,8 @@ body.modal-open {
   overflow: hidden;
   position: fixed;
   width: 100%;
+}
+
+.error-message-login {
+  color: $color-alert-error;
 }
