@@ -36,16 +36,21 @@ export class BaseService {
   constructor(protected http: HttpClient) {}
 
   /**
-   * Método genérico para realizar requisições HTTP.
+   * Realiza uma requisição HTTP genérica utilizando o método especificado.
    *
-   * @param {string} method - Método HTTP (GET, POST, PUT, DELETE, etc.).
-   * @param {string} endpoint - Endpoint da API a ser acessado.
-   * @param {any} [body] - Corpo da requisição.
-   * @returns {Promise<T>} Promessa com a resposta da requisição.
+   * @template T - Tipo genérico que representa o formato da resposta esperada
+   * @param {string} method - Método HTTP a ser utilizado (GET, POST, PUT, DELETE, etc.)
+   * @param {string} endpoint - Caminho relativo do endpoint da API (será concatenado com a URL base)
+   * @param {any} [body] - Dados opcionais a serem enviados no corpo da requisição
+   * @throws {Error} Lança um erro se a requisição falhar
+   * @returns {Promise<T>} Promise que resolve com a resposta da API do tipo T
    */
   protected call<T>(method: string, endpoint: string, body?: any): Promise<T> {
     const url = `${this.serverUrl}/${endpoint}`;
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'ngrok-skip-browser-warning': 'true',
+    });
 
     return firstValueFrom(
       this.http
