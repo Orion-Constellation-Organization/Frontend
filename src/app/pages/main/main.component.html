@@ -17,7 +17,7 @@
 </header>
 <div class="main-container">
     <app-main-menu [navMenuBtnTitleOne]="scheduledTitle" [navMenuBtnTitleTwo]="tutoringRequestsTitle" [navMenuBtnTitleThree]="pendingStudentConfirmationTitle"></app-main-menu>
-    <div class="main-container-button">
+    <div class="main-container-button" *ngIf="isStudent()">
         <app-button [label]="buttonTitle"></app-button>
     </div>
 </div>

@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { EnvironmentMenuTitles } from 'src/utils/enum/environmentMenu.enum';
-import { EnvironmentButton } from 'src/utils/enum/environmentButton';
+import { EnvironmentButton } from 'src/utils/enum/environmentButton.enum';
 import { AuthService } from 'src/shared/providers/auth.service';
+import { UserType } from 'src/utils/enum/userType.enum';
 
 /**
  * Componente principal da aplicação que gerencia o estado do menu e os títulos exibidos.
  *
- * @component
+ * @export
+ * @class MainComponent
+ * @implements {OnInit}
  */
 @Component({
   selector: 'app-main',
@@ -17,21 +20,24 @@ export class MainComponent implements OnInit {
   /**
    * Título exibido para a seção de agendamentos.
    *
-   * @type {string}
+   * @memberof MainComponent
+   * @type {EnvironmentMenuTitles}
    */
   scheduledTitle = EnvironmentMenuTitles.SCHEDULED;
 
   /**
    * Título exibido para a seção de pedidos de tutoria.
    *
-   * @type {string}
+   * @memberof MainComponent
+   * @type {EnvironmentMenuTitles}
    */
   tutoringRequestsTitle = EnvironmentMenuTitles.TUTORING_REQUESTS;
 
   /**
    * Título exibido para a seção de aguardando confirmação do aluno.
    *
-   * @type {string}
+   * @memberof MainComponent
+   * @type {EnvironmentMenuTitles}
    */
   pendingStudentConfirmationTitle =
     EnvironmentMenuTitles.PENDING_STUDENT_CONFIRMATION;
@@ -39,6 +45,7 @@ export class MainComponent implements OnInit {
   /**
    * Nome do tutor atualmente em uso.
    *
+   * @memberof MainComponent
    * @type {string}
    */
   tutor = 'fulano';
@@ -46,19 +53,26 @@ export class MainComponent implements OnInit {
   /**
    * Indica se o menu user está aberto ou fechado.
    *
+   * @memberof MainComponent
    * @type {boolean}
    */
   menuOpen = false;
 
   /**
-   * Nome do usuário logado (tutor ou aluno)
+   * Nome do usuário logado
+   *
+   * @memberof MainComponent
    * @type {string}
+   * @default ''
    */
   userName = '';
 
   /**
    * Tipo do usuário logado
-   * @type {string}
+   *
+   * @memberof MainComponent
+   * @type {UserType | string}
+   * @default ''
    */
   userType = '';
 
@@ -76,8 +90,13 @@ export class MainComponent implements OnInit {
 
   /**
    * Carrega os dados do usuário do localStorage e atualiza o componente
+   *
+   * @private
+   * @memberof MainComponent
+   * @returns {Promise<void>}
+   * @throws {Error} Quando houver falha ao carregar os dados do usuário
    */
-  private async loadUserData() {
+  private async loadUserData(): Promise<void> {
     try {
       const userData = await this.authService.getCurrentUser();
       console.log('userData recebido:', userData);
@@ -104,5 +123,23 @@ export class MainComponent implements OnInit {
    */
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
+  }
+
+  /**
+   * Verifica se o usuário é um estudante
+   *
+   * @memberof MainComponent
+   * @returns {boolean} Retorna true se o usuário for um estudante, false caso contrário
+   */
+  isStudent(): boolean {
+    return this.userType === UserType.STUDENT;
+  }
+
+  /**
+   * Verifica se o usuário é um tutor
+   * @returns {boolean}
+   */
+  isTutor(): boolean {
+    return this.userType === UserType.TUTOR;
   }
 }
