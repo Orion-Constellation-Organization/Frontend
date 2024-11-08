@@ -1,0 +1,198 @@
+@import "../../../app/styles/theme.scss";
+@import "../../../app/styles/variables.scss";
+
+.modal {
+  @extend .modal;
+  max-width: 1024px !important;
+  padding: 56px 69px !important;
+}
+
+.container-header-register {
+  .container-header-register-title {
+    text-align: center;
+    color: $color-primary-dark;
+    font-size: 32px !important;
+    font-weight: 700;
+    line-height: 150%;
+    padding-bottom: 28.64px;
+  }
+}
+
+.form-container {
+  .form-section {
+    margin-bottom: 24px;
+
+    .form-label-reason {
+      width: 100%;
+      background-color: $color-customization-angular-material;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 150%;
+      padding: 10px 22px;
+      border-radius: 23px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-left: 26px;
+
+      .checkbox-item {
+        ::ng-deep {
+          .mdc-form-field {
+            label {
+              font-size: 24px;
+              font-weight: 500;
+              line-height: 150%;
+              color: $color-primary-dark;
+            }
+          }
+          .mdc-checkbox {
+            &.mdc-checkbox--selected {
+              .mdc-checkbox__background {
+                background-color: $color-neutral-black !important;
+                border-color: $color-neutral-black !important;
+              }
+
+              .mdc-checkbox__checkmark {
+                color: $color-neutral-white !important;
+                fill: $color-neutral-white !important;
+              }
+            }
+
+            .mdc-checkbox__native-control:enabled:checked
+              ~ .mdc-checkbox__background {
+              background-color: $color-neutral-black !important;
+              border-color: $color-neutral-black !important;
+
+              .mdc-checkbox__checkmark-path {
+                stroke: $color-neutral-white !important;
+              }
+            }
+          }
+
+          .mat-mdc-checkbox {
+            .mdc-checkbox__ripple {
+              &::before,
+              &::after {
+                background-color: $color-neutral-white !important;
+              }
+            }
+
+            &:hover .mdc-checkbox__ripple::before {
+              background-color: $color-neutral-white !important;
+              opacity: 0.04;
+            }
+
+            &:focus .mdc-checkbox__ripple::before {
+              background-color: $color-neutral-white !important;
+              opacity: 0.12;
+            }
+
+            &:active .mdc-checkbox__ripple::after {
+              background-color: $color-neutral-white !important;
+              opacity: 0.1;
+            }
+          }
+
+          .mdc-checkbox__ripple {
+            background: $color-neutral-white !important;
+          }
+        }
+      }
+    }
+
+    .schedule-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-left: 26px;
+
+      .schedule-item {
+        display: flex;
+        justify-content: center;
+        margin: 0;
+      }
+
+      ::ng-deep {
+        .mat-mdc-icon-button {
+          padding: 0px !important;
+        }
+
+        .mat-datepicker-toggle {
+          .mat-datepicker-toggle-default-icon {
+            width: 32px !important;
+            height: 32px !important;
+          }
+        }
+
+        .add-schedule-container {
+          display: flex;
+          align-items: center;
+          padding-left: 10px;
+          gap: 10px;
+
+          .add-schedule-btn.mat-mdc-button {
+            min-width: 32px !important;
+            width: 32px !important;
+            height: 32px !important;
+            background-color: $color-neutral-black !important;
+            border-radius: 50% !important;
+            position: relative !important;
+
+            .mat-icon {
+              position: absolute !important;
+              top: 50% !important;
+              left: 50% !important;
+              transform: translate(-50%, -50%) !important;
+              width: 24px !important;
+              height: 24px !important;
+              font-size: 24px !important;
+              line-height: 24px !important;
+              color: $color-neutral-white !important;
+            }
+          }
+
+          .button-add-schedule,
+          .button-remove-schedule {
+            padding: 0;
+            margin: 0;
+
+            ::ng-deep {
+              .add-schedule-icon {
+                width: 32px !important;
+                height: 32px !important;
+              }
+            }
+          }
+
+          .add-schedule-text {
+            margin: auto;
+          }
+        }
+      }
+    }
+
+    .subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+
+      button {
+        width: 100%;
+
+        &.selected {
+          background-color: $color-background;
+          color: $color-primary-light;
+        }
+      }
+    }
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}

@@ -18,6 +18,9 @@
 <div class="main-container">
     <app-main-menu [navMenuBtnTitleOne]="scheduledTitle" [navMenuBtnTitleTwo]="tutoringRequestsTitle" [navMenuBtnTitleThree]="pendingStudentConfirmationTitle"></app-main-menu>
     <div class="main-container-button" *ngIf="isStudent()">
-        <app-button [label]="buttonTitle"></app-button>
+        <app-button [label]="buttonTitle" (click)="toggleClassRequestModal()">
+        </app-button>
     </div>
 </div>
+<app-class-request-form *ngIf="showClassRequestModal" (closeModal)="toggleClassRequestModal()">
+</app-class-request-form>

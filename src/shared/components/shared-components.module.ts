@@ -11,7 +11,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { NgxMatDatetimePickerModule } from '@angular-material-components/datetime-picker';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegistrationSuccessModalComponent } from './registration-success-modal/registration-success-modal.component';
@@ -19,6 +21,7 @@ import { StudentRegistrationFormComponent } from './student-registration-form/st
 import { TutorRegistrationFormComponent } from './tutor-registration-form/tutor-registration-form.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { ButtonComponent } from './button/button.component';
+import { ClassRequestFormComponent } from './class-request-form/class-request-form.component';
 
 const COMPONENTS = [
   RegistrationSuccessModalComponent,
@@ -26,6 +29,7 @@ const COMPONENTS = [
   TutorRegistrationFormComponent,
   MainMenuComponent,
   ButtonComponent,
+  ClassRequestFormComponent,
 ] as const;
 
 @NgModule({
@@ -46,6 +50,8 @@ const COMPONENTS = [
     FormsModule,
     ReactiveFormsModule,
     NgxMaskDirective,
+    MatCheckboxModule,
+    NgxMatDatetimePickerModule,
   ],
   exports: [...COMPONENTS],
   providers: [provideNgxMask()],

@@ -82,6 +82,8 @@ export class MainComponent implements OnInit {
    */
   buttonTitle = EnvironmentButton.PRIMARY;
 
+  showClassRequestModal = false;
+
   constructor(private authService: AuthService) {}
 
   async ngOnInit() {
@@ -141,5 +143,9 @@ export class MainComponent implements OnInit {
    */
   isTutor(): boolean {
     return this.userType === UserType.TUTOR;
+  }
+
+  toggleClassRequestModal() {
+    this.showClassRequestModal = !this.showClassRequestModal;
   }
 }

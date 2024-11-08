@@ -1,0 +1,70 @@
+<div class="modal modal-register">
+    <div class="container">
+        <header class="container-header-register">
+            <button class="close close-button" mat-icon-button (click)="closeModal.emit()" tabindex="0">
+                <mat-icon>close</mat-icon>
+            </button>
+            <h2 class="container-header-register-title">Pedido de Aula</h2>
+        </header>
+
+        <form [formGroup]="classRequestForm" (ngSubmit)="onSubmit()" class="form-container">
+            <div class="form-section">
+                <p class="form-label form-label-reason">Qual o motivo do pedido de aula? *</p>
+                <div class="checkbox-group">
+                    <mat-checkbox class="checkbox-item" *ngFor="let reason of reasonOptions" (change)="onReasonChange(reason, $event)">
+                        {{reason}}
+                    </mat-checkbox>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <p class="form-label form-label-reason">Escolha os horários que você tenha disponibilidade para assistir a aula. *</p>
+                <div formArrayName="schedules">
+                    <div class="schedule-container">
+                        <div *ngFor="let schedule of schedules.controls; let i=index" class="schedule-item">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <div class="schedule-item-container">
+                                <mat-form-field appearance="outline">
+                                    <input matInput [formControlName]="i" [matDatepicker]="picker" placeholder="dd/mm/aaaa às xx:xx">
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <button type="button" mat-icon-button (click)="removeSchedule(i)" *ngIf="schedules.length > 1" class="remove-schedule-btn">
+                                <mat-icon class="remove-schedule-icon">remove</mat-icon>
+                            </button>
+                        </div>
+                        <div class="add-schedule-container">
+                            <button type="button" mat-button (click)="addSchedule()" class="add-schedule-btn">
+                                <mat-icon class="add-schedule-icon">add</mat-icon>
+                            </button>
+                            <p class="add-schedule-text">Adicionar mais horários</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <p class="form-label form-label-reason">Em qual disciplina você deseja ter aula? *</p>
+                <div class="subjects-grid">
+                    <button type="button" *ngFor="let subject of subjects" mat-stroked-button [class.selected]="classRequestForm.get('subject')?.value === subject" (click)="classRequestForm.patchValue({subject: subject})">
+                        {{subject}}
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <p class="form-label form-label-reason">Deixe algumas informações que possam ajudar o tutor.</p>
+                <mat-form-field appearance="outline" class="full-width">
+                    <textarea matInput formControlName="additionalInfo" placeholder="Ex: Assunto dentro da disciplina, Questão que tenha dúvida..." rows="4">
+          </textarea>
+                </mat-form-field>
+            </div>
+
+            <div class="form-actions">
+                <button mat-raised-button color="primary" type="submit" [disabled]="!classRequestForm.valid">
+                    Enviar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
