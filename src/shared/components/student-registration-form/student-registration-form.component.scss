@@ -1,0 +1,5 @@
+@import "../../../app/styles/theme.scss";
+
+:host {
+  @extend .font-primary;
+}

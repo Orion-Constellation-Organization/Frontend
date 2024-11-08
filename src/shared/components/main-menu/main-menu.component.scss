@@ -1,0 +1,101 @@
+@import "../../../app/styles/theme.scss";
+
+.main-nav-container {
+  display: flex;
+  flex-direction: column;
+  width: 192px;
+  margin-left: 40px;
+
+  @media (max-width: 768px) {
+    width: 140px;
+    margin-left: 40px;
+  }
+}
+
+.main-nav-box {
+  width: 192px;
+  min-height: 76px;
+
+  @media (max-width: 768px) {
+    width: 140px;
+  }
+}
+
+.main-nav-btn-primary {
+  font-size: 24px;
+  font-weight: 500;
+  color: $color-background;
+  width: 192px;
+  min-height: 76px;
+  cursor: pointer;
+  background: $color-primary-light;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 10px 10px 0 0;
+  &:hover {
+    background: $color-hover-light-primary;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+    width: 140px;
+  }
+}
+
+.main-nav-btn-secondary {
+  font-size: 24px;
+  font-weight: 700;
+  color: $color-background;
+  width: 192px;
+  min-height: 76px;
+  background: $color-primary-dark;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  &:hover {
+    background: $color-hover-dark-primary;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+    width: 140px;
+  }
+}
+
+.main-nav-btn-tertiary {
+  width: 192px;
+  min-height: 76px;
+  padding: 5px;
+  margin-top: -5px;
+  background: $color-background;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  &:hover {
+    background: $color-hover-light-gray;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+    width: 140px;
+  }
+}
+
+.main-nav-btn-tertiary-click {
+  font-size: 24px;
+  font-weight: 500;
+  color: $color-neutral-dark;
+  width: 192px;
+  min-height: 76px;
+  padding: 15px;
+  background: $color-background;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  &:hover {
+    background: $color-hover-light-gray;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+    width: 140px;
+  }
+}
+
+.last {
+  border-radius: 0 0 10px 10px;
+}

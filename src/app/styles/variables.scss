@@ -1,10 +1,33 @@
-$background-color: #e1e1e3;
-$secondary-color: #fff;
-$tertiary-color: #a3a3a3;
-$hover-color: #000048;
-$text-color: #000000;
+$color-neutral-white: #ffffff;
+$color-neutral-black: #000000;
+$color-neutral-gray-light: #e1e1e3;
+$color-neutral-gray-dark: #a3a3a3;
 
-$button-text-color: $secondary-color;
-$button-enable-text-color: $text-color;
-$button-hover-color: $hover-color;
-$background-home-color:$background-color
+$color-primary-dark: #000048;
+$color-primary-light: #4582c4;
+$color-background: $color-neutral-white;
+$color-accent: #a3a3a3;
+$color-neutral-dark: #000000;
+
+$color-hover-dark-primary: #000080;
+$color-hover-light-primary: #4191e0;
+$color-hover-light-gray: #eaeaec;
+
+$color-alert-error: #d32f2f;
+$color-alert-error-hover: #c62828;
+$color-alert-success: #388e3c;
+$color-alert-success-hover: #2e7d32;
+$color-alert-warning: #ffa000;
+$color-alert-warning-hover: #ff8f00;
+$color-alert-info: #1976d2;
+$color-alert-info-hover: #1565c0;
+
+$color-customization-angular-material: #acc8e5;
+
+$button-color-text: $color-neutral-white;
+$button-color-text-enabled: $color-neutral-black;
+$button-color-hover: $color-primary-dark;
+$button-color-background: $color-background;
+
+$font-primary: "Inter", sans-serif;
+$font-secondary: "Montserrat", sans-serif;
