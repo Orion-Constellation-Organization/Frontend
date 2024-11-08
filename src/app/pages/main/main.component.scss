@@ -1,5 +1,9 @@
 @import "../../../app/styles/theme.scss";
 
+.font-primary {
+  font-family: $font-primary;
+}
+
 .header-content {
   display: flex;
 }
@@ -117,4 +121,15 @@
       background-color: $color-hover-light-gray;
     }
   }
+}
+
+.main-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 95px;
+}
+
+.main-container-button {
+  margin: auto auto 0 auto;
 }

@@ -64,7 +64,7 @@
   min-height: 76px;
   padding: 5px;
   margin-top: -5px;
-  background: $color-background;
+  background: $color-neutral-gray-light;
   border: 1px solid rgba(0, 0, 0, 0.2);
   &:hover {
     background: $color-hover-light-gray;
@@ -83,7 +83,7 @@
   width: 192px;
   min-height: 76px;
   padding: 15px;
-  background: $color-background;
+  background: $color-neutral-gray-light;
   border: 1px solid rgba(0, 0, 0, 0.2);
   cursor: pointer;
   &:hover {

@@ -1,16 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from 'src/shared/guards/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { TutorRegistrationFormComponent } from 'src/shared/components/tutor-registration-form/tutor-registration-form.component';
 import { StudentRegistrationFormComponent } from 'src/shared/components/student-registration-form/student-registration-form.component';
 import { MainComponent } from './main/main.component';
+// import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'main', component: MainComponent },
+  {
+    path: 'main',
+    component: MainComponent,
+    canActivate: [AuthGuard],
+  },
   {
     path: 'tutor-registration-form',
     component: TutorRegistrationFormComponent,

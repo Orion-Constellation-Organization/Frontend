@@ -1,0 +1,25 @@
+@import "../../../app/styles/variables.scss";
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-primary {
+  background-color: $color-primary-light;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 150%;
+  text-align: center;
+  color: $color-neutral-white;
+  width: 327px;
+  height: 112px;
+  border-radius: 44.8px;
+  border: none;
+  padding: 0 89.5px;
+  cursor: pointer;
+  &:hover {
+    background-color: $color-hover-light-primary;
+  }
+}
