@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { Reason } from 'src/utils/enum/reason.enum';
+import { Subject } from 'src/utils/enum/subject.enum';
 
 @Component({
   selector: 'app-class-request-form',
@@ -11,27 +13,8 @@ export class ClassRequestFormComponent {
 
   classRequestForm: FormGroup;
 
-  reasonOptions = [
-    'Reforço do conteúdo',
-    'Prova ou trabalho específico',
-    'Correção de exercício',
-    'Outro',
-  ];
-
-  subjects = [
-    'Biologia',
-    'Sociologia',
-    'Gramática',
-    'Geografia',
-    'História',
-    'Filosofía',
-    'Literatura',
-    'Inglês',
-    'Química',
-    'Física',
-    'Redação',
-    'Matemática',
-  ];
+  reasonOptions = Object.values(Reason);
+  subjects = Object.values(Subject);
 
   constructor(private fb: FormBuilder) {
     this.classRequestForm = this.fb.group({

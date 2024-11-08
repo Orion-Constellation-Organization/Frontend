@@ -14,15 +14,7 @@ export class ButtonComponent {
   /** Texto a ser exibido no botão */
   @Input() label: string = '';
   /** Tipo do botão que define seu estilo visual */
-  @Input() type: EnvironmentButton =
-    EnvironmentButton.PRIMARY ||
-    EnvironmentButton.SECONDARY ||
-    EnvironmentButton.CANCEL ||
-    EnvironmentButton.DELETE ||
-    EnvironmentButton.SAVE ||
-    EnvironmentButton.CLOSE ||
-    EnvironmentButton.SUBMIT ||
-    EnvironmentButton.GHOST;
+  @Input() type: EnvironmentButton = EnvironmentButton.PRIMARY;
 
   /**
    * Obtém o tipo do botão

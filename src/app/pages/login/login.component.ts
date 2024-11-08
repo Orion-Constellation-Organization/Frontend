@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
   /**
    * Construtor do componente, injetando o serviço de autenticação e o FormBuilder.
    *
-   * @param {AuthService} authService - Serviço de autenticaão para gerenciar operações de login.
+   * @param {AuthService} authService - Serviço de autenticação para gerenciar operações de login.
    * @param {FormBuilder} fb - Construtor do formulário.
    * @param {Router} router - Serviço de roteamento para navegar entre rotas.
    */
