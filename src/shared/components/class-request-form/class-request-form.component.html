@@ -11,7 +11,7 @@
             <div class="form-section">
                 <p class="form-label form-label-reason">Qual o motivo do pedido de aula? *</p>
                 <div class="checkbox-group">
-                    <mat-checkbox class="checkbox-item" *ngFor="let reason of reasonOptions" (change)="onReasonChange(reason, $event)">
+                    <mat-checkbox class="checkbox-item" *ngFor="let reason of reasonOptions" (change)="onReasonChange(reason, $event)" required>
                         {{reason}}
                     </mat-checkbox>
                 </div>
@@ -21,23 +21,37 @@
                 <p class="form-label form-label-reason">Escolha os horários que você tenha disponibilidade para assistir a aula. *</p>
                 <div formArrayName="schedules">
                     <div class="schedule-container">
-                        <div *ngFor="let schedule of schedules.controls; let i=index" class="schedule-item">
+                        <div *ngFor="let schedule of schedules.controls; let i=index" class="schedule-item" [formGroupName]="i">
+
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+
                             <div class="schedule-item-container">
                                 <mat-form-field appearance="outline">
-                                    <input matInput [formControlName]="i" [matDatepicker]="picker" placeholder="dd/mm/aaaa às xx:xx">
+                                    <input class="schedule-item-input" matInput formControlName="date" [matDatepicker]="picker" placeholder="dd/mm/aaaa" required>
                                     <mat-datepicker #picker></mat-datepicker>
                                 </mat-form-field>
                             </div>
+
+                            <div class="schedule-item-separator-container">
+                                <span class="schedule-item-separator">às</span>
+                            </div>
+
+                            <div class="schedule-item-container">
+                                <mat-form-field appearance="outline">
+                                    <input class="schedule-item-input" matInput type="time" formControlName="time" placeholder="00:00" required>
+                                </mat-form-field>
+                            </div>
+
                             <button type="button" mat-icon-button (click)="removeSchedule(i)" *ngIf="schedules.length > 1" class="remove-schedule-btn">
                                 <mat-icon class="remove-schedule-icon">remove</mat-icon>
                             </button>
                         </div>
                         <div class="add-schedule-container">
-                            <button type="button" mat-button (click)="addSchedule()" class="add-schedule-btn">
+                            <button type="button" mat-button (click)="addSchedule()" class="add-schedule-btn" *ngIf="canAddMoreSchedules">
                                 <mat-icon class="add-schedule-icon">add</mat-icon>
                             </button>
-                            <p class="add-schedule-text">Adicionar mais horários</p>
+                            <p class="add-schedule-text" *ngIf="canAddMoreSchedules">Adicionar mais horários</p>
+                            <p class="add-schedule-text" *ngIf="!canAddMoreSchedules">Limite máximo de 3 horários atingido</p>
                         </div>
                     </div>
                 </div>
@@ -46,7 +60,7 @@
             <div class="form-section">
                 <p class="form-label form-label-reason">Em qual disciplina você deseja ter aula? *</p>
                 <div class="subjects-grid">
-                    <button type="button" *ngFor="let subject of subjects" mat-stroked-button [class.selected]="classRequestForm.get('subject')?.value === subject" (click)="classRequestForm.patchValue({subject: subject})">
+                    <button type="button" *ngFor="let subject of subjects" mat-stroked-button [class.selected]="classRequestForm.get('subject')?.value === subject" (click)="classRequestForm.patchValue({subject: subject})" required>
                         {{subject}}
                     </button>
                 </div>
@@ -56,7 +70,7 @@
                 <p class="form-label form-label-reason">Deixe algumas informações que possam ajudar o tutor.</p>
                 <mat-form-field appearance="outline" class="full-width">
                     <textarea matInput formControlName="additionalInfo" placeholder="Ex: Assunto dentro da disciplina, Questão que tenha dúvida..." rows="4">
-          </textarea>
+                    </textarea>
                 </mat-form-field>
             </div>
 

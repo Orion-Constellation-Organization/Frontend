@@ -12,7 +12,6 @@ export class ClassRequestFormComponent {
   @Output() closeModal = new EventEmitter<void>();
 
   classRequestForm: FormGroup;
-
   reasonOptions = Object.values(Reason);
   subjects = Object.values(Subject);
 
@@ -24,12 +23,15 @@ export class ClassRequestFormComponent {
         [Validators.required]
       ),
       subject: ['', Validators.required],
-      additionalInfo: ['', Validators.required],
+      additionalInfo: [''],
     });
   }
 
   private createScheduleControl() {
-    return this.fb.control('', Validators.required);
+    return this.fb.group({
+      date: ['', Validators.required],
+      time: ['', Validators.required],
+    });
   }
 
   get schedules() {
@@ -37,7 +39,13 @@ export class ClassRequestFormComponent {
   }
 
   addSchedule() {
-    this.schedules.push(this.createScheduleControl());
+    if (this.schedules.length < 3) {
+      this.schedules.push(this.createScheduleControl());
+    }
+  }
+
+  get canAddMoreSchedules(): boolean {
+    return this.schedules.length < 3;
   }
 
   removeSchedule(index: number) {

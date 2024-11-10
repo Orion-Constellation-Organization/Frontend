@@ -115,6 +115,17 @@
         margin: 0;
       }
 
+      .schedule-item-separator-container {
+        padding: 10px;
+
+        .schedule-item-separator {
+          font-size: 24px;
+          font-weight: 500;
+          line-height: 150%;
+          color: $color-primary-dark;
+        }
+      }
+
       ::ng-deep {
         .mat-mdc-icon-button {
           padding: 0px !important;
@@ -168,6 +179,10 @@
           }
 
           .add-schedule-text {
+            font-size: 24px;
+            font-weight: 500;
+            line-height: 150%;
+            color: $color-primary-dark;
             margin: auto;
           }
         }
