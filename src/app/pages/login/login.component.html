@@ -13,7 +13,7 @@
 
             <section class="login-form">
                 <form [formGroup]="loginForm" class="form-container">
-                    <mat-form-field appearance="outline" class="full-width">
+                    <mat-form-field appearance="outline" class="full-width custom">
                         <mat-label>Email </mat-label>
                         <input matInput type="email" formControlName="email" placeholder="Digite seu email" />
                         <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
@@ -24,7 +24,7 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field appearance="outline" class="full-width rounded-input">
+                    <mat-form-field appearance="outline" class="full-width custom rounded-input">
                         <mat-label>Senha </mat-label>
                         <input matInput type="password" placeholder="Digite sua senha" formControlName="password" required />
                         <mat-error *ngIf="loginForm.get('password')?.hasError('required')">

@@ -11,7 +11,7 @@
 
         <form class="form-container" [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
             <div class="form-container-controls">
-                <mat-form-field appearance="outline" class="full-width">
+                <mat-form-field appearance="outline" class="full-width custom">
                     <mat-label>Nome completo: </mat-label>
                     <input matInput formControlName="fullName" required />
                     <mat-error *ngIf="registrationForm.get('fullName')?.hasError('required')">
@@ -19,7 +19,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="full-width">
+                <mat-form-field appearance="outline" class="full-width custom">
                     <mat-label>Nome de usuário/nome social: </mat-label>
                     <input matInput formControlName="username" required />
                     <mat-error *ngIf="registrationForm.get('username')?.hasError('required')">
@@ -27,7 +27,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="full-width">
+                <mat-form-field appearance="outline" class="full-width custom">
                     <mat-label>E-mail: </mat-label>
                     <input matInput formControlName="email" required email />
                     <mat-error *ngIf="registrationForm.get('email')?.hasError('email')">
@@ -38,7 +38,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="full-width">
+                <mat-form-field appearance="outline" class="full-width custom">
                     <mat-label>Insira sua data de nascimento: </mat-label>
                     <input matInput formControlName="birthDate" required mask="00/00/0000" placeholder="dd/mm/yyyy" />
                     <mat-error *ngIf="registrationForm.get('birthDate')?.hasError('required')">
@@ -46,7 +46,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="full-width">
+                <mat-form-field appearance="outline" class="full-width custom">
                     <mat-label>Nível de educação: </mat-label>
                     <mat-select class="custom-select" formControlName="educationLevel" required>
                         <mat-option *ngFor="let level of educationLevels" [value]="level">
@@ -58,7 +58,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="full-width">
+                <mat-form-field appearance="outline" class="full-width custom">
                     <mat-label>Crie sua senha: </mat-label>
                     <input matInput type="password" formControlName="password" required (focus)="onPasswordFocus()" />
                 </mat-form-field>
@@ -80,7 +80,7 @@
                     </p>
                 </div>
 
-                <mat-form-field appearance="outline" class="full-width">
+                <mat-form-field appearance="outline" class="full-width custom">
                     <mat-label>Confirme sua Senha: </mat-label>
                     <input matInput type="password" formControlName="confirmPassword" required />
                 </mat-form-field>
