@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { EnvironmentButton } from 'src/utils/enum/environmentButton.enum';
-import { Reason } from 'src/utils/enum/reason.enum';
+import { Reason, ReasonLabel } from 'src/utils/enum/reason.enum';
 import { Subject } from 'src/utils/enum/subject.enum';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-class-request-form',
@@ -13,8 +14,13 @@ export class ClassRequestFormComponent {
   @Output() closeModal = new EventEmitter<void>();
 
   classRequestForm: FormGroup;
-  reasonOptions = Object.values(Reason);
+  reasonOptions = Object.values(Reason).map((reason) => ({
+    value: reason,
+    label: ReasonLabel[reason],
+  }));
+
   subjects = Object.values(Subject);
+
   EnvironmentButton = EnvironmentButton;
 
   constructor(private fb: FormBuilder) {
@@ -54,7 +60,7 @@ export class ClassRequestFormComponent {
     this.schedules.removeAt(index);
   }
 
-  onReasonChange(reason: string, event: any) {
+  onReasonChange(reason: Reason, event: MatCheckboxChange) {
     const reasonsArray = this.classRequestForm.get('reasons') as FormArray;
     if (event.checked) {
       reasonsArray.push(this.fb.control(reason));

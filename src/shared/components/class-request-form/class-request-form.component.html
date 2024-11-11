@@ -11,8 +11,8 @@
             <div class="form-section">
                 <p class="form-label form-label-reason">Qual o motivo do pedido de aula? *</p>
                 <div class="checkbox-group">
-                    <mat-checkbox class="checkbox-item" *ngFor="let reason of reasonOptions" (change)="onReasonChange(reason, $event)" required>
-                        {{reason}}
+                    <mat-checkbox class="checkbox-item" *ngFor="let reason of reasonOptions" (change)="onReasonChange(reason.value, $event)" required>
+                        {{reason.label}}
                     </mat-checkbox>
                 </div>
             </div>
