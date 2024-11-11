@@ -76,9 +76,8 @@
             </div>
 
             <div class="form-actions">
-                <button mat-raised-button color="primary" type="submit" [disabled]="!classRequestForm.valid">
-                    Enviar
-                </button>
+                <app-button [label]="'Enviar'" [type]="EnvironmentButton.PRIMARY" [disabled]="!classRequestForm.valid">
+                </app-button>
             </div>
         </form>
     </div>

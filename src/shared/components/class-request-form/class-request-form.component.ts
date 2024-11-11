@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { EnvironmentButton } from 'src/utils/enum/environmentButton.enum';
 import { Reason } from 'src/utils/enum/reason.enum';
 import { Subject } from 'src/utils/enum/subject.enum';
 
@@ -14,6 +15,7 @@ export class ClassRequestFormComponent {
   classRequestForm: FormGroup;
   reasonOptions = Object.values(Reason);
   subjects = Object.values(Subject);
+  EnvironmentButton = EnvironmentButton;
 
   constructor(private fb: FormBuilder) {
     this.classRequestForm = this.fb.group({

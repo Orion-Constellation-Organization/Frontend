@@ -15,6 +15,8 @@ export class ButtonComponent {
   @Input() label: string = '';
   /** Tipo do botão que define seu estilo visual */
   @Input() type: EnvironmentButton = EnvironmentButton.PRIMARY;
+  /** Indica se o botão está desabilitado */
+  @Input() disabled: boolean = false;
 
   /**
    * Obtém o tipo do botão
@@ -38,6 +40,7 @@ export class ButtonComponent {
       'button-close': this.type === EnvironmentButton.CLOSE,
       'button-submit': this.type === EnvironmentButton.SUBMIT,
       'button-ghost': this.type === EnvironmentButton.GHOST,
+      'button-disabled': this.disabled,
     };
   }
 }
