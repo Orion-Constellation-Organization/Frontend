@@ -203,11 +203,24 @@
         }
       }
     }
-  }
-}
 
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 24px;
+    .form-label-reason-custom,
+    .form-label-reason-custom-text {
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 150%;
+      color: $color-text-dark;
+      margin: 0;
+    }
+
+    .form-label-reason-custom-text {
+      margin-bottom: 40px;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 24px;
+    }
+  }
 }
