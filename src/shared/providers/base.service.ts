@@ -11,6 +11,8 @@ import { environment } from 'src/environments/environment.development';
 /**
  * Serviço base para realizar requisições HTTP.
  *
+ * @export
+ * @class
  * @service
  * @description Este serviço utiliza a URL base configurada no arquivo de ambiente.
  * A URL base pode ser alterada dependendo do ambiente em que a aplicação está sendo executada,
@@ -42,7 +44,7 @@ export class BaseService {
    * @param {string} method - Método HTTP a ser utilizado (GET, POST, PUT, DELETE, etc.)
    * @param {string} endpoint - Caminho relativo do endpoint da API (será concatenado com a URL base)
    * @param {any} [body] - Dados opcionais a serem enviados no corpo da requisição
-   * @throws {Error} Lança um erro se a requisição falhar
+   * @throws {HttpErrorResponse} Lança um erro HTTP se a requisição falhar
    * @returns {Promise<T>} Promise que resolve com a resposta da API do tipo T
    */
   protected call<T>(method: string, endpoint: string, body?: any): Promise<T> {

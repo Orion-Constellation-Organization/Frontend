@@ -43,7 +43,10 @@ export class ClassRequestFormComponent implements OnInit {
     label: ReasonLabel[reason],
   }));
 
-  /** Lista de matérias disponíveis */
+  /**
+   * Lista de matérias disponíveis para seleção
+   * Carregada durante a inicialização do componente
+   */
   subjects: ISubject[] = [];
 
   /** Enum de botões de ambiente */
@@ -53,9 +56,22 @@ export class ClassRequestFormComponent implements OnInit {
   @ViewChild(RegistrationSuccessModalComponent)
   registrationSuccessModal!: RegistrationSuccessModalComponent;
 
+  /**
+   * Mensagem de erro exibida quando ocorre algum problema na submissão
+   * @type {string}
+   */
   errorMessage: string = '';
+
+  /**
+   * Horário conflitante identificado durante a validação
+   * @type {string}
+   */
   conflictingSchedule: string = '';
 
+  /**
+   * Indica se existe um erro relacionado aos horários selecionados
+   * @type {boolean}
+   */
   hasScheduleError: boolean = false;
 
   /**
@@ -105,14 +121,16 @@ export class ClassRequestFormComponent implements OnInit {
   }
 
   /**
-   * Getter para acessar o FormArray de agendamentos
+   * Getter que retorna o FormArray de agendamentos do formulário
+   * @returns {FormArray} Array de controles de agendamento
    */
   get schedules() {
     return this.classRequestForm.get('schedules') as FormArray;
   }
 
   /**
-   * Adiciona um novo agendamento ao formulário, limitado a 3 horários
+   * Verifica se é possível adicionar mais horários ao formulário
+   * @returns {boolean} true se podem ser adicionados mais horários (máximo 3)
    */
   addSchedule() {
     if (this.schedules.length < 3) {
@@ -130,7 +148,7 @@ export class ClassRequestFormComponent implements OnInit {
 
   /**
    * Remove um agendamento específico do formulário
-   * @param index - Índice do agendamento a ser removido
+   * @param {number} index - Índice do agendamento a ser removido
    */
   removeSchedule(index: number) {
     this.schedules.removeAt(index);
@@ -138,8 +156,8 @@ export class ClassRequestFormComponent implements OnInit {
 
   /**
    * Manipula a mudança nos checkboxes de motivos
-   * @param reason - Motivo selecionado
-   * @param event - Evento de mudança do checkbox
+   * @param {Reason} reason - Motivo selecionado/desselecionado
+   * @param {MatCheckboxChange} event - Evento do checkbox
    */
   onReasonChange(reason: Reason, event: MatCheckboxChange) {
     const reasonsArray = this.classRequestForm.get('reasons') as FormArray;
@@ -156,10 +174,11 @@ export class ClassRequestFormComponent implements OnInit {
   }
 
   /**
-   * Formata a data e hora para o formato desejado
-   * @param date - Data a ser formatada
-   * @param time - Hora a ser formatada
-   * @returns String formatada com data e hora
+   * Formata a data e hora para o padrão brasileiro
+   * @param {Date} date - Data a ser formatada
+   * @param {string} time - Hora a ser formatada
+   * @returns {string} Data e hora formatadas (ex: "dd/MM/yyyy às HH:mm")
+   * @private
    */
   private formatSchedule(date: Date, time: string): string {
     const formattedDate = formatDate(date, 'dd/MM/yyyy', 'en-US');
@@ -167,9 +186,10 @@ export class ClassRequestFormComponent implements OnInit {
   }
 
   /**
-   * Prepara os dados do formulário para envio
-   * @returns Objeto IClassRequest com os dados formatados
-   * @throws Error se o usuário não estiver autenticado
+   * Prepara os dados do formulário para envio à API
+   * @returns {IClassRequest} Objeto com os dados formatados da solicitação
+   * @throws {Error} Se o usuário não estiver autenticado
+   * @private
    */
   private prepareRequestData(): IClassRequest {
     const formValue = this.classRequestForm.value;
@@ -205,7 +225,10 @@ export class ClassRequestFormComponent implements OnInit {
 
   /**
    * Manipula a submissão do formulário
-   * Valida, prepara e envia os dados para o servidor
+   * Valida os dados, prepara a requisição e envia para o servidor
+   * Em caso de sucesso, exibe o modal de confirmação
+   * Em caso de erro, exibe as mensagens apropriadas
+   * @async
    */
   async onSubmit() {
     if (this.classRequestForm.valid) {
@@ -249,7 +272,8 @@ export class ClassRequestFormComponent implements OnInit {
   }
 
   /**
-   * Scrolla o modal para o topo.
+   * Rola a tela para o topo do modal
+   * @protected
    */
   protected scrollToTop(): void {
     const container = document.querySelector('.modal-register');
@@ -261,6 +285,7 @@ export class ClassRequestFormComponent implements OnInit {
 
   /**
    * Abre o modal de sucesso de solicitação de aula ao definir `isOpen` como `true`.
+   * @public
    */
   public openRegistrationSuccessDialog() {
     this.registrationSuccessModal.isOpen = true;
@@ -269,6 +294,7 @@ export class ClassRequestFormComponent implements OnInit {
   /**
    * Fecha o modal de sucesso de solicitação de aula ao definir `isOpen` como `false`
    * e emite o evento `closeModal` para informar o fechamento.
+   * @public
    */
   public closeRegistrationSuccessDialog() {
     this.registrationSuccessModal.isOpen = false;
