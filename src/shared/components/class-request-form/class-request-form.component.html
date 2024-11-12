@@ -68,10 +68,10 @@
 
             <div class="form-section">
                 <p class="form-label form-label-reason-custom">Deixe algumas informações que possam ajudar o tutor.</p>
-                <p class="form-label form-label-reason-custom-text">Ex: Assunto dentro da disciplina, Questão que tenha dúvida...</p>
                 <mat-form-field appearance="outline" class="full-width">
-                    <textarea matInput formControlName="additionalInfo" placeholder="Ex: Assunto dentro da disciplina, Questão que tenha dúvida..." rows="4">
+                    <textarea matInput formControlName="additionalInfo" placeholder="Ex: Assunto dentro da disciplina, Questão que tenha dúvida..." rows="4" maxlength="200">
                     </textarea>
+                    <mat-hint align="end">{{classRequestForm.get('additionalInfo')?.value?.length || 0}}/200</mat-hint>
                 </mat-form-field>
             </div>
 

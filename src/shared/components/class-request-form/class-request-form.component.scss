@@ -210,17 +210,12 @@
       }
     }
 
-    .form-label-reason-custom,
-    .form-label-reason-custom-text {
+    .form-label-reason-custom {
       font-size: 24px;
       font-weight: 500;
       line-height: 150%;
       color: $color-text-dark;
-      margin: 0;
-    }
-
-    .form-label-reason-custom-text {
-      margin-bottom: 40px;
+      margin: 0 0 20px 0;
     }
 
     .form-actions {
