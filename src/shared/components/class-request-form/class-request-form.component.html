@@ -27,7 +27,7 @@
 
                             <div class="schedule-item-container">
                                 <mat-form-field appearance="outline">
-                                    <input class="schedule-item-input" matInput formControlName="date" [matDatepicker]="picker" placeholder="dd/mm/aaaa" required>
+                                    <input class="schedule-item-input" matInput formControlName="date" [matDatepicker]="picker" placeholder="dd/mm/aaaa" required (dateChange)="onScheduleChange()">
                                     <mat-datepicker #picker></mat-datepicker>
                                 </mat-form-field>
                             </div>
@@ -38,7 +38,7 @@
 
                             <div class="schedule-item-container">
                                 <mat-form-field appearance="outline">
-                                    <input class="schedule-item-input" matInput type="time" formControlName="time" placeholder="00:00" required>
+                                    <input class="schedule-item-input" matInput type="time" formControlName="time" placeholder="00:00" required (change)="onScheduleChange()">
                                 </mat-form-field>
                             </div>
 
@@ -75,8 +75,19 @@
                 </mat-form-field>
             </div>
 
+            <div class="error-message" *ngIf="errorMessage">
+                <p>{{ errorMessage }}</p>
+                <p *ngIf="conflictingSchedule" class="conflicting-schedule">
+                    <mat-icon class="warning-icon">warning</mat-icon>
+                    <span>{{ conflictingSchedule }}</span>
+                </p>
+                <p *ngIf="conflictingSchedule" class="error-hint">
+                    Por favor, selecione um horário diferente para continuar.
+                </p>
+            </div>
+
             <div class="form-actions">
-                <app-button [label]="'Enviar'" [type]="EnvironmentButton.PRIMARY" [disabled]="!classRequestForm.valid">
+                <app-button [label]="'Enviar'" [type]="EnvironmentButton.PRIMARY" [disabled]="!classRequestForm.valid || hasScheduleError">
                 </app-button>
             </div>
         </form>

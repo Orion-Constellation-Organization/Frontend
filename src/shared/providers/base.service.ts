@@ -79,14 +79,12 @@ export class BaseService {
    * @returns {Observable<never>} Um Observable com a mensagem de erro.
    */
   protected handleError(error: HttpErrorResponse) {
-    let errorMessage = 'Ocorreu um erro desconhecido';
-
     if (error.error instanceof ErrorEvent) {
-      errorMessage = `Erro: ${error.error.message}`;
+      // Erro do cliente
+      return throwError(() => error);
     } else {
-      errorMessage = `Código do erro: ${error.status}, mensagem: ${error.message}`;
+      // Erro da API - retorna o erro original
+      return throwError(() => error);
     }
-
-    return throwError(() => new Error(errorMessage));
   }
 }

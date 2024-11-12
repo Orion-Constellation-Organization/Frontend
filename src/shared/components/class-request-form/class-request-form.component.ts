@@ -53,6 +53,11 @@ export class ClassRequestFormComponent implements OnInit {
   @ViewChild(RegistrationSuccessModalComponent)
   registrationSuccessModal!: RegistrationSuccessModalComponent;
 
+  errorMessage: string = '';
+  conflictingSchedule: string = '';
+
+  hasScheduleError: boolean = false;
+
   /**
    * Construtor do componente
    * @param fb - Serviço FormBuilder para criação de formulários reativos
@@ -188,6 +193,17 @@ export class ClassRequestFormComponent implements OnInit {
   }
 
   /**
+   * Manipula mudanças nos campos de data/hora
+   */
+  onScheduleChange() {
+    if (this.hasScheduleError) {
+      this.hasScheduleError = false;
+      this.errorMessage = '';
+      this.conflictingSchedule = '';
+    }
+  }
+
+  /**
    * Manipula a submissão do formulário
    * Valida, prepara e envia os dados para o servidor
    */
@@ -195,11 +211,39 @@ export class ClassRequestFormComponent implements OnInit {
     if (this.classRequestForm.valid) {
       try {
         const requestData = this.prepareRequestData();
-        await this.classRequestService.createClassRequest(requestData);
+        const response = await this.classRequestService.createClassRequest(
+          requestData
+        );
+
+        this.hasScheduleError = false;
+        this.errorMessage = '';
+        this.conflictingSchedule = '';
         this.scrollToTop();
         this.openRegistrationSuccessDialog();
-      } catch (error) {
-        console.error('Erro ao enviar solicitação:', error);
+      } catch (error: any) {
+        if (error.error?.errors?.[0]) {
+          const firstError = error.error.errors[0];
+          if (firstError.msg && firstError.value?.[0]) {
+            this.hasScheduleError = true;
+            this.errorMessage = 'Não é possível agendar este horário:';
+            this.conflictingSchedule = firstError.value[0];
+
+            // Resetar todos os campos de horário
+            while (this.schedules.length > 0) {
+              this.schedules.removeAt(0);
+            }
+            this.schedules.push(this.createScheduleControl());
+          } else {
+            this.errorMessage =
+              firstError.msg ||
+              'Ocorreu um erro ao enviar a solicitação. Tente novamente.';
+            this.conflictingSchedule = '';
+          }
+        } else {
+          this.errorMessage =
+            'Ocorreu um erro ao enviar a solicitação. Tente novamente.';
+          this.conflictingSchedule = '';
+        }
       }
     }
   }

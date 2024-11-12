@@ -224,4 +224,42 @@
       margin-top: 24px;
     }
   }
+
+  .error-message {
+    background-color: $color-neutral-white;
+    color: $color-alert-error;
+    padding: 16px;
+    margin: 12px 0;
+    border-radius: 4px;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 24px;
+
+    p {
+      margin: 0;
+
+      &:not(:last-child) {
+        margin-bottom: 8px;
+      }
+    }
+
+    .conflicting-schedule {
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .warning-icon {
+      font-size: 20px;
+      height: 20px;
+      width: 20px;
+    }
+
+    .error-hint {
+      font-size: 24px;
+      margin-top: 8px;
+    }
+  }
 }
