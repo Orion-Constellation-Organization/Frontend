@@ -1,4 +1,4 @@
-<div class="modal modal-register">
+<div class="modal modal-register" [class.active]="isOpen">
     <div class="container">
         <header class="container-header-register">
             <button class="close close-button" mat-icon-button (click)="closeModal.emit()" tabindex="0">
@@ -80,5 +80,7 @@
                 </app-button>
             </div>
         </form>
+        <app-registration-success-modal [message]="message" (onClose)="closeRegistrationSuccessDialog()">
+        </app-registration-success-modal>
     </div>
 </div>
