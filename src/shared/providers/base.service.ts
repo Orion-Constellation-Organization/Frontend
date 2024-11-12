@@ -47,9 +47,12 @@ export class BaseService {
    */
   protected call<T>(method: string, endpoint: string, body?: any): Promise<T> {
     const url = `${this.serverUrl}/${endpoint}`;
+    const token = localStorage.getItem('authToken');
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'ngrok-skip-browser-warning': 'true',
+      ...(token && { Authorization: `Bearer ${token}` }),
     });
 
     return firstValueFrom(

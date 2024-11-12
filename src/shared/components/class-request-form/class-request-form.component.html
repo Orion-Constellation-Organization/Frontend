@@ -60,8 +60,8 @@
             <div class="form-section">
                 <p class="form-label form-label-reason">Em qual disciplina você deseja ter aula? *</p>
                 <div class="subjects-grid">
-                    <button type="button" *ngFor="let subject of subjects" mat-stroked-button [class.selected]="classRequestForm.get('subject')?.value === subject" (click)="classRequestForm.patchValue({subject: subject})" required>
-                        {{subject}}
+                    <button type="button" *ngFor="let subject of subjects" mat-stroked-button [class.selected]="classRequestForm.get('subjectId')?.value === subject.subjectId" (click)="classRequestForm.patchValue({subjectId: subject.subjectId})" required>
+                        {{subject.subjectName}}
                     </button>
                 </div>
             </div>
