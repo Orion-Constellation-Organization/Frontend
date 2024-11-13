@@ -82,7 +82,20 @@ export class MainComponent implements OnInit {
    */
   buttonTitle: EnvironmentButton = EnvironmentButton.PRIMARY;
 
+  /**
+   * Controla a visibilidade do modal de solicitação de aula
+   *
+   * @type {boolean}
+   * @default false
+   */
   showClassRequestModal = false;
+
+  /**
+   * Controla a visibilidade do modal de perfil do usuário
+   *
+   * @type {boolean}
+   * @default false
+   */
   showProfile = false;
 
   constructor(private authService: AuthService) {}
@@ -123,11 +136,20 @@ export class MainComponent implements OnInit {
 
   /**
    * Alterna o estado de abertura do menu user.
+   *
+   * @memberof MainComponent
+   * @returns {void}
    */
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
   }
 
+  /**
+   * Alterna a visibilidade do modal de perfil do usuário
+   *
+   * @memberof MainComponent
+   * @returns {void}
+   */
   toggleProfile() {
     this.showProfile = !this.showProfile;
   }
@@ -144,12 +166,20 @@ export class MainComponent implements OnInit {
 
   /**
    * Verifica se o usuário é um tutor
+   *
+   * @memberof MainComponent
    * @returns {boolean}
    */
   isTutor(): boolean {
     return this.userType === UserType.TUTOR;
   }
 
+  /**
+   * Alterna a visibilidade do modal de solicitação de aula
+   *
+   * @memberof MainComponent
+   * @returns {void}
+   */
   toggleClassRequestModal() {
     this.showClassRequestModal = !this.showClassRequestModal;
   }
