@@ -121,6 +121,7 @@ export class AuthService {
         email: decodedToken.email,
         role: decodedToken.role,
         username: response.username,
+        birthDate: response.birthDate, // Adicionando a data de nascimento
       };
     } catch (error) {
       console.error('Erro ao buscar dados do usuário:', error);
