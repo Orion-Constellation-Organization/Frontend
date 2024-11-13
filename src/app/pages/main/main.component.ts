@@ -78,11 +78,12 @@ export class MainComponent implements OnInit {
 
   /**
    * Título do botão
-   * @type {string}
+   * @type {EnvironmentButton}
    */
-  buttonTitle = EnvironmentButton.PRIMARY;
+  buttonTitle: EnvironmentButton = EnvironmentButton.PRIMARY;
 
   showClassRequestModal = false;
+  showProfile = false;
 
   constructor(private authService: AuthService) {}
 
@@ -125,6 +126,10 @@ export class MainComponent implements OnInit {
    */
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
+  }
+
+  toggleProfile() {
+    this.showProfile = !this.showProfile;
   }
 
   /**
