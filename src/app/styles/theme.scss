@@ -191,13 +191,14 @@
   font-size: 12px;
 }
 
-::ng-deep .mat-mdc-form-field .mdc-text-field {
+::ng-deep .custom .mdc-text-field {
   background-color: $color-customization-angular-material !important;
   border-radius: 10px !important;
   width: 100% !important;
 }
 
-::ng-deep .mat-mdc-form-field {
+::ng-deep .custom,
+.mat-mdc-form-field {
   .mat-mdc-text-field-wrapper {
     height: 40px !important;
   }

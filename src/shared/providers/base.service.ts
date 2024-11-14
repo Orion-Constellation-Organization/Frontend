@@ -11,6 +11,8 @@ import { environment } from 'src/environments/environment.development';
 /**
  * Serviço base para realizar requisições HTTP.
  *
+ * @export
+ * @class
  * @service
  * @description Este serviço utiliza a URL base configurada no arquivo de ambiente.
  * A URL base pode ser alterada dependendo do ambiente em que a aplicação está sendo executada,
@@ -42,14 +44,17 @@ export class BaseService {
    * @param {string} method - Método HTTP a ser utilizado (GET, POST, PUT, DELETE, etc.)
    * @param {string} endpoint - Caminho relativo do endpoint da API (será concatenado com a URL base)
    * @param {any} [body] - Dados opcionais a serem enviados no corpo da requisição
-   * @throws {Error} Lança um erro se a requisição falhar
+   * @throws {HttpErrorResponse} Lança um erro HTTP se a requisição falhar
    * @returns {Promise<T>} Promise que resolve com a resposta da API do tipo T
    */
   protected call<T>(method: string, endpoint: string, body?: any): Promise<T> {
     const url = `${this.serverUrl}/${endpoint}`;
+    const token = localStorage.getItem('authToken');
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'ngrok-skip-browser-warning': 'true',
+      ...(token && { Authorization: `Bearer ${token}` }),
     });
 
     return firstValueFrom(
@@ -76,14 +81,12 @@ export class BaseService {
    * @returns {Observable<never>} Um Observable com a mensagem de erro.
    */
   protected handleError(error: HttpErrorResponse) {
-    let errorMessage = 'Ocorreu um erro desconhecido';
-
     if (error.error instanceof ErrorEvent) {
-      errorMessage = `Erro: ${error.error.message}`;
+      // Erro do cliente
+      return throwError(() => error);
     } else {
-      errorMessage = `Código do erro: ${error.status}, mensagem: ${error.message}`;
+      // Erro da API - retorna o erro original
+      return throwError(() => error);
     }
-
-    return throwError(() => new Error(errorMessage));
   }
 }
