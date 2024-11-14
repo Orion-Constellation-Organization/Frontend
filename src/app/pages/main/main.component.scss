@@ -36,6 +36,23 @@
   }
 }
 
+.header-box-profile {
+  display: flex;
+  text-align: center;
+  width: 624px;
+  height: 58px;
+  background-color: $color-customization-angular-material;
+  border-radius: 23px;
+  margin: auto;
+
+  .header-profile-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: $color-neutral-black;
+    margin: auto;
+  }
+}
+
 .header-user-control {
   margin: 56px 56px 0 auto;
 
@@ -124,8 +141,9 @@
 }
 
 .main-container {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: auto 1fr;
   align-items: center;
   margin-bottom: 95px;
 }

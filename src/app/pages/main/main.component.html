@@ -4,6 +4,9 @@
             <img class="header-logo" src="../../../assets/images/RB Logo base.png" alt="logo Ambiente Principal">
         </div>
         <p class="header-text" *ngIf="!showProfile">Olá, {{userName}}!</p>
+        <div class="header-box-profile" *ngIf="showProfile">
+            <h1 class="header-profile-title">Perfil - Dados Cadastrais</h1>
+        </div>
         <div class="header-user-control">
             <div class="header-user-box-image" (click)="toggleMenu()">
                 <img class="header-user-icon" src="../../../assets/images/user-icon.png" alt="User Icon">
