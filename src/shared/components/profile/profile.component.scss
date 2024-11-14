@@ -39,6 +39,11 @@
       .profile-content-edit-social {
         display: flex;
         justify-content: space-between;
+
+        img,
+        .profile-content-edit-social {
+          cursor: pointer;
+        }
       }
 
       .profile-content-edit-social-name,

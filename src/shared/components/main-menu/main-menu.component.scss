@@ -59,6 +59,17 @@
   }
 }
 
+.main-nav-btn-secondary-profile {
+  min-height: 147px !important;
+  background: $color-customization-angular-material !important;
+  color: $color-neutral-dark !important;
+  cursor: pointer;
+  &:hover {
+    background: $color-hover-light-primary !important;
+    color: $color-neutral-dark !important;
+  }
+}
+
 .main-nav-btn-tertiary {
   width: 192px;
   min-height: 76px;
@@ -74,6 +85,10 @@
     font-size: 20px;
     width: 140px;
   }
+}
+
+.main-nav-btn-tertiary-click-profile {
+  border-radius: 0 0 10px 10px !important;
 }
 
 .main-nav-btn-tertiary-click {

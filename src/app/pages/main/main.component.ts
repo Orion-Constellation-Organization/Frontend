@@ -17,10 +17,38 @@ import { UserType } from 'src/utils/enum/userType.enum';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
+  /**
+   * Título exibido para a seção inicial.
+   *
+   * @memberof MainComponent
+   * @type {EnvironmentMenuTitles}
+   */
   beginTitle = EnvironmentMenuTitles.BEGIN;
+
+  /**
+   * Título exibido para a seção de aulas.
+   *
+   * @memberof MainComponent
+   * @type {EnvironmentMenuTitles}
+   */
   classesTitle = EnvironmentMenuTitles.CLASSES;
+
+  /**
+   * Título exibido para a seção de dados cadastrais.
+   *
+   * @memberof MainComponent
+   * @type {EnvironmentMenuTitles}
+   */
   registrationDataTitle = EnvironmentMenuTitles.REGISTRATION_DATA;
+
+  /**
+   * Título exibido para a seção de segurança.
+   *
+   * @memberof MainComponent
+   * @type {EnvironmentMenuTitles}
+   */
   securityTitle = EnvironmentMenuTitles.SECURITY;
+
   /**
    * Título exibido para a seção de agendamentos.
    *
@@ -46,6 +74,12 @@ export class MainComponent implements OnInit {
   pendingStudentConfirmationTitle =
     EnvironmentMenuTitles.PENDING_STUDENT_CONFIRMATION;
 
+  /**
+   * Título exibido para a seção desabilitada.
+   *
+   * @memberof MainComponent
+   * @type {EnvironmentMenuTitles}
+   */
   disabledTitle = EnvironmentMenuTitles.DISABLED;
 
   /**
@@ -104,8 +138,19 @@ export class MainComponent implements OnInit {
    */
   showProfile = false;
 
+  /**
+   * Cria uma instância do MainComponent.
+   *
+   * @param authService - Serviço de autenticação injetado para gerenciar operações relacionadas ao usuário
+   */
   constructor(private authService: AuthService) {}
 
+  /**
+   * Método do ciclo de vida do Angular executado após a criação do componente.
+   * Inicializa o componente carregando os dados do usuário.
+   *
+   * @returns {Promise<void>} Uma promise que resolve quando os dados do usuário são carregados
+   */
   async ngOnInit() {
     await this.loadUserData();
   }

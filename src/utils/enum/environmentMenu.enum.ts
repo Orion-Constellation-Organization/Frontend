@@ -6,10 +6,26 @@
  * @enum {string}
  */
 export enum EnvironmentMenuTitles {
+  /**
+   * Seção inicial do menu de ambiente
+   */
   BEGIN = 'Inicio',
+
+  /**
+   * Seção que contém os dados de cadastro do usuário
+   */
   REGISTRATION_DATA = 'Dados Cadastrais',
+
+  /**
+   * Seção relacionada às configurações de segurança
+   */
   SECURITY = 'Segurança',
+
+  /**
+   * Seção que lista todas as aulas disponíveis
+   */
   CLASSES = 'Aulas',
+
   /**
    * Seção de atividades agendadas
    */
@@ -24,5 +40,10 @@ export enum EnvironmentMenuTitles {
    * Seção de atividades pendentes de confirmação do aluno
    */
   PENDING_STUDENT_CONFIRMATION = 'Aguardando confirmação do Aluno',
+
+  /**
+   * Representa um estado desabilitado ou inativo do botão no menu.
+   * Utilizado quando um item do menu deve estar presente mas não visível/interativo.
+   */
   DISABLED = '',
 }
