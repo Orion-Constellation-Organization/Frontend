@@ -7,6 +7,8 @@
  */
 export enum EnvironmentMenuTitles {
   BEGIN = 'Inicio',
+  REGISTRATION_DATA = 'Dados Cadastrais',
+  SECURITY = 'Segurança',
   CLASSES = 'Aulas',
   /**
    * Seção de atividades agendadas

@@ -34,7 +34,8 @@ export class MainMenuComponent {
    */
   @Input() navMenuBtnTitleThree: string = '';
   @Input() navMenuBtnTitleDisabled: string = '';
-  @Input() hideButtons: boolean = false;
+  @Input() hideButtonsProfile: boolean = false;
+  @Input() navMenuBtnTitleRegistrationData: string = '';
   // @Input() navMenuBtnTitleFour: string = '';
   // @Input() navMenuBtnTitleFive: string = '';
   // @Input() navMenuBtnTitleSix: string = '';

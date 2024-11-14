@@ -19,6 +19,8 @@ import { UserType } from 'src/utils/enum/userType.enum';
 export class MainComponent implements OnInit {
   beginTitle = EnvironmentMenuTitles.BEGIN;
   classesTitle = EnvironmentMenuTitles.CLASSES;
+  registrationDataTitle = EnvironmentMenuTitles.REGISTRATION_DATA;
+  securityTitle = EnvironmentMenuTitles.SECURITY;
   /**
    * Título exibido para a seção de agendamentos.
    *
