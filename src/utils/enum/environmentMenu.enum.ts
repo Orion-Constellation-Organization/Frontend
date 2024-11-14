@@ -6,6 +6,8 @@
  * @enum {string}
  */
 export enum EnvironmentMenuTitles {
+  BEGIN = 'Inicio',
+  CLASSES = 'Aulas',
   /**
    * Seção de atividades agendadas
    */
@@ -20,4 +22,5 @@ export enum EnvironmentMenuTitles {
    * Seção de atividades pendentes de confirmação do aluno
    */
   PENDING_STUDENT_CONFIRMATION = 'Aguardando confirmação do Aluno',
+  DISABLED = '',
 }

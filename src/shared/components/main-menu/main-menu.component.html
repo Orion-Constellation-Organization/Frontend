@@ -1,9 +1,9 @@
 <nav class="main-nav-container">
     <div class="main-nav-box">
-        <button class="main-nav-btn-primary">Inicio</button>
+        <button class="main-nav-btn-primary">{{navMenuBtnTitleBegin}}</button>
     </div>
     <div class="main-nav-box">
-        <button class="main-nav-btn-secondary" disabled>Aulas</button>
+        <button class="main-nav-btn-secondary" disabled>{{navMenuBtnTitleClasses}}</button>
     </div>
     <div class="main-nav-box">
         <button class="main-nav-btn-tertiary-click">{{navMenuBtnTitleOne}}</button>
@@ -15,15 +15,15 @@
         <button class="main-nav-btn-tertiary-click">{{navMenuBtnTitleThree}}</button>
     </div>
     <div class="main-nav-box">
-        <button class="main-nav-btn-secondary" disabled></button>
+        <button *ngIf="!hideButtons" class="main-nav-btn-secondary" disabled>{{navMenuBtnTitleDisabled}}</button>
     </div>
     <div class="main-nav-box">
-        <button class="main-nav-btn-tertiary" disabled></button>
+        <button *ngIf="!hideButtons" class="main-nav-btn-tertiary" disabled>{{navMenuBtnTitleDisabled}}</button>
     </div>
     <div class="main-nav-box">
-        <button class="main-nav-btn-tertiary" disabled></button>
+        <button *ngIf="!hideButtons" class="main-nav-btn-tertiary" disabled>{{navMenuBtnTitleDisabled}}</button>
     </div>
     <div class="main-nav-box">
-        <button class="main-nav-btn-tertiary last" disabled></button>
+        <button *ngIf="!hideButtons" class="main-nav-btn-tertiary last" disabled>{{navMenuBtnTitleDisabled}}</button>
     </div>
 </nav>

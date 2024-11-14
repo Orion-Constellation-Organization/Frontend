@@ -11,6 +11,8 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./main-menu.component.scss'],
 })
 export class MainMenuComponent {
+  @Input() navMenuBtnTitleBegin: string = '';
+  @Input() navMenuBtnTitleClasses: string = '';
   /**
    * Título do primeiro botão do menu de navegação.
    *
@@ -31,4 +33,10 @@ export class MainMenuComponent {
    * @type {string}
    */
   @Input() navMenuBtnTitleThree: string = '';
+  @Input() navMenuBtnTitleDisabled: string = '';
+  @Input() hideButtons: boolean = false;
+  // @Input() navMenuBtnTitleFour: string = '';
+  // @Input() navMenuBtnTitleFive: string = '';
+  // @Input() navMenuBtnTitleSix: string = '';
+  // @Input() navMenuBtnTitleSeven: string = '';
 }

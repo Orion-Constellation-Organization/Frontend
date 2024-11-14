@@ -85,6 +85,8 @@
 .header-user-menu {
   display: flex;
   flex-direction: column;
+  position: absolute;
+  left: 82%;
 
   @media (max-width: 768px) {
   }

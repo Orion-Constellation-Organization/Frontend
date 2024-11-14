@@ -17,6 +17,8 @@ import { UserType } from 'src/utils/enum/userType.enum';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
+  beginTitle = EnvironmentMenuTitles.BEGIN;
+  classesTitle = EnvironmentMenuTitles.CLASSES;
   /**
    * Título exibido para a seção de agendamentos.
    *
@@ -41,6 +43,8 @@ export class MainComponent implements OnInit {
    */
   pendingStudentConfirmationTitle =
     EnvironmentMenuTitles.PENDING_STUDENT_CONFIRMATION;
+
+  disabledTitle = EnvironmentMenuTitles.DISABLED;
 
   /**
    * Nome do tutor atualmente em uso.
@@ -152,6 +156,7 @@ export class MainComponent implements OnInit {
    */
   toggleProfile() {
     this.showProfile = !this.showProfile;
+    this.toggleMenu();
   }
 
   /**
