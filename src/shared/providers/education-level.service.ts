@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { IEducationLevel } from '../interfaces/education-level.interface';
-import { environment } from 'src/environments/environment.development';
 import { BaseService } from '../providers/base.service';
 
 /**

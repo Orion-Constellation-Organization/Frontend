@@ -26,4 +26,14 @@ export class StudentService extends BaseService {
   async createStudent(payload: ICreateStudent): Promise<IStudentResponse> {
     return this.call('POST', 'register/student', payload);
   }
+
+  /**
+   * Busca um estudante pelo seu ID.
+   *
+   * @param id - ID do estudante a ser buscado
+   * @returns Promessa com os dados do estudante encontrado
+   */
+  async getStudentById(id: number): Promise<any> {
+    return this.call('GET', `get/student/${id}`);
+  }
 }

@@ -166,12 +166,12 @@ export class MainComponent implements OnInit {
   private async loadUserData(): Promise<void> {
     try {
       const userData = await this.authService.getCurrentUser();
-      console.log('userData recebido:', userData);
-
+      // se o usuário possui username e role, preencho os campos com os dados do usuário
       if (userData && userData.username && userData.role) {
         this.userName = userData.username;
         this.userType = userData.role;
       } else {
+        // se o usuário não possui username e role, preencho os campos com valores padrão
         console.warn('Dados do usuário incompletos ou inválidos');
         console.log('username:', userData?.username);
         console.log('role:', userData?.role);
@@ -179,6 +179,7 @@ export class MainComponent implements OnInit {
         this.userType = 'Não definido';
       }
     } catch (error) {
+      // se ocorrer um erro, preencho os campos com valores padrão
       console.error('Erro ao carregar dados do usuário:', error);
       this.userName = 'Usuário';
       this.userType = 'Não definido';
