@@ -1,6 +1,6 @@
 <nav class="main-nav-container">
     <div class="main-nav-box">
-        <button class="main-nav-btn-primary">{{navMenuBtnTitleBegin}}</button>
+        <button class="main-nav-btn-primary" routerLink="/main" (click)="onBeginClick()">{{navMenuBtnTitleBegin}}</button>
     </div>
     <div class="main-nav-box">
         <button class="main-nav-btn-secondary" [ngClass]="{'main-nav-btn-secondary-profile': hideButtonsProfile}">{{navMenuBtnTitleClasses}}</button>

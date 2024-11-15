@@ -235,4 +235,15 @@ export class MainComponent implements OnInit {
   toggleClassRequestModal() {
     this.showClassRequestModal = !this.showClassRequestModal;
   }
+
+  /**
+   * Fecha os menus abertos quando o botão de início é clicado
+   *
+   * @memberof MainComponent
+   * @returns {void}
+   */
+  closeMenus() {
+    this.menuOpen = false;
+    this.showProfile = false;
+  }
 }
