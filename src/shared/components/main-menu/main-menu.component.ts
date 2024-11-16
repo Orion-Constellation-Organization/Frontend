@@ -31,4 +31,24 @@ export class MainMenuComponent {
    * @type {string}
    */
   @Input() navMenuBtnTitleThree: string = '';
+
+  isMenuOpen = false;
+  isMobile = false;
+
+  constructor() {
+    this.checkScreenSize();
+    window.addEventListener('resize', () => this.checkScreenSize());
+  }
+
+  checkScreenSize() {
+    this.isMobile = window.innerWidth <= 768;
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu() {
+    this.isMenuOpen = false;
+  }
 }
