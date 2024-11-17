@@ -1,0 +1,71 @@
+@import "../../../app/styles/theme.scss";
+
+.class-card-manager-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 796px;
+  background-color: $color-customization-angular-material;
+  border-radius: 80px;
+  padding: 45px;
+  border: 1px solid $color-alert-error;
+}
+
+.class-card-manager-info {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  border: 1px solid $color-alert-error;
+}
+
+.class-card-manager-student-info {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 150%;
+  margin: auto;
+  text-align: left;
+}
+
+.class-card-manager-student-reason {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 150%;
+  margin: auto;
+  text-align: left;
+}
+
+.class-card-manager-tutor-description {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 150%;
+}
+
+.class-card-manager-actions-item-title {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 150%;
+  margin: auto;
+  text-align: left;
+}
+
+.class-card-manager-actions-item-schedule {
+  display: flex;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 150%;
+  margin: auto;
+}
+
+.class-card-manager-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  border: 1px solid $color-alert-error;
+}
+
+.class-card-manager-actions-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid $color-alert-error;
+}
