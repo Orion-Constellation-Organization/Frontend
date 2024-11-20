@@ -199,69 +199,28 @@ export class ClassRequestFormComponent implements OnInit {
       // Processar horários
       if (Array.isArray(this.requestData.availableSchedules)) {
         this.requestData.availableSchedules.forEach((schedule: string) => {
-          try {
-            if (!schedule) {
-              console.warn('Horário inválido encontrado');
-              return;
-            }
-
-            console.log('Processando horário:', schedule);
-
-            // Verificar se o formato está correto
-            if (!schedule.includes(' às ')) {
-              console.warn('Formato de horário inválido:', schedule);
-              return;
-            }
-
-            const [datePart, timePart] = schedule
-              .split(' às ')
-              .map((part) => part?.trim())
-              .filter(Boolean);
-
-            if (!datePart || !timePart) {
-              console.warn('Partes de data/hora inválidas:', {
-                datePart,
-                timePart,
-              });
-              return;
-            }
-
-            const [day, month, year] = datePart.split('/').map(Number);
-
-            if (!day || !month || !year) {
-              console.warn('Componentes de data inválidos:', {
-                day,
-                month,
-                year,
-              });
-              return;
-            }
-
-            const date = new Date(year, month - 1, day);
-
-            if (isNaN(date.getTime())) {
-              console.warn('Data inválida criada:', date);
-              return;
-            }
-
-            schedulesArray.push(
-              this.fb.group({
-                date: [date],
-                time: [timePart],
-              })
+          if (!schedule || !schedule.includes(' às ')) {
+            console.warn(
+              'Horário inválido encontrado ou formato incorreto:',
+              schedule
             );
-
-            console.log('Horário processado com sucesso:', {
-              date,
-              time: timePart,
-            });
-          } catch (error) {
-            console.error(
-              'Erro ao processar horário individual:',
-              schedule,
-              error
-            );
+            return;
           }
+
+          const [datePart, timePart] = schedule
+            .split(' às ')
+            .map((part) => part?.trim());
+          const [day, month, year] = datePart.split('/').map(Number);
+          const date = new Date(year, month - 1, day);
+
+          if (isNaN(date.getTime()) || !day || !month || !year) {
+            console.warn('Data inválida encontrada:', datePart);
+            return;
+          }
+
+          schedulesArray.push(
+            this.fb.group({ date: [date], time: [timePart] })
+          );
         });
       }
 
@@ -365,26 +324,14 @@ export class ClassRequestFormComponent implements OnInit {
    */
   private prepareRequestData(): IClassRequest {
     const formValue = this.classRequestForm.value;
-    console.log('Valores do formulário:', formValue);
 
-    // Formatar as datas preferidas no formato correto
     const preferredDates = formValue.schedules.map((schedule: any) => {
       const date = new Date(schedule.date);
-      // Formatando a data para dd/MM/yyyy
-      const formattedDate = `${String(date.getDate()).padStart(
-        2,
-        '0'
-      )}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
-
-      // Combinando com o horário no formato esperado
-      return `${formattedDate} às ${schedule.time}`;
+      return this.formatSchedule(date, schedule.time);
     });
-
-    console.log('Datas formatadas:', preferredDates);
 
     // Obter o token decodificado
     const decodedToken = this.authService.getDecodedToken();
-    console.log('Token decodificado:', decodedToken);
 
     if (!decodedToken) {
       throw new Error('Token não encontrado');
@@ -399,7 +346,6 @@ export class ClassRequestFormComponent implements OnInit {
       studentId: decodedToken.id,
     };
 
-    console.log('Dados preparados:', requestData);
     return requestData;
   }
 
@@ -407,20 +353,6 @@ export class ClassRequestFormComponent implements OnInit {
    * Manipula mudanças nos campos de data/hora
    */
   onScheduleChange() {
-    // console.log('onScheduleChange called');
-    // console.log('hasScheduleError before:', this.hasScheduleError);
-
-    // if (this.hasScheduleError) {
-    //   Promise.resolve().then(() => {
-    //     this.hasScheduleError = false;
-    //     this.errorMessage = '';
-    //     this.conflictingSchedule = '';
-
-    //     console.log('hasScheduleError after:', this.hasScheduleError);
-    //   });
-    // }
-
-    // Remover a lógica anterior e usar apenas para limpar mensagens de erro
     this.errorMessage = '';
     this.conflictingSchedule = '';
     this.validateForm();
@@ -520,7 +452,7 @@ export class ClassRequestFormComponent implements OnInit {
   }
 
   // Adicionar um método para verificar se uma razão está selecionada
-  isReasonSelected(reason: Reason): boolean {
+  public isReasonSelected(reason: Reason): boolean {
     const reasonsArray = this.classRequestForm.get('reasons') as FormArray;
     return reasonsArray.controls.some((control) => control.value === reason);
   }
@@ -537,14 +469,5 @@ export class ClassRequestFormComponent implements OnInit {
     this.hasScheduleError =
       hasInvalidSchedules || hasEmptyReasons || hasNoSubject;
     this.cdr.detectChanges();
-  }
-
-  // Adicionar método para limpar o componente
-  public reset(): void {
-    this.subjects = [];
-    this.errorMessage = '';
-    this.conflictingSchedule = '';
-    this.hasScheduleError = false;
-    this.classRequestForm.reset();
   }
 }

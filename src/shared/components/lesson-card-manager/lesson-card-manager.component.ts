@@ -4,7 +4,6 @@ import { UserType } from 'src/utils/enum/userType.enum';
 import { StudentService } from 'src/shared/providers/student.service';
 import { Reason, ReasonLabel } from 'src/utils/enum/reason.enum';
 import { EnvironmentButton } from 'src/utils/enum/environmentButton.enum';
-import { ClassRequestFormComponent } from '../class-request-form/class-request-form.component';
 
 @Component({
   selector: 'app-lesson-card-manager',
@@ -32,43 +31,41 @@ export class LessonCardManagerComponent implements OnInit {
 
   // Retorna até três horários ou todos, se houver menos de três
   getAvailableSchedules(preferredDates: string[]): string[] {
-    // Garantir que todas as datas estejam no formato correto antes de retornar
-    const validDates = preferredDates.filter(
-      (date) => date && date.includes(' às ')
-    );
-    return validDates.length > 3 ? validDates.slice(0, 3) : validDates;
+    return preferredDates.length > 3
+      ? preferredDates.slice(0, 3)
+      : preferredDates;
   }
 
   private async loadUserData(): Promise<void> {
     try {
       // obter os dados do usuário logado
       const userData = await this.authService.getCurrentUser();
-      console.log('Dados do usuário logado carregados com sucesso', userData);
+      // console.log('Dados do usuário logado carregados com sucesso', userData);
 
       // obter o nome do usuário logado
       this.userName = userData?.username || 'Usuário';
-      console.log(
-        'Nome do usuário logado carregado com sucesso:',
-        this.userName
-      );
+      // console.log(
+      //   'Nome do usuário logado carregado com sucesso:',
+      //   this.userName
+      // );
 
       // depois, obtenho os dados completos do usuário
       if (userData?.role === UserType.STUDENT) {
         const studentData = await this.studentService.getStudentById(
           userData.id
         );
-        console.log(
-          'Dados completos do estudante carregados com sucesso',
-          studentData
-        );
+        // console.log(
+        //   'Dados completos do estudante carregados com sucesso',
+        //   studentData
+        // );
 
         // se o usuário é um estudante, obtenho o nível de educação individual
         if (studentData?.educationLevel?.levelType) {
           this.educationLevel = studentData.educationLevel.levelType;
-          console.log(
-            'Nível de ensino do usuário carregado com sucesso:',
-            this.educationLevel
-          );
+          // console.log(
+          //   'Nível de ensino do usuário carregado com sucesso:',
+          //   this.educationLevel
+          // );
         } else {
           this.educationLevel = 'Não definido';
         }
