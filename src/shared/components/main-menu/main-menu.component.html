@@ -1,4 +1,10 @@
-<nav class="main-nav-container">
+<div class="hamburger-icon" (click)="toggleMenu()" *ngIf="isMobile">
+    <mat-icon>menu</mat-icon>
+</div>
+
+<div class="menu-overlay" [class.active]="isMenuOpen" (click)="closeMenu()"></div>
+
+<nav class="main-nav-container" [class.open]="isMenuOpen">
     <div class="main-nav-box">
         <button class="main-nav-btn-primary">Inicio</button>
     </div>
@@ -16,12 +22,6 @@
     </div>
     <div class="main-nav-box">
         <button class="main-nav-btn-secondary" disabled></button>
-    </div>
-    <div class="main-nav-box">
-        <button class="main-nav-btn-tertiary" disabled></button>
-    </div>
-    <div class="main-nav-box">
-        <button class="main-nav-btn-tertiary" disabled></button>
     </div>
     <div class="main-nav-box">
         <button class="main-nav-btn-tertiary last" disabled></button>

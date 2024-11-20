@@ -5,6 +5,39 @@
   @extend .modal;
   max-width: 1024px !important;
   padding: 56px 69px !important;
+
+  @media (max-width: 1366px) {
+    max-width: 800px !important;
+    padding: 30px 30px !important;
+  }
+
+  @media (max-width: 1200px) {
+    max-width: 700px !important;
+  }
+
+  @media (max-width: 1024px) {
+    max-width: 600px !important;
+  }
+
+  @media (max-width: 768px) {
+    min-width: 500px !important;
+    max-width: 600px !important;
+  }
+
+  @media (max-width: 425px) {
+    min-width: 400px !important;
+    max-width: 430px !important;
+  }
+
+  @media (max-width: 375px) {
+    min-width: 350px !important;
+    max-width: 350px !important;
+  }
+
+  @media (max-width: 320px) {
+    min-width: 300px !important;
+    max-width: 320px !important;
+  }
 }
 
 .container-header-register {
@@ -15,6 +48,11 @@
     font-weight: 700;
     line-height: 150%;
     padding-bottom: 28.64px;
+
+    @media (max-width: 1366px) {
+      font-size: 24px !important;
+      padding-bottom: 20px !important;
+    }
   }
 }
 
@@ -30,6 +68,11 @@
       line-height: 150%;
       padding: 10px 22px;
       border-radius: 23px;
+
+      @media (max-width: 1366px) {
+        font-size: 18px !important;
+        padding: 10px 18px !important;
+      }
     }
 
     .checkbox-group {
@@ -37,6 +80,11 @@
       flex-direction: column;
       gap: 14px;
       margin-left: 26px;
+
+      @media (max-width: 1366px) {
+        gap: 8px !important;
+        margin-left: 18px !important;
+      }
 
       .checkbox-item {
         ::ng-deep {
@@ -46,6 +94,10 @@
               font-weight: 500;
               line-height: 150%;
               color: $color-primary-dark;
+
+              @media (max-width: 1366px) {
+                font-size: 18px !important;
+              }
             }
           }
           .mdc-checkbox {
@@ -109,20 +161,70 @@
       align-items: flex-start;
       margin-left: 26px;
 
+      @media (max-width: 1366px) {
+        margin-left: 18px !important;
+      }
+
+      @media (max-width: 768px) {
+        margin-left: -5px !important;
+      }
+
+      @media (max-width: 425px) {
+        margin-left: 0 !important;
+      }
+
       .schedule-item {
         display: flex;
         justify-content: center;
         margin: 0;
       }
 
+      .schedule-full-container {
+        display: flex;
+
+        @media (max-width: 425px) {
+          flex-direction: column;
+        }
+      }
+
+      .schedule-full-container-date {
+        display: flex;
+      }
+
+      .schedule-full-container-time {
+        display: flex;
+      }
+
+      ::ng-deep .custom-class-request-form {
+        .mat-mdc-text-field-wrapper {
+          height: 40px !important;
+        }
+
+        .mdc-text-field--outlined .mat-mdc-form-field-infix {
+          padding-top: 8px !important;
+          padding-bottom: 8px !important;
+          min-height: 40px !important;
+          display: flex !important;
+          align-items: center !important;
+        }
+      }
+
       .schedule-item-separator-container {
         padding: 10px;
+
+        @media (max-width: 425px) {
+          padding: 15px !important;
+        }
 
         .schedule-item-separator {
           font-size: 24px;
           font-weight: 500;
           line-height: 150%;
           color: $color-primary-dark;
+
+          @media (max-width: 1366px) {
+            font-size: 18px !important;
+          }
         }
       }
 
@@ -135,6 +237,11 @@
           .mat-datepicker-toggle-default-icon {
             width: 32px !important;
             height: 32px !important;
+
+            @media (max-width: 1366px) {
+              width: 24px !important;
+              height: 24px !important;
+            }
           }
         }
 
@@ -144,6 +251,10 @@
           padding-left: 10px;
           gap: 10px;
 
+          @media (max-width: 1366px) {
+            gap: 8px !important;
+          }
+
           .add-schedule-btn.mat-mdc-button {
             min-width: 32px !important;
             width: 32px !important;
@@ -151,6 +262,12 @@
             background-color: $color-neutral-black !important;
             border-radius: 50% !important;
             position: relative !important;
+
+            @media (max-width: 1366px) {
+              min-width: 24px !important;
+              width: 24px !important;
+              height: 24px !important;
+            }
 
             .mat-icon {
               position: absolute !important;
@@ -162,6 +279,13 @@
               font-size: 24px !important;
               line-height: 24px !important;
               color: $color-neutral-white !important;
+
+              @media (max-width: 1366px) {
+                font-size: 20px !important;
+                width: 20px !important;
+                height: 20px !important;
+                line-height: 20px !important;
+              }
             }
           }
 
@@ -174,6 +298,11 @@
               .add-schedule-icon {
                 width: 32px !important;
                 height: 32px !important;
+
+                @media (max-width: 1366px) {
+                  width: 24px !important;
+                  height: 24px !important;
+                }
               }
             }
           }
@@ -184,6 +313,10 @@
             line-height: 150%;
             color: $color-primary-dark;
             margin: auto;
+
+            @media (max-width: 1366px) {
+              font-size: 18px !important;
+            }
           }
         }
       }
@@ -195,6 +328,15 @@
       max-width: 657px;
       margin: 29px auto 50px;
 
+      @media (max-width: 1366px) {
+        max-width: 500px !important;
+        margin: 20px auto 40px !important;
+      }
+
+      @media (max-width: 425px) {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+
       button {
         width: 100%;
         height: 75px;
@@ -202,6 +344,11 @@
         font-weight: 500;
         line-height: 150%;
         color: $color-neutral-black;
+
+        @media (max-width: 1366px) {
+          font-size: 14px !important;
+          height: 60px !important;
+        }
 
         &.selected {
           background-color: $color-primary-light;
@@ -216,6 +363,11 @@
       line-height: 150%;
       color: $color-text-dark;
       margin: 0 0 20px 0;
+
+      @media (max-width: 1366px) {
+        font-size: 18px !important;
+        margin: 0 0 16px 0 !important;
+      }
     }
 
     .form-actions {
@@ -235,6 +387,10 @@
     border-radius: 10px;
     font-size: 24px;
 
+    @media (max-width: 1366px) {
+      font-size: 18px !important;
+    }
+
     p {
       margin: 0;
 
@@ -249,17 +405,31 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
+
+      @media (max-width: 1366px) {
+        gap: 6px !important;
+      }
     }
 
     .warning-icon {
       font-size: 20px;
       height: 20px;
       width: 20px;
+
+      @media (max-width: 1366px) {
+        font-size: 18px !important;
+        height: 18px !important;
+        width: 18px !important;
+      }
     }
 
     .error-hint {
       font-size: 24px;
       margin-top: 8px;
+
+      @media (max-width: 1366px) {
+        font-size: 18px !important;
+      }
     }
   }
 }

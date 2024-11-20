@@ -38,4 +38,12 @@
   &:disabled {
     @extend .button-disabled;
   }
+
+  @media (max-width: 1366px) {
+    width: 230px;
+    height: 80px;
+    font-size: 16px;
+    padding: 0 50px;
+    border-radius: 30px;
+  }
 }

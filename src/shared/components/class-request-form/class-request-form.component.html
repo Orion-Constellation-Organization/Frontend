@@ -23,29 +23,35 @@
                     <div class="schedule-container">
                         <div *ngFor="let schedule of schedules.controls; let i=index" class="schedule-item" [formGroupName]="i">
 
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <div class="schedule-full-container">
+                                <div class="schedule-full-container-date">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <div class="schedule-item-container">
+                                        <mat-form-field appearance="outline" class="custom-class-request-form">
+                                            <input class="schedule-item-input" matInput formControlName="date" [matDatepicker]="picker" placeholder="dd/mm/aaaa" required (dateChange)="onScheduleChange()">
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="schedule-full-container-time">
+                                    <div class="schedule-item-separator-container">
+                                        <span class="schedule-item-separator">às</span>
+                                    </div>
 
-                            <div class="schedule-item-container">
-                                <mat-form-field appearance="outline">
-                                    <input class="schedule-item-input" matInput formControlName="date" [matDatepicker]="picker" placeholder="dd/mm/aaaa" required (dateChange)="onScheduleChange()">
-                                    <mat-datepicker #picker></mat-datepicker>
-                                </mat-form-field>
+                                    <div class="schedule-item-container">
+                                        <mat-form-field appearance="outline" class="custom-class-request-form">
+                                            <input class="schedule-item-input" matInput type="time" formControlName="time" placeholder="00:00" required (change)="onScheduleChange()">
+                                        </mat-form-field>
+
+                                    </div>
+                                    <button type="button" mat-icon-button (click)="removeSchedule(i)" *ngIf="schedules.length > 1" class="remove-schedule-btn">
+                                        <mat-icon class="remove-schedule-icon">remove</mat-icon>
+                                    </button>
+                                </div>
                             </div>
 
-                            <div class="schedule-item-separator-container">
-                                <span class="schedule-item-separator">às</span>
-                            </div>
-
-                            <div class="schedule-item-container">
-                                <mat-form-field appearance="outline">
-                                    <input class="schedule-item-input" matInput type="time" formControlName="time" placeholder="00:00" required (change)="onScheduleChange()">
-                                </mat-form-field>
-                            </div>
-
-                            <button type="button" mat-icon-button (click)="removeSchedule(i)" *ngIf="schedules.length > 1" class="remove-schedule-btn">
-                                <mat-icon class="remove-schedule-icon">remove</mat-icon>
-                            </button>
                         </div>
+
                         <div class="add-schedule-container">
                             <button type="button" mat-button (click)="addSchedule()" class="add-schedule-btn" *ngIf="canAddMoreSchedules">
                                 <mat-icon class="add-schedule-icon">add</mat-icon>
