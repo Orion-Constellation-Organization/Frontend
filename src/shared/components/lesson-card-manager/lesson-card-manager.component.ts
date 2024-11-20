@@ -4,6 +4,7 @@ import { UserType } from 'src/utils/enum/userType.enum';
 import { StudentService } from 'src/shared/providers/student.service';
 import { Reason, ReasonLabel } from 'src/utils/enum/reason.enum';
 import { EnvironmentButton } from 'src/utils/enum/environmentButton.enum';
+import { ClassRequestFormComponent } from '../class-request-form/class-request-form.component';
 
 @Component({
   selector: 'app-lesson-card-manager',
@@ -16,6 +17,8 @@ export class LessonCardManagerComponent implements OnInit {
   @Input() lessonRequests: any[] = [];
   editRequest = EnvironmentButton.EDIT;
   deleteRequest = EnvironmentButton.DELETE;
+  showEditForm = false;
+  selectedRequest: any = null;
 
   constructor(
     private authService: AuthService,
@@ -89,5 +92,15 @@ export class LessonCardManagerComponent implements OnInit {
     } catch (error) {
       console.error('Erro ao carregar dados do usuário', error);
     }
+  }
+
+  onEditClick(request: any): void {
+    this.selectedRequest = request;
+    this.showEditForm = true;
+  }
+
+  onCloseForm(): void {
+    this.showEditForm = false;
+    this.selectedRequest = null;
   }
 }

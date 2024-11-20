@@ -20,8 +20,10 @@
             </ng-container>
         </div>
         <div class="class-card-manager-actions-item class-card-manager-actions-container-buttons">
-            <app-button [type]="editRequest" [label]="editRequest"></app-button>
+            <app-button [type]="editRequest" [label]="editRequest" (click)="onEditClick(request)"></app-button>
             <app-button [type]="deleteRequest" [label]="deleteRequest"></app-button>
         </div>
     </div>
 </div>
+<app-class-request-form *ngIf="showEditForm" [isOpen]="showEditForm" [editMode]="true" [requestData]="selectedRequest" (closeModal)="onCloseForm()">
+</app-class-request-form>

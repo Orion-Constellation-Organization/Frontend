@@ -34,6 +34,8 @@ export class ClassRequestFormComponent implements OnInit {
   @Input() message: string = 'Seu pedido de aula foi enviado com sucesso!';
   /** EventEmitter para fechar o modal */
   @Output() closeModal = new EventEmitter<void>();
+  @Input() editMode = false;
+  @Input() requestData: any = null;
 
   /** Formulário principal de solicitação de aulas */
   classRequestForm: FormGroup;
@@ -104,9 +106,87 @@ export class ClassRequestFormComponent implements OnInit {
   async ngOnInit() {
     try {
       this.subjects = await this.subjectService.getSubjects();
+      if (this.editMode && this.requestData) {
+        console.log('Dados recebidos para edição:', this.requestData);
+        this.populateFormWithExistingData();
+      }
     } catch (error) {
       console.error('Erro ao carregar matérias:', error);
     }
+  }
+
+  private populateFormWithExistingData(): void {
+    console.log('Populando formulário com dados:', this.requestData);
+
+    //Populando o FormArray de reasons
+    // Limpar o FormArray de reasons antes de popular
+    const reasonsArray = this.classRequestForm.get('reasons') as FormArray;
+    while (reasonsArray.length) {
+      reasonsArray.removeAt(0);
+    }
+
+    // Dividir a string de razões em um array
+    const reasonLabels = this.requestData.reasonType.split(', ');
+    console.log('Labels de razões encontradas:', reasonLabels);
+
+    // Para cada label, encontrar o valor do enum correspondente e adicionar ao FormArray
+    reasonLabels.forEach((label: string) => {
+      const reasonEntry = Object.entries(ReasonLabel).find(
+        ([_, value]) => value === label
+      );
+      if (reasonEntry) {
+        const [enumValue] = reasonEntry;
+        reasonsArray.push(this.fb.control(enumValue));
+      }
+    });
+
+    //Populando o FormArray de schedules
+    // Limpar o FormArray de schedules antes de popular
+    const schedulesArray = this.schedules;
+    while (schedulesArray.length) {
+      schedulesArray.removeAt(0);
+    }
+
+    // Processar cada horário disponível
+    this.requestData.availableSchedules.forEach((schedule: string) => {
+      console.log('Processando horário:', schedule);
+      const [dateStr, timeStr] = schedule.split(' ');
+
+      // Criar um objeto Date a partir da string de data
+      const date = new Date(dateStr);
+
+      // Adicionar ao FormArray
+      schedulesArray.push(
+        this.fb.group({
+          date: [date],
+          time: [timeStr],
+        })
+      );
+    });
+
+    // Populando o campo de subjectId
+    // Atualizar os outros campos do formulário
+    const subjectId = this.subjects.find(
+      (s) => s.subjectName === this.requestData.subject
+    )?.subjectId;
+    console.log('Subject ID encontrado:', subjectId);
+
+    // Populando o campo de additionalInfo
+    this.classRequestForm.patchValue({
+      subjectId: subjectId,
+      additionalInfo: this.requestData.tutorDescription,
+    });
+
+    console.log('Estado final do formulário:', this.classRequestForm.value);
+  }
+
+  private parseSchedule(schedule: string): [Date, string] {
+    console.log('Parseando horário:', schedule);
+    // Formato esperado: "dd/MM/yyyy às HH:mm"
+    const [datePart, timePart] = schedule.split(' às ');
+    const [day, month, year] = datePart.split('/').map(Number);
+    const date = new Date(year, month - 1, day);
+    return [date, timePart];
   }
 
   /**
@@ -234,9 +314,16 @@ export class ClassRequestFormComponent implements OnInit {
     if (this.classRequestForm.valid) {
       try {
         const requestData = this.prepareRequestData();
-        const response = await this.classRequestService.createClassRequest(
-          requestData
-        );
+
+        if (this.editMode) {
+          // Passando o ID da solicitação que está sendo editada
+          await this.classRequestService.updateClassRequest(
+            this.requestData.classId, // ou onde quer que você tenha o ID
+            requestData
+          );
+        } else {
+          await this.classRequestService.createClassRequest(requestData);
+        }
 
         this.hasScheduleError = false;
         this.errorMessage = '';
@@ -299,5 +386,11 @@ export class ClassRequestFormComponent implements OnInit {
   public closeRegistrationSuccessDialog() {
     this.registrationSuccessModal.isOpen = false;
     this.closeModal.emit();
+  }
+
+  // Adicionar um método para verificar se uma razão está selecionada
+  isReasonSelected(reason: Reason): boolean {
+    const reasonsArray = this.classRequestForm.get('reasons') as FormArray;
+    return reasonsArray.controls.some((control) => control.value === reason);
   }
 }
