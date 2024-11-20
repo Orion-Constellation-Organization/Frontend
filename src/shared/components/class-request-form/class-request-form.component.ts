@@ -78,6 +78,9 @@ export class ClassRequestFormComponent implements OnInit {
    */
   hasScheduleError: boolean = false;
 
+  /** Indica se o formulário foi modificado */
+  isFormModified: boolean = false;
+
   /**
    * Construtor do componente
    * @param fb - Serviço FormBuilder para criação de formulários reativos
@@ -150,6 +153,7 @@ export class ClassRequestFormComponent implements OnInit {
     // Adicionar observador de mudanças no formulário
     this.classRequestForm.valueChanges.subscribe(() => {
       this.validateForm();
+      this.isFormModified = true;
     });
   }
 
