@@ -4,68 +4,102 @@ import { UserType } from 'src/utils/enum/userType.enum';
 import { StudentService } from 'src/shared/providers/student.service';
 import { Reason, ReasonLabel } from 'src/utils/enum/reason.enum';
 import { EnvironmentButton } from 'src/utils/enum/environmentButton.enum';
-
+/**
+ * Componente para gerenciar cards de solicitações de aula.
+ */
 @Component({
   selector: 'app-lesson-card-manager',
   templateUrl: './lesson-card-manager.component.html',
   styleUrls: ['./lesson-card-manager.component.scss'],
 })
 export class LessonCardManagerComponent implements OnInit {
+  /**
+   * Nome do usuário.
+   */
   @Input() userName: string = '';
+
+  /**
+   * Nível de educação do usuário.
+   */
   @Input() educationLevel: string = '';
+
+  /**
+   * Solicitações de aula do usuário.
+   */
   @Input() lessonRequests: any[] = [];
+
+  /**
+   * Botão para editar a solicitação.
+   */
   editRequest = EnvironmentButton.EDIT;
+
+  /**
+   * Botão para deletar a solicitação.
+   */
   deleteRequest = EnvironmentButton.DELETE;
+
+  /**
+   * Indica se o formulário de edição deve ser exibido.
+   */
   showEditForm = false;
+
+  /**
+   * Solicitação selecionada para edição.
+   */
   selectedRequest: any = null;
 
+  /**
+   * Cria uma instância do componente LessonCardManager.
+   * @param authService - Serviço de autenticação para gerenciar usuários.
+   * @param studentService - Serviço para gerenciar dados de estudantes.
+   * @param cdr - Referência ao ChangeDetectorRef para detectar mudanças no componente.
+   */
   constructor(
     private authService: AuthService,
     private studentService: StudentService,
     private cdr: ChangeDetectorRef
   ) {}
 
+  /**
+   * Método de ciclo de vida que é chamado após a inicialização do componente.
+   * Carrega os dados do usuário logado.
+   */
   ngOnInit(): void {
     this.loadUserData();
   }
 
-  // Retorna até três horários ou todos, se houver menos de três
+  /**
+   * Retorna até três horários ou todos, se houver menos de três.
+   * @param preferredDates - Datas preferidas.
+   * @returns Horários disponíveis.
+   */
   getAvailableSchedules(preferredDates: string[]): string[] {
     return preferredDates.length > 3
       ? preferredDates.slice(0, 3)
       : preferredDates;
   }
 
+  /**
+   * Carrega os dados do usuário logado.
+   * @returns Promise<void>
+   */
   private async loadUserData(): Promise<void> {
     try {
       // obter os dados do usuário logado
       const userData = await this.authService.getCurrentUser();
-      // console.log('Dados do usuário logado carregados com sucesso', userData);
 
       // obter o nome do usuário logado
       this.userName = userData?.username || 'Usuário';
-      // console.log(
-      //   'Nome do usuário logado carregado com sucesso:',
-      //   this.userName
-      // );
 
       // depois, obtenho os dados completos do usuário
       if (userData?.role === UserType.STUDENT) {
         const studentData = await this.studentService.getStudentById(
           userData.id
         );
-        // console.log(
-        //   'Dados completos do estudante carregados com sucesso',
-        //   studentData
-        // );
 
         // se o usuário é um estudante, obtenho o nível de educação individual
         if (studentData?.educationLevel?.levelType) {
           this.educationLevel = studentData.educationLevel.levelType;
-          // console.log(
-          //   'Nível de ensino do usuário carregado com sucesso:',
-          //   this.educationLevel
-          // );
         } else {
           this.educationLevel = 'Não definido';
         }
@@ -138,17 +172,17 @@ export class LessonCardManagerComponent implements OnInit {
             studentId: studentData.id,
           };
         });
-
-        console.log('Requisições processadas:', this.lessonRequests);
       }
     } catch (error) {
       console.error('Erro ao carregar dados do usuário', error);
     }
   }
 
+  /**
+   * Manipula o clique no botão de edição.
+   * @param request - Solicitação a ser editada.
+   */
   onEditClick(request: any): void {
-    console.log('Dados originais do pedido:', request);
-
     if (!request.classId) {
       console.error('Tentativa de edição sem ID da solicitação:', request);
       return;
@@ -167,6 +201,10 @@ export class LessonCardManagerComponent implements OnInit {
     }
   }
 
+  /**
+   * Abre o formulário de edição.
+   * @param request - Solicitação a ser editada.
+   */
   private openEditForm(request: any): void {
     try {
       if (!request) {
@@ -188,8 +226,6 @@ export class LessonCardManagerComponent implements OnInit {
         subjectId: request.subjectId,
       };
 
-      console.log('Dados preparados para edição:', this.selectedRequest);
-
       this.showEditForm = true;
       this.cdr.detectChanges();
     } catch (error) {
@@ -197,6 +233,10 @@ export class LessonCardManagerComponent implements OnInit {
     }
   }
 
+  /**
+   * Fecha o formulário de edição.
+   * @param result - Resultado da edição.
+   */
   onCloseForm(result?: string): void {
     this.showEditForm = false;
     this.selectedRequest = null;

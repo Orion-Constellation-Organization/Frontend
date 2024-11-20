@@ -30,13 +30,30 @@ import { LessonRequestService } from '../../providers/lesson-request.service';
   styleUrls: ['./class-request-form.component.scss'],
 })
 export class ClassRequestFormComponent implements OnInit {
-  /** Flag que controla se o modal está aberto */
+  /**
+   * Flag que controla se o modal está aberto.
+   * @type {boolean}
+   */
   @Input() isOpen = false;
-  /** Mensagem que será exibida no modal de sucesso após o envio do pedido de aula */
+  /**
+   * Mensagem que será exibida no modal de sucesso após o envio do pedido de aula.
+   * @type {string}
+   */
   @Input() message: string = 'Seu pedido de aula foi enviado com sucesso!';
-  /** EventEmitter para fechar o modal */
+  /**
+   * EventEmitter para fechar o modal.
+   * @type {EventEmitter<string>}
+   */
   @Output() closeModal = new EventEmitter<string>();
+  /**
+   * Indica se o componente está em modo de edição.
+   * @type {boolean}
+   */
   @Input() editMode = false;
+  /**
+   * Dados da solicitação a serem editados, se disponíveis.
+   * @type {any}
+   */
   @Input() requestData: any = null;
 
   /** Formulário principal de solicitação de aulas */
@@ -134,20 +151,14 @@ export class ClassRequestFormComponent implements OnInit {
           'subjectName' in subject
       );
 
-      console.log('Matérias carregadas com sucesso:', this.subjects);
-
       // Resto da lógica de inicialização
       if (this.editMode && this.requestData) {
-        console.log('Dados recebidos para edição:', this.requestData);
         await this.populateFormWithExistingData();
       }
     } catch (error) {
       console.error('Erro ao carregar matérias:', error);
       // Inicializar com array vazio para evitar erros de renderização
       this.subjects = [];
-      // Opcional: Mostrar mensagem de erro para o usuário
-      this.errorMessage =
-        'Erro ao carregar as matérias. Por favor, tente novamente.';
     }
 
     // Adicionar observador de mudanças no formulário
@@ -157,14 +168,20 @@ export class ClassRequestFormComponent implements OnInit {
     });
   }
 
-  // Tornar o método de população assíncrono
+  /**
+   * Popula o formulário com dados existentes, se disponíveis.
+   *
+   * Este método verifica se os dados da solicitação estão disponíveis e, em caso afirmativo,
+   * limpa o formulário atual e preenche os campos de razões e horários com os dados fornecidos.
+   *
+   * @throws {Error} Se os dados da solicitação não estiverem disponíveis ou se ocorrer um erro ao processar os dados.
+   *
+   * @returns {Promise<void>} Uma promessa que resolve quando a operação de preenchimento é concluída.
+   *
+   * @private
+   */
   private async populateFormWithExistingData(): Promise<void> {
     try {
-      console.log(
-        'Iniciando população do formulário com dados:',
-        this.requestData
-      );
-
       if (!this.requestData || !this.requestData.availableSchedules) {
         console.warn('Dados inválidos ou ausentes:', this.requestData);
         return;
@@ -173,7 +190,7 @@ export class ClassRequestFormComponent implements OnInit {
       // Limpar o formulário antes de popular
       this.classRequestForm.reset();
 
-      // Populando o FormArray de reasons
+      // Populando o FormArray de razões
       const reasonsArray = this.classRequestForm.get('reasons') as FormArray;
       while (reasonsArray.length) {
         reasonsArray.removeAt(0);
@@ -194,7 +211,7 @@ export class ClassRequestFormComponent implements OnInit {
         });
       }
 
-      // Populando o FormArray de schedules
+      // Populando o FormArray de horários
       const schedulesArray = this.schedules;
       while (schedulesArray.length) {
         schedulesArray.removeAt(0);
@@ -228,15 +245,13 @@ export class ClassRequestFormComponent implements OnInit {
         });
       }
 
-      // Populando outros campos
+      // Populando os campos de subjectId e additionalInfo
       if (this.requestData.subjectId) {
         this.classRequestForm.patchValue({
           subjectId: this.requestData.subjectId,
           additionalInfo: this.requestData.tutorDescription || '',
         });
       }
-
-      console.log('Estado final do formulário:', this.classRequestForm.value);
       this.cdr.detectChanges();
     } catch (error) {
       console.error('Erro ao popular formulário:', error);
@@ -373,22 +388,15 @@ export class ClassRequestFormComponent implements OnInit {
     if (this.classRequestForm.valid) {
       try {
         const requestData = this.prepareRequestData();
-        console.log('Modo de edição:', this.editMode);
-        console.log('ID da solicitação:', this.requestData?.classId);
 
         // Verifica se está em modo de edição e se tem um ID válido
         if (this.editMode && this.requestData?.classId) {
-          console.log(
-            'Atualizando pedido existente...',
-            this.requestData.classId
-          );
           await this.lessonRequestService.updateLessonRequest(
             this.requestData.classId,
             requestData
           );
           this.message = 'Seu pedido de aula foi atualizado com sucesso!';
         } else {
-          console.log('Criando novo pedido...');
           await this.classRequestService.createClassRequest(requestData);
           this.message = 'Seu pedido de aula foi enviado com sucesso!';
         }
@@ -403,25 +411,17 @@ export class ClassRequestFormComponent implements OnInit {
         console.error('Erro na submissão:', error);
         if (error.error?.errors?.[0]) {
           const firstError = error.error.errors[0];
-          console.log('Primeiro erro:', firstError);
           if (firstError.msg && firstError.value?.[0]) {
             this.hasScheduleError = true;
             this.errorMessage = 'Não é possível agendar este horário:';
             this.conflictingSchedule = firstError.value[0];
           } else {
-            this.errorMessage =
-              firstError.msg ||
-              'Ocorreu um erro ao enviar a solicitação. Tente novamente.';
             this.conflictingSchedule = '';
           }
         } else {
-          this.errorMessage =
-            'Ocorreu um erro ao enviar a solicitação. Tente novamente.';
           this.conflictingSchedule = '';
         }
       }
-    } else {
-      console.log('Formulário inválido:', this.classRequestForm.errors);
     }
   }
 
@@ -455,12 +455,29 @@ export class ClassRequestFormComponent implements OnInit {
     this.closeModal.emit('updated');
   }
 
-  // Adicionar um método para verificar se uma razão está selecionada
+  /**
+   * Verifica se uma razão específica está selecionada no formulário.
+   * @param {Reason} reason - A razão a ser verificada.
+   * @returns {boolean} Retorna true se a razão estiver selecionada, caso contrário, false.
+   */
   public isReasonSelected(reason: Reason): boolean {
     const reasonsArray = this.classRequestForm.get('reasons') as FormArray;
     return reasonsArray.controls.some((control) => control.value === reason);
   }
 
+  /**
+   * Valida o formulário de solicitação de aulas.
+   * Verifica se existem horários inválidos, se não há razões selecionadas
+   * e se um assunto foi escolhido.
+   *
+   * - `hasInvalidSchedules`: Indica se algum dos horários possui erros de validação.
+   * - `hasEmptyReasons`: Indica se não há razões selecionadas no formulário.
+   * - `hasNoSubject`: Indica se nenhum assunto foi selecionado.
+   *
+   * Atualiza a propriedade `hasScheduleError` com base nas validações realizadas.
+   *
+   * @private
+   */
   private validateForm() {
     const hasInvalidSchedules = this.schedules.controls.some((control) => {
       return control.get('date')?.errors || control.get('time')?.errors;

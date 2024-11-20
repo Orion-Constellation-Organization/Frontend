@@ -82,10 +82,29 @@ export class MainComponent implements OnInit {
    */
   buttonTitle = EnvironmentButton.PRIMARY;
 
+  /**
+   * Indica se o modal de solicitação de aula está visível ou não.
+   *
+   * @memberof MainComponent
+   * @type {boolean}
+   * @default false
+   */
   showClassRequestModal = false;
 
+  /**
+   * Cria uma instância do componente MainComponent.
+   *
+   * @param {AuthService} authService - Serviço de autenticação utilizado para gerenciar dados do usuário.
+   * @memberof MainComponent
+   */
   constructor(private authService: AuthService) {}
 
+  /**
+   * Método chamado ao inicializar o componente.
+   * Carrega os dados do usuário ao iniciar o componente.
+   *
+   * @memberof MainComponent
+   */
   async ngOnInit() {
     await this.loadUserData();
   }
@@ -101,7 +120,6 @@ export class MainComponent implements OnInit {
   private async loadUserData(): Promise<void> {
     try {
       const userData = await this.authService.getCurrentUser();
-      console.log('userData recebido:', userData);
 
       if (userData && userData.username && userData.role) {
         this.userName = userData.username;
@@ -145,6 +163,11 @@ export class MainComponent implements OnInit {
     return this.userType === UserType.TUTOR;
   }
 
+  /**
+   * Alterna a visibilidade do modal de solicitação de aula.
+   *
+   * @memberof MainComponent
+   */
   toggleClassRequestModal() {
     this.showClassRequestModal = !this.showClassRequestModal;
   }
