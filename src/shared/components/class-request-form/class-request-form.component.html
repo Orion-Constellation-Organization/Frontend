@@ -93,7 +93,7 @@
             </div>
 
             <div class="form-actions">
-                <app-button [label]="'Enviar'" [type]="EnvironmentButton.PRIMARY" [disabled]="!classRequestForm.valid || hasScheduleError">
+                <app-button [label]="editMode ? 'Atualizar' : 'Enviar'" [type]="EnvironmentButton.PRIMARY" [disabled]="classRequestForm.invalid || hasScheduleError || classRequestForm.pristine">
                 </app-button>
             </div>
         </form>

@@ -25,5 +25,7 @@
         </div>
     </div>
 </div>
-<app-class-request-form *ngIf="showEditForm" [isOpen]="showEditForm" [editMode]="true" [requestData]="selectedRequest" (closeModal)="onCloseForm()">
-</app-class-request-form>
+<ng-container *ngIf="showEditForm">
+    <app-class-request-form [isOpen]="showEditForm" [editMode]="true" [requestData]="selectedRequest" (closeModal)="onCloseForm($event)">
+    </app-class-request-form>
+</ng-container>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from 'src/shared/providers/auth.service';
 import { UserType } from 'src/utils/enum/userType.enum';
 import { StudentService } from 'src/shared/providers/student.service';
@@ -22,7 +22,8 @@ export class LessonCardManagerComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private studentService: StudentService
+    private studentService: StudentService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -31,9 +32,11 @@ export class LessonCardManagerComponent implements OnInit {
 
   // Retorna até três horários ou todos, se houver menos de três
   getAvailableSchedules(preferredDates: string[]): string[] {
-    return preferredDates.length > 3
-      ? preferredDates.slice(0, 3)
-      : preferredDates;
+    // Garantir que todas as datas estejam no formato correto antes de retornar
+    const validDates = preferredDates.filter(
+      (date) => date && date.includes(' às ')
+    );
+    return validDates.length > 3 ? validDates.slice(0, 3) : validDates;
   }
 
   private async loadUserData(): Promise<void> {
@@ -71,8 +74,59 @@ export class LessonCardManagerComponent implements OnInit {
         }
 
         // Mapear as solicitações de aula para o formato do card
-        this.lessonRequests = studentData.lessonRequests.map(
-          (request: any) => ({
+        this.lessonRequests = studentData.lessonRequests.map((request: any) => {
+          const requestId = request.ClassId;
+
+          if (!requestId) {
+            console.warn('Solicitação sem ID:', request);
+          }
+
+          // Função auxiliar para formatar a data
+          const formatSchedule = (dateString: string): string => {
+            try {
+              if (!dateString) return '';
+
+              // Verifica se já está no formato desejado
+              if (dateString.includes(' às ')) {
+                return dateString;
+              }
+
+              // Parse da data em formato ISO ou outro formato
+              const [datePart, timePart] = dateString.split(' ');
+              const date = new Date(datePart);
+
+              if (isNaN(date.getTime())) {
+                console.warn('Data inválida:', dateString);
+                return '';
+              }
+
+              // Formatar a data para dd/MM/yyyy
+              const day = date.getDate().toString().padStart(2, '0');
+              const month = (date.getMonth() + 1).toString().padStart(2, '0');
+              const year = date.getFullYear();
+
+              // Formatar a hora (assumindo que timePart está em formato HH:mm)
+              const formattedTime = timePart
+                ? timePart.substring(0, 5)
+                : '00:00';
+
+              return `${day}/${month}/${year} às ${formattedTime}`;
+            } catch (error) {
+              console.error('Erro ao formatar data:', dateString, error);
+              return '';
+            }
+          };
+
+          // Formatar todos os horários disponíveis
+          const formattedSchedules = Array.isArray(request.preferredDates)
+            ? request.preferredDates
+                .filter(Boolean)
+                .map(formatSchedule)
+                .filter(Boolean)
+            : [];
+
+          return {
+            classId: requestId,
             userName: studentData.username,
             educationLevel: studentData.educationLevel.levelType,
             subject:
@@ -82,12 +136,13 @@ export class LessonCardManagerComponent implements OnInit {
               .join(', '),
             tutorDescription:
               request.additionalInfo || 'Sem informações adicionais',
-            availableSchedules: this.getAvailableSchedules(
-              request.preferredDates
-            ),
-          })
-        );
-        console.log(this.lessonRequests);
+            availableSchedules: this.getAvailableSchedules(formattedSchedules),
+            subjectId: request.subject.subjectId,
+            studentId: studentData.id,
+          };
+        });
+
+        console.log('Requisições processadas:', this.lessonRequests);
       }
     } catch (error) {
       console.error('Erro ao carregar dados do usuário', error);
@@ -95,12 +150,65 @@ export class LessonCardManagerComponent implements OnInit {
   }
 
   onEditClick(request: any): void {
-    this.selectedRequest = request;
-    this.showEditForm = true;
+    console.log('Dados originais do pedido:', request);
+
+    if (!request.classId) {
+      console.error('Tentativa de edição sem ID da solicitação:', request);
+      return;
+    }
+
+    // Fechar qualquer modal aberto anteriormente
+    if (this.showEditForm) {
+      this.showEditForm = false;
+      this.selectedRequest = null;
+      // Dar tempo para o componente ser destruído adequadamente
+      setTimeout(() => {
+        this.openEditForm(request);
+      }, 100);
+    } else {
+      this.openEditForm(request);
+    }
   }
 
-  onCloseForm(): void {
+  private openEditForm(request: any): void {
+    try {
+      if (!request) {
+        console.error('Request inválido:', request);
+        return;
+      }
+
+      // Garantir que todos os campos necessários existam
+      this.selectedRequest = {
+        classId: request.classId,
+        userName: request.userName || 'Usuário não identificado',
+        educationLevel: request.educationLevel || 'Nível não definido',
+        subject: request.subject || 'Sem matéria definida',
+        reasonType: request.reasonType || '',
+        tutorDescription: request.tutorDescription || '',
+        availableSchedules: Array.isArray(request.availableSchedules)
+          ? request.availableSchedules.filter(Boolean)
+          : [],
+        subjectId: request.subjectId,
+      };
+
+      console.log('Dados preparados para edição:', this.selectedRequest);
+
+      this.showEditForm = true;
+      this.cdr.detectChanges();
+    } catch (error) {
+      console.error('Erro ao preparar dados para edição:', error);
+    }
+  }
+
+  onCloseForm(result?: string): void {
     this.showEditForm = false;
     this.selectedRequest = null;
+    this.cdr.detectChanges();
+
+    if (result === 'updated') {
+      setTimeout(() => {
+        this.loadUserData();
+      }, 100);
+    }
   }
 }

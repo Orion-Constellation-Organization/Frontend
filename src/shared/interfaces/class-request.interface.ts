@@ -13,8 +13,11 @@ export interface IClassRequest {
   subjectId: number;
 
   /** Informações adicionais sobre a solicitação */
-  additionalInfo: string;
+  additionalInfo?: string;
 
   /** ID do estudante que está fazendo a solicitação */
   studentId: number;
+
+  /** ID da solicitação */
+  classId?: number;
 }

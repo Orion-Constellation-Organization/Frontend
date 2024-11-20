@@ -44,6 +44,7 @@ export class LessonRequestService extends BaseService {
    * @returns Promise com a resposta da atualização
    */
   async updateLessonRequest(id: number, request: IClassRequest): Promise<any> {
-    return this.call('PUT', `update/lessonrequest/${id}`, request);
+    console.log('Atualizando solicitação:', { id, request });
+    return this.call('PATCH', `update/lessonrequest/${id}`, request);
   }
 }
