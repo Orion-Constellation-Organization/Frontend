@@ -6,4 +6,8 @@ import { IBaseUserResponse } from './base-user-response.interface';
 export interface ITutorResponse extends IBaseUserResponse {
   /** CPF do tutor */
   cpf: string;
+  educationLevels: {
+    educationId: number;
+    levelType: string;
+  }[];
 }

@@ -1,20 +1,23 @@
-<div class="class-card-manager-container">
+<div *ngFor="let request of lessonRequests" class="class-card-manager-container">
     <div class="class-card-manager-info">
         <div class="class-card-manager-student-info">
-            <p>Nome do aluno</p>
-            <p>Ensino Fundamental</p>
-            <p>Disciplina escolhida</p>
+            <p>{{ request.userName || 'Usuário não identificado' }}</p>
+            <p>{{ request.educationLevel || 'Nível de ensino não definido' }}</p>
+            <p>{{ request.subject || 'Sem matéria definida' }}</p>
         </div>
         <div class="class-card-manager-student-reason">
-            <p>Motivo da solicitação</p>
+            <p>{{ request.reasonType || 'Sem motivo especificado' }}</p>
         </div>
     </div>
-    <p class="class-card-manager-tutor-description">Texto descritivo para o tutor</p>
+    <p class="class-card-manager-tutor-description">
+        {{ request.tutorDescription || 'Sem informações adicionais' }}
+    </p>
     <div class="class-card-manager-actions">
         <div class="class-card-manager-actions-item">
             <p class="class-card-manager-actions-item-title">Horários Disponíveis</p>
-            <p class="class-card-manager-actions-item-schedule">Dia dd/mm/aaaa às hh:mm horas</p>
-            <p class="class-card-manager-actions-item-schedule">Dia dd/mm/aaaa às hh:mm horas</p>
+            <ng-container *ngFor="let schedule of request.availableSchedules">
+                <p class="class-card-manager-actions-item-schedule">{{ schedule }}</p>
+            </ng-container>
         </div>
         <div class="class-card-manager-actions-item">
             <button>Editar</button>
