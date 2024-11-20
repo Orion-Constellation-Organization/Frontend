@@ -37,6 +37,7 @@ export class ButtonComponent {
       'button-cancel': this.type === EnvironmentButton.CANCEL,
       'button-delete': this.type === EnvironmentButton.DELETE,
       'button-save': this.type === EnvironmentButton.SAVE,
+      'button-edit': this.type === EnvironmentButton.EDIT,
       'button-close': this.type === EnvironmentButton.CLOSE,
       'button-submit': this.type === EnvironmentButton.SUBMIT,
       'button-ghost': this.type === EnvironmentButton.GHOST,

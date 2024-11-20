@@ -13,15 +13,15 @@
         {{ request.tutorDescription || 'Sem informações adicionais' }}
     </p>
     <div class="class-card-manager-actions">
-        <div class="class-card-manager-actions-item">
+        <div class="class-card-manager-actions-item class-card-manager-actions-container-title">
             <p class="class-card-manager-actions-item-title">Horários Disponíveis</p>
             <ng-container *ngFor="let schedule of request.availableSchedules">
                 <p class="class-card-manager-actions-item-schedule">{{ schedule }}</p>
             </ng-container>
         </div>
-        <div class="class-card-manager-actions-item">
-            <button>Editar</button>
-            <button>Excluir</button>
+        <div class="class-card-manager-actions-item class-card-manager-actions-container-buttons">
+            <app-button [type]="editRequest" [label]="editRequest"></app-button>
+            <app-button [type]="deleteRequest" [label]="deleteRequest"></app-button>
         </div>
     </div>
 </div>

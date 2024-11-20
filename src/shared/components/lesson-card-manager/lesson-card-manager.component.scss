@@ -19,6 +19,7 @@
 }
 
 .class-card-manager-student-info {
+  width: 50%;
   font-size: 24px;
   font-weight: 700;
   line-height: 150%;
@@ -27,6 +28,7 @@
 }
 
 .class-card-manager-student-reason {
+  width: 50%;
   font-size: 24px;
   font-weight: 500;
   line-height: 150%;
@@ -41,11 +43,18 @@
 }
 
 .class-card-manager-actions-item-title {
+  width: 60%;
   font-size: 24px;
   font-weight: 500;
   line-height: 150%;
-  margin: auto;
-  text-align: left;
+}
+
+.class-card-manager-actions-container-title {
+  width: 60%;
+}
+
+.class-card-manager-actions-container-buttons {
+  width: 40%;
 }
 
 .class-card-manager-actions-item-schedule {
@@ -53,7 +62,6 @@
   font-size: 24px;
   font-weight: 500;
   line-height: 150%;
-  margin: auto;
 }
 
 .class-card-manager-actions {
@@ -66,6 +74,7 @@
 .class-card-manager-actions-item {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 10px;
   border: 1px solid $color-alert-error;
 }

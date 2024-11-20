@@ -1,11 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from 'src/shared/providers/auth.service';
-import { EducationLevelService } from 'src/shared/providers/education-level.service';
 import { UserType } from 'src/utils/enum/userType.enum';
 import { StudentService } from 'src/shared/providers/student.service';
-import { TutorService } from 'src/shared/providers/tutor.service';
-import { SubjectService } from 'src/shared/providers/subject.service';
-import { IStudentResponse } from 'src/shared/interfaces/student-response.interface';
+import { Reason, ReasonLabel } from 'src/utils/enum/reason.enum';
+import { EnvironmentButton } from 'src/utils/enum/environmentButton.enum';
 
 @Component({
   selector: 'app-lesson-card-manager',
@@ -13,16 +11,15 @@ import { IStudentResponse } from 'src/shared/interfaces/student-response.interfa
   styleUrls: ['./lesson-card-manager.component.scss'],
 })
 export class LessonCardManagerComponent implements OnInit {
-  @Input() userName: string = ''; // Nome do usuário, essa informação eu busco pelo id do usuário logado
-  @Input() educationLevel: string = ''; // Nível de ensino, essa informação eu busco pelo id do usuário logado
+  @Input() userName: string = '';
+  @Input() educationLevel: string = '';
   @Input() lessonRequests: any[] = [];
+  editRequest = EnvironmentButton.EDIT;
+  deleteRequest = EnvironmentButton.DELETE;
 
   constructor(
     private authService: AuthService,
-    private educationLevelService: EducationLevelService,
-    private studentService: StudentService,
-    private tutorService: TutorService,
-    private subjectService: SubjectService
+    private studentService: StudentService
   ) {}
 
   ngOnInit(): void {
@@ -48,14 +45,6 @@ export class LessonCardManagerComponent implements OnInit {
         'Nome do usuário logado carregado com sucesso:',
         this.userName
       );
-
-      // obter os níveis de ensino disponíveis
-      // const educationLevels =
-      //   await this.educationLevelService.getEducationLevels();
-      // console.log(
-      //   'Todos os níveis de ensino carregados com sucesso',
-      //   educationLevels
-      // );
 
       // depois, obtenho os dados completos do usuário
       if (userData?.role === UserType.STUDENT) {
@@ -83,8 +72,11 @@ export class LessonCardManagerComponent implements OnInit {
           (request: any) => ({
             userName: studentData.username,
             educationLevel: studentData.educationLevel.levelType,
-            subject: request.subject || 'Matemática', // Substitua conforme necessário
-            reasonType: request.reason.join(', '), // Concatena os motivos
+            subject:
+              request.subject.subjectName || 'Erro ao obter a disciplina',
+            reasonType: request.reason
+              .map((r: string) => ReasonLabel[r as Reason] || r)
+              .join(', '),
             tutorDescription:
               request.additionalInfo || 'Sem informações adicionais',
             availableSchedules: this.getAvailableSchedules(
@@ -94,24 +86,6 @@ export class LessonCardManagerComponent implements OnInit {
         );
         console.log(this.lessonRequests);
       }
-
-      // se o usuário é um tutor, obtenho os níveis de educação múltiplos
-      // else if (userData?.role === UserType.TUTOR) {
-      //   const tutorData = await this.tutorService.getTutorById(userData.id);
-      //   console.log('Dados do tutor carregados com sucesso', tutorData);
-
-      //   if (tutorData?.educationLevels?.length) {
-      //     // Usando diretamente os níveis de educação retornados pela API
-      //     const userLevels = tutorData.educationLevels.map(
-      //       (level: { levelType: any }) => level.levelType
-      //     );
-      //     this.educationLevel = userLevels.join(', ') || 'Não definido';
-      //     console.log(
-      //       'Nível de ensino do usuário carregado com sucesso:',
-      //       this.educationLevel
-      //     );
-      //   }
-      // }
     } catch (error) {
       console.error('Erro ao carregar dados do usuário', error);
     }
