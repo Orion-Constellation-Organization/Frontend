@@ -53,5 +53,13 @@
         line-height: 150%;
       }
     }
+
+    .profile-content-error {
+      margin: 0 auto 0 125px;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 150%;
+      color: $color-alert-error;
+    }
   }
 }

@@ -26,6 +26,9 @@ export class ProfileComponent implements OnInit {
   /** Data de nascimento do usuário */
   birthDate: string = '';
 
+  /** Mensagem de erro */
+  errorMessage: string | null = null;
+
   /**
    * Construtor do componente de perfil
    * @param {AuthService} authService - Serviço de autenticação
@@ -87,13 +90,14 @@ export class ProfileComponent implements OnInit {
    */
   private async loadUserData(): Promise<void> {
     try {
+      this.errorMessage = null; // resetando a mensagem de erro
       const userData = await this.authService.getCurrentUser();
 
       if (!userData?.id) {
         throw new Error('ID do usuário não encontrado');
       }
 
-      this.userName = userData.username || 'Usuário';
+      this.userName = userData.username || 'Usuário não encontrado';
       this.birthDate = this.formatDate(userData.birthDate);
 
       // primeiro obtenho os níveis de educação disponíveis
@@ -125,10 +129,11 @@ export class ProfileComponent implements OnInit {
           this.educationLevel = userLevels.join(', ') || 'Não definido';
         }
       }
-      // se ocorrer um erro, preencho os campos com valores padrão
+      // se ocorrer um erro, preencho os campos com valores padrão e a mensagem de erro
     } catch (error) {
       console.error('Erro ao carregar dados do usuário:', error);
-      this.userName = 'Usuário';
+      this.errorMessage = 'Erro ao carregar dados do usuário';
+      this.userName = 'Usuário não encontrado';
       this.educationLevel = 'Não definido';
       this.birthDate = 'Não informada';
     }
