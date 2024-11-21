@@ -1,14 +1,60 @@
 @import "../../../app/styles/theme.scss";
 
+.hamburger-icon {
+  display: none;
+
+  @media (max-width: 425px) {
+    display: block;
+    position: fixed;
+    top: 140px;
+    left: 30px;
+    z-index: 1001;
+    cursor: pointer;
+  }
+
+  @media (max-width: 375px) {
+    top: 130px;
+  }
+}
+
+// Overlay quando o menu estiver aberto
+.menu-overlay {
+  display: none;
+  &.active {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+}
+
 .main-nav-container {
   display: flex;
   flex-direction: column;
   width: 192px;
   margin-left: 40px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1366px) {
     width: 140px;
-    margin-left: 40px;
+    margin-left: 20px;
+  }
+
+  // Menu mobile, esconde o menu
+  @media (max-width: 425px) {
+    position: fixed;
+    left: -192px;
+    height: 100vh;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    margin-left: 0;
+
+    &.open {
+      left: 30px; // mostra o menu
+    }
   }
 }
 
@@ -16,7 +62,8 @@
   width: 192px;
   min-height: 76px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1366px) {
+    min-height: 50px;
     width: 140px;
   }
 }
@@ -35,9 +82,10 @@
     background: $color-hover-light-primary;
   }
 
-  @media (max-width: 768px) {
-    font-size: 20px;
+  @media (max-width: 1366px) {
+    min-height: 50px;
     width: 140px;
+    font-size: 16px;
   }
 }
 
@@ -53,9 +101,10 @@
     background: $color-hover-dark-primary;
   }
 
-  @media (max-width: 768px) {
-    font-size: 20px;
+  @media (max-width: 1366px) {
+    min-height: 50px;
     width: 140px;
+    font-size: 16px;
   }
 }
 
@@ -81,9 +130,10 @@
     background: $color-hover-light-gray;
   }
 
-  @media (max-width: 768px) {
-    font-size: 20px;
+  @media (max-width: 1366px) {
+    min-height: 50px;
     width: 140px;
+    font-size: 16px;
   }
 }
 
@@ -105,9 +155,10 @@
     background: $color-hover-light-gray;
   }
 
-  @media (max-width: 768px) {
-    font-size: 20px;
+  @media (max-width: 1366px) {
+    min-height: 50px;
     width: 140px;
+    font-size: 16px;
   }
 }
 
