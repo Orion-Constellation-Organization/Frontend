@@ -78,3 +78,10 @@
   gap: 10px;
   border: 1px solid $color-alert-error;
 }
+
+.class-card-manager-error-message {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 150%;
+  color: $color-alert-error;
+}

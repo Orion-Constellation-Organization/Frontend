@@ -10,13 +10,13 @@
         </div>
     </div>
     <p class="class-card-manager-tutor-description">
-        {{ request.tutorDescription || 'Sem informações adicionais' }}
+        "{{ request.tutorDescription || 'Sem informações adicionais' }}"
     </p>
     <div class="class-card-manager-actions">
         <div class="class-card-manager-actions-item class-card-manager-actions-container-title">
-            <p class="class-card-manager-actions-item-title">Horários Disponíveis</p>
+            <p class="class-card-manager-actions-item-title">Horários Disponíveis:</p>
             <ng-container *ngFor="let schedule of request.availableSchedules">
-                <p class="class-card-manager-actions-item-schedule">{{ schedule }}</p>
+                <p class="class-card-manager-actions-item-schedule">Dia {{ schedule }} horas</p>
             </ng-container>
         </div>
         <div class="class-card-manager-actions-item class-card-manager-actions-container-buttons">
@@ -24,6 +24,9 @@
             <app-button [type]="deleteRequest" [label]="deleteRequest"></app-button>
         </div>
     </div>
+</div>
+<div *ngIf="errorMessage">
+    <p class="class-card-manager-error-message">{{ errorMessage }}</p>
 </div>
 <ng-container *ngIf="showEditForm">
     <app-class-request-form [isOpen]="showEditForm" [editMode]="true" [requestData]="selectedRequest" (closeModal)="onCloseForm($event)">

@@ -49,6 +49,11 @@ export class LessonCardManagerComponent implements OnInit {
   selectedRequest: any = null;
 
   /**
+   * Mensagem de erro.
+   */
+  errorMessage: string | null = null;
+
+  /**
    * Cria uma instância do componente LessonCardManager.
    * @param authService - Serviço de autenticação para gerenciar usuários.
    * @param studentService - Serviço para gerenciar dados de estudantes.
@@ -85,11 +90,12 @@ export class LessonCardManagerComponent implements OnInit {
    */
   private async loadUserData(): Promise<void> {
     try {
+      this.errorMessage = null;
       // obter os dados do usuário logado
       const userData = await this.authService.getCurrentUser();
 
       // obter o nome do usuário logado
-      this.userName = userData?.username || 'Usuário';
+      this.userName = userData?.username || 'Usuário não identificado';
 
       // depois, obtenho os dados completos do usuário
       if (userData?.role === UserType.STUDENT) {
@@ -115,7 +121,7 @@ export class LessonCardManagerComponent implements OnInit {
           // Função auxiliar para formatar a data
           const formatSchedule = (dateString: string): string => {
             try {
-              if (!dateString) return '';
+              if (!dateString) return 'Ocorreu um erro ao formatar a data';
 
               // Verifica se já está no formato desejado
               if (dateString.includes(' às ')) {
@@ -128,7 +134,7 @@ export class LessonCardManagerComponent implements OnInit {
 
               if (isNaN(date.getTime())) {
                 console.warn('Data inválida:', dateString);
-                return '';
+                return 'Ocorreu um erro ao formatar a data';
               }
 
               // Formatar a data para dd/MM/yyyy
@@ -144,7 +150,7 @@ export class LessonCardManagerComponent implements OnInit {
               return `${day}/${month}/${year} às ${formattedTime}`;
             } catch (error) {
               console.error('Erro ao formatar data:', dateString, error);
-              return '';
+              return 'Ocorreu um erro ao formatar a data';
             }
           };
 
@@ -175,6 +181,7 @@ export class LessonCardManagerComponent implements OnInit {
       }
     } catch (error) {
       console.error('Erro ao carregar dados do usuário', error);
+      this.errorMessage = 'Erro ao carregar dados do usuário';
     }
   }
 
