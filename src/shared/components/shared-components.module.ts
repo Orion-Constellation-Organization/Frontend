@@ -22,6 +22,7 @@ import { TutorRegistrationFormComponent } from './tutor-registration-form/tutor-
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { ButtonComponent } from './button/button.component';
 import { ClassRequestFormComponent } from './class-request-form/class-request-form.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const COMPONENTS = [
   RegistrationSuccessModalComponent,
@@ -30,6 +31,7 @@ const COMPONENTS = [
   MainMenuComponent,
   ButtonComponent,
   ClassRequestFormComponent,
+  ProfileComponent,
 ] as const;
 
 @NgModule({

@@ -27,4 +27,14 @@ export class TutorService extends BaseService {
   async createTutor(payload: ICreateTutor): Promise<ITutorResponse> {
     return this.call('POST', 'register/tutor', payload);
   }
+
+  /**
+   * Busca um tutor específico pelo seu ID.
+   *
+   * @param id - O identificador único do tutor
+   * @returns Promessa com os dados do tutor encontrado
+   */
+  async getTutorById(id: number): Promise<any> {
+    return this.call('GET', `get/tutor/${id}`);
+  }
 }

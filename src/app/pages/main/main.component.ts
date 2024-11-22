@@ -18,6 +18,38 @@ import { UserType } from 'src/utils/enum/userType.enum';
 })
 export class MainComponent implements OnInit {
   /**
+   * Título exibido para a seção inicial.
+   *
+   * @memberof MainComponent
+   * @type {EnvironmentMenuTitles}
+   */
+  beginTitle = EnvironmentMenuTitles.BEGIN;
+
+  /**
+   * Título exibido para a seção de aulas.
+   *
+   * @memberof MainComponent
+   * @type {EnvironmentMenuTitles}
+   */
+  classesTitle = EnvironmentMenuTitles.CLASSES;
+
+  /**
+   * Título exibido para a seção de dados cadastrais.
+   *
+   * @memberof MainComponent
+   * @type {EnvironmentMenuTitles}
+   */
+  registrationDataTitle = EnvironmentMenuTitles.REGISTRATION_DATA;
+
+  /**
+   * Título exibido para a seção de segurança.
+   *
+   * @memberof MainComponent
+   * @type {EnvironmentMenuTitles}
+   */
+  securityTitle = EnvironmentMenuTitles.SECURITY;
+
+  /**
    * Título exibido para a seção de agendamentos.
    *
    * @memberof MainComponent
@@ -41,6 +73,14 @@ export class MainComponent implements OnInit {
    */
   pendingStudentConfirmationTitle =
     EnvironmentMenuTitles.PENDING_STUDENT_CONFIRMATION;
+
+  /**
+   * Título exibido para a seção desabilitada.
+   *
+   * @memberof MainComponent
+   * @type {EnvironmentMenuTitles}
+   */
+  disabledTitle = EnvironmentMenuTitles.DISABLED;
 
   /**
    * Nome do tutor atualmente em uso.
@@ -78,14 +118,39 @@ export class MainComponent implements OnInit {
 
   /**
    * Título do botão
-   * @type {string}
+   * @type {EnvironmentButton}
    */
-  buttonTitle = EnvironmentButton.PRIMARY;
+  buttonTitle: EnvironmentButton = EnvironmentButton.PRIMARY;
 
+  /**
+   * Controla a visibilidade do modal de solicitação de aula
+   *
+   * @type {boolean}
+   * @default false
+   */
   showClassRequestModal = false;
 
+  /**
+   * Controla a visibilidade do modal de perfil do usuário
+   *
+   * @type {boolean}
+   * @default false
+   */
+  showProfile = false;
+
+  /**
+   * Cria uma instância do MainComponent.
+   *
+   * @param authService - Serviço de autenticação injetado para gerenciar operações relacionadas ao usuário
+   */
   constructor(private authService: AuthService) {}
 
+  /**
+   * Método do ciclo de vida do Angular executado após a criação do componente.
+   * Inicializa o componente carregando os dados do usuário.
+   *
+   * @returns {Promise<void>} Uma promise que resolve quando os dados do usuário são carregados
+   */
   async ngOnInit() {
     await this.loadUserData();
   }
@@ -101,12 +166,12 @@ export class MainComponent implements OnInit {
   private async loadUserData(): Promise<void> {
     try {
       const userData = await this.authService.getCurrentUser();
-      console.log('userData recebido:', userData);
-
+      // se o usuário possui username e role, preencho os campos com os dados do usuário
       if (userData && userData.username && userData.role) {
         this.userName = userData.username;
         this.userType = userData.role;
       } else {
+        // se o usuário não possui username e role, preencho os campos com valores padrão
         console.warn('Dados do usuário incompletos ou inválidos');
         console.log('username:', userData?.username);
         console.log('role:', userData?.role);
@@ -114,6 +179,7 @@ export class MainComponent implements OnInit {
         this.userType = 'Não definido';
       }
     } catch (error) {
+      // se ocorrer um erro, preencho os campos com valores padrão
       console.error('Erro ao carregar dados do usuário:', error);
       this.userName = 'Usuário';
       this.userType = 'Não definido';
@@ -122,9 +188,23 @@ export class MainComponent implements OnInit {
 
   /**
    * Alterna o estado de abertura do menu user.
+   *
+   * @memberof MainComponent
+   * @returns {void}
    */
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
+  }
+
+  /**
+   * Alterna a visibilidade do modal de perfil do usuário
+   *
+   * @memberof MainComponent
+   * @returns {void}
+   */
+  toggleProfile() {
+    this.showProfile = !this.showProfile;
+    this.toggleMenu();
   }
 
   /**
@@ -139,13 +219,32 @@ export class MainComponent implements OnInit {
 
   /**
    * Verifica se o usuário é um tutor
+   *
+   * @memberof MainComponent
    * @returns {boolean}
    */
   isTutor(): boolean {
     return this.userType === UserType.TUTOR;
   }
 
+  /**
+   * Alterna a visibilidade do modal de solicitação de aula
+   *
+   * @memberof MainComponent
+   * @returns {void}
+   */
   toggleClassRequestModal() {
     this.showClassRequestModal = !this.showClassRequestModal;
+  }
+
+  /**
+   * Fecha os menus abertos quando o botão de início é clicado
+   *
+   * @memberof MainComponent
+   * @returns {void}
+   */
+  closeMenus() {
+    this.menuOpen = false;
+    this.showProfile = false;
   }
 }
