@@ -1,0 +1,65 @@
+@import "../../../app/styles/theme.scss";
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  min-height: 745px;
+
+  .profile-main {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+
+    .profile-content {
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto 0 125px;
+      gap: 30px;
+
+      .profile-content-name,
+      .profile-content-birthday {
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 150%;
+      }
+    }
+
+    .profile-content-edit {
+      display: flex;
+      flex-direction: column;
+      min-width: 688px;
+      min-height: 196px;
+      border: 3px solid $color-neutral-black;
+      border-radius: 6px;
+      margin: 0 auto 0 90px;
+      padding: 30px;
+      gap: 30px;
+
+      .profile-content-edit-social {
+        display: flex;
+        justify-content: space-between;
+
+        img,
+        .profile-content-edit-social {
+          cursor: pointer;
+        }
+      }
+
+      .profile-content-edit-social-name,
+      .profile-content-edit-educationLevel {
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 150%;
+      }
+    }
+
+    .profile-content-error {
+      margin: 0 auto 0 125px;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 150%;
+      color: $color-alert-error;
+    }
+  }
+}

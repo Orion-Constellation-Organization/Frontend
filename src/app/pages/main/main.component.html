@@ -3,24 +3,29 @@
         <div class="header-box-image">
             <img class="header-logo" src="../../../assets/images/RB Logo base.png" alt="logo Ambiente Principal">
         </div>
-        <p class="header-text">Olá, {{userName}}!</p>
+        <p class="header-text" *ngIf="!showProfile">Olá, {{userName}}!</p>
+        <div class="header-box-profile" *ngIf="showProfile">
+            <h1 class="header-profile-title">Perfil - Dados Cadastrais</h1>
+        </div>
         <div class="header-user-control">
             <div class="header-user-box-image" (click)="toggleMenu()">
                 <img class="header-user-icon" src="../../../assets/images/user-icon.png" alt="User Icon">
             </div>
             <div class="header-user-menu" *ngIf="menuOpen">
-                <button class="menu-item perfil" routerLink="/perfil">Perfil</button>
+                <button class="menu-item perfil" (click)="toggleProfile()">Perfil</button>
                 <button class="menu-item home" routerLink="/home">Sair</button>
             </div>
         </div>
     </div>
 </header>
 <div class="main-container">
-    <app-main-menu [navMenuBtnTitleOne]="scheduledTitle" [navMenuBtnTitleTwo]="tutoringRequestsTitle" [navMenuBtnTitleThree]="pendingStudentConfirmationTitle"></app-main-menu>
-    <div class="main-container-button" *ngIf="isStudent()">
+    <app-main-menu [navMenuBtnTitleBegin]="beginTitle" [navMenuBtnTitleClasses]="!showProfile ? classesTitle : registrationDataTitle" [navMenuBtnTitleOne]="!showProfile ? scheduledTitle : securityTitle" [navMenuBtnTitleTwo]="!showProfile ? tutoringRequestsTitle : ''" [navMenuBtnTitleThree]="!showProfile ? pendingStudentConfirmationTitle : ''" [navMenuBtnTitleDisabled]="!showProfile ? disabledTitle : ''" [hideButtonsProfile]="showProfile" (beginButtonClick)="closeMenus()">
+    </app-main-menu>
+    <div class="main-container-button" *ngIf="isStudent() && !showProfile">
         <app-button [label]="buttonTitle" (click)="toggleClassRequestModal()">
         </app-button>
     </div>
+    <app-profile *ngIf="showProfile"></app-profile>
 </div>
 <app-class-request-form *ngIf="showClassRequestModal" (closeModal)="toggleClassRequestModal()">
 </app-class-request-form>

@@ -23,6 +23,7 @@ import { MainMenuComponent } from './main-menu/main-menu.component';
 import { ButtonComponent } from './button/button.component';
 import { ClassRequestFormComponent } from './class-request-form/class-request-form.component';
 import { LessonCardManagerComponent } from './lesson-card-manager/lesson-card-manager.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const COMPONENTS = [
   RegistrationSuccessModalComponent,
@@ -32,6 +33,7 @@ const COMPONENTS = [
   ButtonComponent,
   ClassRequestFormComponent,
   LessonCardManagerComponent,
+  ProfileComponent,
 ] as const;
 
 @NgModule({
