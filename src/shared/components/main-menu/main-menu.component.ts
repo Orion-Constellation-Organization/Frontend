@@ -67,13 +67,29 @@ export class MainMenuComponent {
   @Output() beginButtonClick = new EventEmitter<void>();
 
   /**
+   * Flag que controla o estado de abertura/fechamento do menu.
+   *
+   * @type {boolean}
+   * @default false
+   */
+  isMenuOpen = false;
+
+  /**
+   * Flag que indica se a aplicação está sendo exibida em um dispositivo móvel.
+   *
+   * @type {boolean}
+   * @default false
+   */
+  isMobile = false;
+
+  /**
    * Manipula o evento de clique do botão inicial.
    * Emite um evento através do beginButtonClick.
+   * @event {void} beginButtonClick - Evento emitido quando o botão inicial é clicado.
    */
   onBeginClick() {
     this.beginButtonClick.emit();
-    isMenuOpen = false;
-    isMobile = false;
+  }
 
   constructor() {
     this.checkScreenSize();
