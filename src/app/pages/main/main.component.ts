@@ -83,6 +83,31 @@ export class MainComponent implements OnInit {
   disabledTitle = EnvironmentMenuTitles.DISABLED;
 
   /**
+   * aguardando voluntário
+   *
+   * @memberof MainComponent
+   * @type {EnvironmentMenuTitles}
+   */
+  waitingVolunteerTitle = EnvironmentMenuTitles.WAITING_VOLUNTEER;
+
+  /**
+   * aguardando sua confirmação
+   *
+   * @memberof MainComponent
+   * @type {EnvironmentMenuTitles}
+   */
+  waitingYourConfirmationTitle =
+    EnvironmentMenuTitles.WAITING_YOUR_CONFIRMATION;
+
+  /**
+   * aulas agendadas
+   *
+   * @memberof MainComponent
+   * @type {EnvironmentMenuTitles}
+   */
+  scheduledLessonsTitle = EnvironmentMenuTitles.SCHEDULED_LESSONS;
+
+  /**
    * Nome do tutor atualmente em uso.
    *
    * @memberof MainComponent
@@ -253,5 +278,50 @@ export class MainComponent implements OnInit {
   closeMenus() {
     this.menuOpen = false;
     this.showProfile = false;
+  }
+
+  /**
+   * Retorna o título do primeiro botão baseado no tipo de usuário
+   *
+   * @memberof MainComponent
+   * @returns {EnvironmentMenuTitles}
+   */
+  getButtonTitleOne(): EnvironmentMenuTitles {
+    if (this.showProfile) {
+      return this.securityTitle;
+    }
+    return this.userType === UserType.STUDENT
+      ? this.waitingVolunteerTitle
+      : this.scheduledTitle;
+  }
+
+  /**
+   * Retorna o título do segundo botão baseado no tipo de usuário
+   *
+   * @memberof MainComponent
+   * @returns {EnvironmentMenuTitles}
+   */
+  getButtonTitleTwo(): EnvironmentMenuTitles {
+    if (this.showProfile) {
+      return EnvironmentMenuTitles.NONE;
+    }
+    return this.userType === UserType.STUDENT
+      ? this.waitingYourConfirmationTitle
+      : this.tutoringRequestsTitle;
+  }
+
+  /**
+   * Retorna o título do terceiro botão baseado no tipo de usuário
+   *
+   * @memberof MainComponent
+   * @returns {EnvironmentMenuTitles}
+   */
+  getButtonTitleThree(): EnvironmentMenuTitles {
+    if (this.showProfile) {
+      return EnvironmentMenuTitles.NONE;
+    }
+    return this.userType === UserType.STUDENT
+      ? this.scheduledLessonsTitle
+      : this.pendingStudentConfirmationTitle;
   }
 }

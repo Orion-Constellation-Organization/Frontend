@@ -46,4 +46,25 @@ export enum EnvironmentMenuTitles {
    * Utilizado quando um item do menu deve estar presente mas não visível/interativo.
    */
   DISABLED = '',
+
+  /**
+   * Seção de aguardando voluntário
+   */
+  WAITING_VOLUNTEER = 'Aguardando voluntário',
+
+  /**
+   * Seção de aguardando sua confirmação
+   */
+  WAITING_YOUR_CONFIRMATION = 'Aguardando sua confirmação',
+
+  /**
+   * Seção de aulas agendadas
+   */
+  SCHEDULED_LESSONS = 'Aulas agendadas',
+
+  /**
+   * Representa um estado desabilitado ou inativo do botão no menu.
+   * Utilizado quando um item do menu deve estar presente mas não visível/interativo.
+   */
+  NONE = '',
 }
