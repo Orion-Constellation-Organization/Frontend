@@ -43,7 +43,7 @@
   height: 58px;
   background-color: $color-customization-angular-material;
   border-radius: 23px;
-  margin: auto;
+  margin: auto 130px;
 
   .header-profile-title {
     font-size: 24px;
@@ -148,7 +148,7 @@
   display: grid;
   grid-template-rows: auto;
   grid-template-columns: auto 1fr;
-  align-items: center;
+  // align-items: center;
   margin-bottom: 95px;
 
   @media (max-width: 1366px) {
