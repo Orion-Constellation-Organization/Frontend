@@ -349,18 +349,23 @@ export class MainComponent implements OnInit {
    * @returns {boolean}
    */
   shouldShowCardManager(): boolean {
-    return this.selectedMenu === 'classes_scheduled';
+    return this.selectedMenu === 'waiting_volunteer';
   }
 
   /**
-   * Verifica se deve mostrar o botão de solicitar aula
+   * Verifica se deve mostrar o botão de solicitar aula.
+   *
+   * Este método avalia se o usuário atual é um estudante, se o perfil do usuário não está visível
+   * e se o menu selecionado não é o de "aguardando voluntário". Se todas essas condições forem
+   * atendidas, o botão de solicitar aula será exibido.
+   *
    * @returns {boolean}
    */
   shouldShowRequestButton(): boolean {
     return (
       this.isStudent() &&
       !this.showProfile &&
-      this.selectedMenu !== 'classes_scheduled'
+      this.selectedMenu !== 'waiting_volunteer'
     );
   }
 }
