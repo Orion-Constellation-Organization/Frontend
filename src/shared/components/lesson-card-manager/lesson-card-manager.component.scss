@@ -8,14 +8,20 @@
   background-color: $color-customization-angular-material;
   border-radius: 80px;
   padding: 45px;
-  border: 1px solid $color-alert-error;
+  margin: auto auto 20px auto;
+
+  @media (max-width: 1366px) {
+    gap: 0px;
+    max-width: 700px;
+    border-radius: 40px;
+    padding: 30px;
+  }
 }
 
 .class-card-manager-info {
   display: flex;
   flex-direction: row;
   gap: 10px;
-  border: 1px solid $color-alert-error;
 }
 
 .class-card-manager-student-info {
@@ -25,6 +31,10 @@
   line-height: 150%;
   margin: auto;
   text-align: left;
+
+  @media (max-width: 1366px) {
+    font-size: 20px;
+  }
 }
 
 .class-card-manager-student-reason {
@@ -34,12 +44,20 @@
   line-height: 150%;
   margin: auto;
   text-align: left;
+
+  @media (max-width: 1366px) {
+    font-size: 20px;
+  }
 }
 
 .class-card-manager-tutor-description {
   font-size: 24px;
   font-weight: 500;
   line-height: 150%;
+
+  @media (max-width: 1366px) {
+    font-size: 20px;
+  }
 }
 
 .class-card-manager-actions-item-title {
@@ -47,10 +65,18 @@
   font-size: 24px;
   font-weight: 500;
   line-height: 150%;
+
+  @media (max-width: 1366px) {
+    font-size: 20px;
+  }
 }
 
 .class-card-manager-actions-container-title {
   width: 60%;
+
+  @media (max-width: 1366px) {
+    font-size: 20px;
+  }
 }
 
 .class-card-manager-actions-container-buttons {
@@ -62,21 +88,26 @@
   font-size: 24px;
   font-weight: 500;
   line-height: 150%;
+
+  @media (max-width: 1366px) {
+    font-size: 20px;
+  }
 }
 
 .class-card-manager-actions {
   display: flex;
   flex-direction: row;
   gap: 10px;
-  border: 1px solid $color-alert-error;
 }
 
 .class-card-manager-actions-item {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.class-card-manager-actions-container-buttons {
   gap: 10px;
-  border: 1px solid $color-alert-error;
 }
 
 .class-card-manager-error-message {
@@ -84,4 +115,8 @@
   font-weight: 500;
   line-height: 150%;
   color: $color-alert-error;
+
+  @media (max-width: 1366px) {
+    font-size: 20px;
+  }
 }

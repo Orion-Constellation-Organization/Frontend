@@ -155,6 +155,8 @@
 }
 
 .main-container-lesson-card-manager {
+  display: flex;
   overflow: auto;
   height: 420px;
+  justify-content: center;
 }
