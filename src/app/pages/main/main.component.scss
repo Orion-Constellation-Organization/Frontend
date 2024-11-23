@@ -148,12 +148,6 @@
   display: grid;
   grid-template-rows: auto;
   grid-template-columns: auto 1fr;
-  // align-items: center;
-  margin-bottom: 95px;
-
-  @media (max-width: 1366px) {
-    margin-bottom: 60px;
-  }
 }
 
 .main-container-button {

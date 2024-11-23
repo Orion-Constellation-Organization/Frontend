@@ -19,15 +19,15 @@
     </div>
 </header>
 <div class="main-container">
-    <app-main-menu [navMenuBtnTitleBegin]="beginTitle" [navMenuBtnTitleClasses]="!showProfile ? classesTitle : registrationDataTitle" [navMenuBtnTitleOne]="!showProfile ? getButtonTitleOne() : securityTitle" [navMenuBtnTitleTwo]="!showProfile ? getButtonTitleTwo() : ''" [navMenuBtnTitleThree]="!showProfile ? getButtonTitleThree() : ''" [navMenuBtnTitleDisabled]="!showProfile ? disabledTitle : ''" [hideButtonsProfile]="showProfile" (beginButtonClick)="closeMenus()">
+    <app-main-menu [navMenuBtnTitleBegin]="beginTitle" [navMenuBtnTitleClasses]="!showProfile ? classesTitle : registrationDataTitle" [navMenuBtnTitleOne]="!showProfile ? getButtonTitleOne() : securityTitle" [navMenuBtnTitleTwo]="!showProfile ? getButtonTitleTwo() : ''" [navMenuBtnTitleThree]="!showProfile ? getButtonTitleThree() : ''" [navMenuBtnTitleDisabled]="!showProfile ? disabledTitle : ''" [hideButtonsProfile]="showProfile" (beginButtonClick)="onMenuSelect('Begin')" (buttonOneClick)="onMenuSelect('waiting_volunteer')" (buttonTwoClick)="onMenuSelect('waiting_confirmation')" (buttonThreeClick)="onMenuSelect('classes_scheduled')">
     </app-main-menu>
-    <!-- <div class="main-container-button" *ngIf="isStudent() && !showProfile">
+    <div class="main-container-button" *ngIf="shouldShowRequestButton()">
         <app-button [label]="buttonTitle" (click)="toggleClassRequestModal()">
         </app-button>
-    </div> -->
-    <!-- <div class="main-container-lesson-card-manager">
+    </div>
+    <div class="main-container-lesson-card-manager" *ngIf="shouldShowCardManager()">
         <app-lesson-card-manager></app-lesson-card-manager>
-    </div> -->
+    </div>
     <app-profile *ngIf="showProfile"></app-profile>
 </div>
 <app-class-request-form *ngIf="showClassRequestModal" (closeModal)="toggleClassRequestModal()">

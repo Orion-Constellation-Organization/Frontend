@@ -65,6 +65,9 @@ export class MainMenuComponent {
    * @event
    */
   @Output() beginButtonClick = new EventEmitter<void>();
+  @Output() buttonOneClick = new EventEmitter<void>();
+  @Output() buttonTwoClick = new EventEmitter<void>();
+  @Output() buttonThreeClick = new EventEmitter<void>();
 
   /**
    * Flag que controla o estado de abertura/fechamento do menu.
@@ -91,19 +94,63 @@ export class MainMenuComponent {
     this.beginButtonClick.emit();
   }
 
+  /**
+   * Manipula o evento de clique do primeiro botão do menu.
+   * Emite um evento através do buttonOneClick.
+   * @event {void} buttonOneClick - Evento emitido quando o primeiro botão é clicado.
+   */
+  onButtonOneClick(): void {
+    this.buttonOneClick.emit();
+  }
+
+  /**
+   * Manipula o evento de clique do segundo botão do menu.
+   * Emite um evento através do buttonTwoClick.
+   * @event {void} buttonTowClick - Evento emitido quando o segundo botão é clicado.
+   */
+  onButtonTwoClick(): void {
+    this.buttonTwoClick.emit();
+  }
+
+  /**
+   * Manipula o evento de clique do terceiro botão do menu.
+   * Emite um evento através do buttonThreeClick.
+   * @event {void} buttonThreeClick - Evento emitido quando o terceiro botão é clicado.
+   */
+  onButtonThreeClick(): void {
+    this.buttonThreeClick.emit();
+  }
+
+  /**
+   * Construtor do componente MainMenu.
+   * Inicializa o estado do componente e adiciona um listener para redimensionamento da janela.
+   */
   constructor() {
     this.checkScreenSize();
     window.addEventListener('resize', () => this.checkScreenSize());
   }
 
+  /**
+   * Verifica o tamanho da tela e atualiza a flag isMobile.
+   * Define isMobile como true se a largura da janela for menor ou igual a 768 pixels.
+   * @returns {void}
+   */
   checkScreenSize() {
     this.isMobile = window.innerWidth <= 768;
   }
 
+  /**
+   * Alterna o estado do menu.
+   * @returns {void}
+   */
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
+  /**
+   * Fecha o menu.
+   * @returns {void}
+   */
   closeMenu() {
     this.isMenuOpen = false;
   }

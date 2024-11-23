@@ -18,6 +18,15 @@ import { UserType } from 'src/utils/enum/userType.enum';
 })
 export class MainComponent implements OnInit {
   /**
+   * Seleciona o menu inicial
+   *
+   * @memberof MainComponent
+   * @type {string}
+   * @default 'begin'
+   */
+  selectedMenu: string = 'begin';
+
+  /**
    * Título exibido para a seção inicial.
    *
    * @memberof MainComponent
@@ -323,5 +332,35 @@ export class MainComponent implements OnInit {
     return this.userType === UserType.STUDENT
       ? this.scheduledLessonsTitle
       : this.pendingStudentConfirmationTitle;
+  }
+
+  /**
+   * Método chamado quando um botão do menu é clicado
+   * @param menuItem string identificando qual menu foi clicado
+   */
+  onMenuSelect(menuItem: string) {
+    console.log('Menu selecionado:', menuItem);
+    this.selectedMenu = menuItem;
+    this.closeMenus();
+  }
+
+  /**
+   * Verifica se deve mostrar o card manager
+   * @returns {boolean}
+   */
+  shouldShowCardManager(): boolean {
+    return this.selectedMenu === 'classes_scheduled';
+  }
+
+  /**
+   * Verifica se deve mostrar o botão de solicitar aula
+   * @returns {boolean}
+   */
+  shouldShowRequestButton(): boolean {
+    return (
+      this.isStudent() &&
+      !this.showProfile &&
+      this.selectedMenu !== 'classes_scheduled'
+    );
   }
 }
