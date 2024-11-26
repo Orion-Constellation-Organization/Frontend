@@ -396,6 +396,8 @@ export class ClassRequestFormComponent implements OnInit {
             requestData
           );
           this.message = 'Seu pedido de aula foi atualizado com sucesso!';
+          this.scrollToTop();
+          this.openRegistrationSuccessDialog();
         } else {
           await this.classRequestService.createClassRequest(requestData);
           this.message = 'Seu pedido de aula foi enviado com sucesso!';
@@ -407,7 +409,6 @@ export class ClassRequestFormComponent implements OnInit {
         this.hasScheduleError = false;
         this.errorMessage = '';
         this.conflictingSchedule = '';
-        this.closeModal.emit('updated');
       } catch (error: any) {
         console.error('Erro na submissão:', error);
         if (error.error?.errors?.[0]) {
