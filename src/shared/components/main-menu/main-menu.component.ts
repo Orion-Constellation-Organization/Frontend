@@ -11,6 +11,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./main-menu.component.scss'],
 })
 export class MainMenuComponent {
+  isMenuOpen: boolean = false;
+  isMobile: boolean = false;
   /**
    * Título do botão inicial do menu de navegação.
    *
@@ -72,8 +74,9 @@ export class MainMenuComponent {
    */
   onBeginClick() {
     this.beginButtonClick.emit();
-    isMenuOpen = false;
-    isMobile = false;
+    this.isMenuOpen = false;
+    this.isMobile = false;
+  }
 
   constructor() {
     this.checkScreenSize();
