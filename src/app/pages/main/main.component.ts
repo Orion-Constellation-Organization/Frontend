@@ -3,6 +3,7 @@ import { EnvironmentMenuTitles } from 'src/utils/enum/environmentMenu.enum';
 import { EnvironmentButton } from 'src/utils/enum/environmentButton.enum';
 import { AuthService } from 'src/shared/providers/auth.service';
 import { UserType } from 'src/utils/enum/userType.enum';
+import { SelectedMenu } from 'src/utils/enum/selectedMenu.enum';
 
 /**
  * Componente principal da aplicação que gerencia o estado do menu e os títulos exibidos.
@@ -18,13 +19,19 @@ import { UserType } from 'src/utils/enum/userType.enum';
 })
 export class MainComponent implements OnInit {
   /**
-   * Seleciona o menu inicial
+   * Seleciona o tipo de menu
+   *
+   * Este campo determina qual menu será exibido inicialmente na aplicação.
+   * O valor padrão é 'begin', mas pode ser alterado para outros tipos de menus conforme necessário.
    *
    * @memberof MainComponent
-   * @type {string}
-   * @default 'begin'
+   * @type {SelectedMenu}
+   * @default SelectedMenu.BEGIN
    */
-  selectedMenu: string = 'begin';
+  selectedMenu: SelectedMenu =
+    SelectedMenu.BEGIN ||
+    SelectedMenu.CLASSES_SCHEDULED ||
+    SelectedMenu.WAITING_VOLUNTEER;
 
   /**
    * Título exibido para a seção inicial.
@@ -336,36 +343,41 @@ export class MainComponent implements OnInit {
 
   /**
    * Método chamado quando um botão do menu é clicado
+   *
+   * Este método atualiza o menu selecionado e fecha os menus abertos.
+   *
    * @param menuItem string identificando qual menu foi clicado
+   * @returns {void} - Não retorna nenhum valor.
    */
   onMenuSelect(menuItem: string) {
-    console.log('Menu selecionado:', menuItem);
-    this.selectedMenu = menuItem;
+    this.selectedMenu = menuItem as SelectedMenu;
     this.closeMenus();
   }
 
   /**
    * Verifica se deve mostrar o card manager
-   * @returns {boolean}
+   *
+   * Este método avalia se o menu selecionado é o de "aguardando voluntário".
+   *
+   * @returns {boolean} - Se a condição for verdadeira, o componente LessonCardManager será exibido.
    */
   shouldShowCardManager(): boolean {
-    return this.selectedMenu === 'waiting_volunteer';
+    return this.selectedMenu === SelectedMenu.WAITING_VOLUNTEER;
   }
 
   /**
    * Verifica se deve mostrar o botão de solicitar aula.
    *
    * Este método avalia se o usuário atual é um estudante, se o perfil do usuário não está visível
-   * e se o menu selecionado não é o de "aguardando voluntário". Se todas essas condições forem
-   * atendidas, o botão de solicitar aula será exibido.
+   * e se o menu selecionado não é o de "aguardando voluntário".
    *
-   * @returns {boolean}
+   * @returns {boolean} - Se a condição for verdadeira, o botão de solicitar aula será exibido.
    */
   shouldShowRequestButton(): boolean {
     return (
       this.isStudent() &&
       !this.showProfile &&
-      this.selectedMenu !== 'waiting_volunteer'
+      this.selectedMenu !== SelectedMenu.WAITING_VOLUNTEER
     );
   }
 }

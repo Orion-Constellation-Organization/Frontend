@@ -19,7 +19,7 @@
     </div>
 </header>
 <div class="main-container">
-    <app-main-menu [navMenuBtnTitleBegin]="beginTitle" [navMenuBtnTitleClasses]="!showProfile ? classesTitle : registrationDataTitle" [navMenuBtnTitleOne]="!showProfile ? getButtonTitleOne() : securityTitle" [navMenuBtnTitleTwo]="!showProfile ? getButtonTitleTwo() : ''" [navMenuBtnTitleThree]="!showProfile ? getButtonTitleThree() : ''" [navMenuBtnTitleDisabled]="!showProfile ? disabledTitle : ''" [hideButtonsProfile]="showProfile" (beginButtonClick)="onMenuSelect('Begin')" (buttonOneClick)="onMenuSelect('waiting_volunteer')" (buttonTwoClick)="onMenuSelect('waiting_confirmation')" (buttonThreeClick)="onMenuSelect('classes_scheduled')">
+    <app-main-menu [navMenuBtnTitleBegin]="beginTitle" [navMenuBtnTitleClasses]="!showProfile ? classesTitle : registrationDataTitle" [navMenuBtnTitleOne]="!showProfile ? getButtonTitleOne() : securityTitle" [navMenuBtnTitleTwo]="!showProfile ? getButtonTitleTwo() : ''" [navMenuBtnTitleThree]="!showProfile ? getButtonTitleThree() : ''" [navMenuBtnTitleDisabled]="!showProfile ? disabledTitle : ''" [hideButtonsProfile]="showProfile" (beginButtonClick)="onMenuSelect('Begin')" (buttonOneClick)="onMenuSelect('Waiting_volunteer')" (buttonTwoClick)="onMenuSelect('Waiting_confirmation')" (buttonThreeClick)="onMenuSelect('Classes_scheduled')">
     </app-main-menu>
     <div class="main-container-button" *ngIf="shouldShowRequestButton()">
         <app-button [label]="buttonTitle" (click)="toggleClassRequestModal()">
