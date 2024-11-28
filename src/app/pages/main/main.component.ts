@@ -297,12 +297,50 @@ export class MainComponent implements OnInit {
   }
 
   /**
-   * Retorna o título do primeiro botão baseado no tipo de usuário
+   * Obtém o título das classes baseado na visibilidade do perfil do usuário.
+   *
+   * Este método verifica se o perfil do usuário está visível. Se estiver, retorna o título
+   * da seção de dados cadastrais. Caso contrário, retorna o título da seção de aulas.
+   *
+   * @returns {EnvironmentMenuTitles} - O título das classes, que pode ser um dos títulos definidos
+   * na enumeração EnvironmentMenuTitles.
+   */
+  private getButtonTitleClasses(): EnvironmentMenuTitles {
+    if (this.showProfile) {
+      return this.registrationDataTitle;
+    }
+    return this.classesTitle;
+  }
+
+  /**
+   * Obtém o título das classes baseado na visibilidade do perfil do usuário.
+   *
+   * Este método retorna o título das classes dependendo se o perfil do usuário está visível ou não.
+   * Se o perfil estiver visível, retorna o título da seção de dados cadastrais.
+   * Caso contrário, chama o método `getButtonTitleClasses()` para determinar o título apropriado.
+   *
+   * @returns {string} - O título das classes, que pode ser um dos títulos definidos
+   * na enumeração EnvironmentMenuTitles.
+   */
+  public get buttonTitleClasses(): string {
+    return !this.showProfile
+      ? this.getButtonTitleClasses()
+      : this.registrationDataTitle;
+  }
+
+  /**
+   * Retorna o título do primeiro botão baseado no tipo de usuário.
+   *
+   * Este método verifica se o perfil do usuário está visível. Se estiver, retorna o título de segurança.
+   * Caso contrário, retorna o título apropriado com base no tipo de usuário:
+   * se o usuário for um estudante, retorna o título de "Aguardando Voluntário";
+   * caso contrário, retorna o título de "Agendado".
    *
    * @memberof MainComponent
-   * @returns {EnvironmentMenuTitles}
+   * @returns {EnvironmentMenuTitles} - O título do primeiro botão, que pode ser um dos títulos definidos
+   * na enumeração EnvironmentMenuTitles.
    */
-  getButtonTitleOne(): EnvironmentMenuTitles {
+  private getButtonTitleOne(): EnvironmentMenuTitles {
     if (this.showProfile) {
       return this.securityTitle;
     }
@@ -312,12 +350,31 @@ export class MainComponent implements OnInit {
   }
 
   /**
-   * Retorna o título do segundo botão baseado no tipo de usuário
+   * Obtém o título do primeiro botão baseado na visibilidade do perfil do usuário.
+   *
+   * Este método retorna o título do botão dependendo se o perfil do usuário está visível ou não.
+   * Se o perfil estiver visível, retorna o título de segurança; caso contrário, chama o método
+   * `getButtonTitleOne()` para determinar o título apropriado.
+   *
+   * @returns {string} O título do primeiro botão ou o título de segurança se o perfil estiver visível.
+   */
+  public get buttonTitleOne(): string {
+    return !this.showProfile ? this.getButtonTitleOne() : this.securityTitle;
+  }
+
+  /**
+   * Retorna o título do segundo botão baseado no tipo de usuário.
+   *
+   * Este método verifica se o perfil do usuário está visível. Se estiver, retorna um valor padrão
+   * indicando que nenhum título deve ser exibido. Caso contrário, retorna o título apropriado com base
+   * no tipo de usuário: se o usuário for um estudante, retorna o título de "Aguardando Sua Confirmação";
+   * caso contrário, retorna o título de "Pedidos de Tutoria".
    *
    * @memberof MainComponent
-   * @returns {EnvironmentMenuTitles}
+   * @returns {EnvironmentMenuTitles} - O título do segundo botão, que pode ser um dos títulos definidos
+   * na enumeração EnvironmentMenuTitles.
    */
-  getButtonTitleTwo(): EnvironmentMenuTitles {
+  private getButtonTitleTwo(): EnvironmentMenuTitles {
     if (this.showProfile) {
       return EnvironmentMenuTitles.NONE;
     }
@@ -327,18 +384,79 @@ export class MainComponent implements OnInit {
   }
 
   /**
-   * Retorna o título do terceiro botão baseado no tipo de usuário
+   * Obtém o título do segundo botão baseado na visibilidade do perfil do usuário.
+   *
+   * Este método retorna uma string que representa o título do segundo botão.
+   * Se o perfil do usuário não estiver visível, chama o método `getButtonTitleTwo()`
+   * para determinar o título apropriado. Caso contrário, retorna uma string vazia.
+   *
+   * @returns {string} O título do segundo botão ou uma string vazia se o perfil estiver visível.
+   */
+  public get buttonTitleTwo(): string {
+    return !this.showProfile ? this.getButtonTitleTwo() : '';
+  }
+
+  /**
+   * Retorna o título do terceiro botão baseado no tipo de usuário.
+   *
+   * Este método verifica se o perfil do usuário está visível. Se estiver, retorna um valor padrão
+   * indicando que nenhum título deve ser exibido. Caso contrário, retorna o título apropriado com base
+   * no tipo de usuário: se o usuário for um estudante, retorna o título de "Aulas Agendadas";
+   * caso contrário, retorna o título de "Aguardando Confirmação do Aluno".
    *
    * @memberof MainComponent
-   * @returns {EnvironmentMenuTitles}
+   * @returns {EnvironmentMenuTitles} - O título do terceiro botão, que pode ser um dos títulos definidos
+   * na enumeração EnvironmentMenuTitles.
    */
-  getButtonTitleThree(): EnvironmentMenuTitles {
+  private getButtonTitleThree(): EnvironmentMenuTitles {
     if (this.showProfile) {
       return EnvironmentMenuTitles.NONE;
     }
     return this.userType === UserType.STUDENT
       ? this.scheduledLessonsTitle
       : this.pendingStudentConfirmationTitle;
+  }
+
+  /**
+   * Obtém o título do terceiro botão baseado na visibilidade do perfil do usuário.
+   *
+   * Este método retorna uma string que representa o título do terceiro botão.
+   * Se o perfil do usuário não estiver visível, chama o método `getButtonTitleThree()`
+   * para determinar o título apropriado. Caso contrário, retorna uma string vazia.
+   *
+   * @returns {string} O título do terceiro botão ou uma string vazia se o perfil estiver visível.
+   */
+  public get buttonTitleThree(): string {
+    return !this.showProfile ? this.getButtonTitleThree() : '';
+  }
+
+  /**
+   * Obtém o título do botão desabilitado baseado na visibilidade do perfil do usuário.
+   *
+   * Este método retorna o título do botão desabilitado dependendo se o perfil do usuário está visível ou não.
+   * Se o perfil estiver visível, retorna uma string vazia; caso contrário, retorna uma string vazia. Nesse caso, ambos títulos estão vazios.
+   *
+   * @returns {EnvironmentMenuTitles} - O título do botão desabilitado, que pode ser um dos títulos definidos
+   * na enumeração EnvironmentMenuTitles.
+   */
+  private getButtonTitleDisabled(): EnvironmentMenuTitles {
+    if (this.showProfile) {
+      return EnvironmentMenuTitles.NONE;
+    }
+    return this.disabledTitle;
+  }
+
+  /**
+   * Obtém o título do botão desabilitado baseado na visibilidade do perfil do usuário.
+   *
+   * Este método retorna uma string que representa o título do botão desabilitado.
+   * Se o perfil do usuário não estiver visível, retorna uma string vazia.
+   * Caso contrário, retorna uma string vazia. Nesse caso, ambos títulos estão vazios.
+   *
+   * @returns {string} O título do botão desabilitado ou uma string vazia se o perfil estiver visível.
+   */
+  public get buttonTitleDisabled(): string {
+    return !this.showProfile ? this.getButtonTitleDisabled() : '';
   }
 
   /**
