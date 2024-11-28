@@ -52,7 +52,7 @@ export class ClassRequestFormComponent implements OnInit {
   @Input() editMode = false;
   /**
    * Dados da solicitação a serem editados, se disponíveis.
-   * @type {any}
+   * @type {IRequestData | null} - Os dados da solicitação ou null se não houver dados disponíveis.
    */
   @Input() requestData: IRequestData | null = null;
 
