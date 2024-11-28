@@ -19,7 +19,7 @@ import { SubjectService } from '../../providers/subject.service';
 import { ISubject } from '../../interfaces/subject.interface';
 import { RegistrationSuccessModalComponent } from '../registration-success-modal/registration-success-modal.component';
 import { LessonRequestService } from '../../providers/lesson-request.service';
-
+import { IRequestData } from '../../interfaces/class-request-data.interface';
 /**
  * Componente responsável pelo formulário de solicitação de aulas.
  * Gerencia a criação, validação e submissão de pedidos de aulas.
@@ -54,7 +54,7 @@ export class ClassRequestFormComponent implements OnInit {
    * Dados da solicitação a serem editados, se disponíveis.
    * @type {any}
    */
-  @Input() requestData: any = null;
+  @Input() requestData: IRequestData | null = null;
 
   /** Formulário principal de solicitação de aulas */
   classRequestForm: FormGroup;
