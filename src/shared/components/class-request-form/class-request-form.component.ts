@@ -130,7 +130,7 @@ export class ClassRequestFormComponent implements OnInit {
   /**
    * Inicializa o componente carregando a lista de matérias disponíveis
    */
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     try {
       // Primeiro, garantir que o serviço de matérias está disponível
       if (!this.subjectService) {
@@ -264,7 +264,7 @@ export class ClassRequestFormComponent implements OnInit {
    * Cria um novo grupo de controles para agendamento
    * @returns FormGroup com controles de data e hora
    */
-  private createScheduleControl() {
+  private createScheduleControl(): FormGroup {
     return this.fb.group({
       date: ['', Validators.required],
       time: ['', Validators.required],
@@ -275,7 +275,7 @@ export class ClassRequestFormComponent implements OnInit {
    * Getter que retorna o FormArray de agendamentos do formulário
    * @returns {FormArray} Array de controles de agendamento
    */
-  get schedules() {
+  get schedules(): FormArray {
     return this.classRequestForm.get('schedules') as FormArray;
   }
 
@@ -283,7 +283,7 @@ export class ClassRequestFormComponent implements OnInit {
    * Verifica se é possível adicionar mais horários ao formulário
    * @returns {boolean} true se podem ser adicionados mais horários (máximo 3)
    */
-  addSchedule() {
+  addSchedule(): void {
     if (this.schedules.length < 3) {
       this.schedules.push(this.createScheduleControl());
     }
@@ -301,7 +301,7 @@ export class ClassRequestFormComponent implements OnInit {
    * Remove um agendamento específico do formulário
    * @param {number} index - Índice do agendamento a ser removido
    */
-  removeSchedule(index: number) {
+  removeSchedule(index: number): void {
     this.schedules.removeAt(index);
   }
 
@@ -310,7 +310,7 @@ export class ClassRequestFormComponent implements OnInit {
    * @param {Reason} reason - Motivo selecionado/desselecionado
    * @param {MatCheckboxChange} event - Evento do checkbox
    */
-  onReasonChange(reason: Reason, event: MatCheckboxChange) {
+  onReasonChange(reason: Reason, event: MatCheckboxChange): void {
     const reasonsArray = this.classRequestForm.get('reasons') as FormArray;
     if (event.checked) {
       reasonsArray.push(this.fb.control(reason));
@@ -372,7 +372,7 @@ export class ClassRequestFormComponent implements OnInit {
   /**
    * Manipula mudanças nos campos de data/hora
    */
-  onScheduleChange() {
+  onScheduleChange(): void {
     this.errorMessage = '';
     this.conflictingSchedule = '';
     this.validateForm();
@@ -385,7 +385,7 @@ export class ClassRequestFormComponent implements OnInit {
    * Em caso de erro, exibe as mensagens apropriadas
    * @async
    */
-  async onSubmit() {
+  async onSubmit(): Promise<void> {
     if (this.classRequestForm.valid) {
       try {
         const requestData = this.prepareRequestData();
@@ -451,7 +451,7 @@ export class ClassRequestFormComponent implements OnInit {
    * Abre o modal de sucesso de solicitação de aula ao definir `isOpen` como `true`.
    * @public
    */
-  public openRegistrationSuccessDialog() {
+  public openRegistrationSuccessDialog(): void {
     this.registrationSuccessModal.isOpen = true;
   }
 
@@ -460,7 +460,7 @@ export class ClassRequestFormComponent implements OnInit {
    * e emite o evento `closeModal` para informar o fechamento.
    * @public
    */
-  public closeRegistrationSuccessDialog() {
+  public closeRegistrationSuccessDialog(): void {
     this.registrationSuccessModal.isOpen = false;
     this.closeModal.emit('updated');
   }
@@ -488,7 +488,7 @@ export class ClassRequestFormComponent implements OnInit {
    *
    * @private
    */
-  private validateForm() {
+  private validateForm(): void {
     const hasInvalidSchedules = this.schedules.controls.some((control) => {
       return control.get('date')?.errors || control.get('time')?.errors;
     });
