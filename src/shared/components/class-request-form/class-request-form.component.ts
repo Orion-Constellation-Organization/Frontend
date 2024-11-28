@@ -20,6 +20,7 @@ import { ISubject } from '../../interfaces/subject.interface';
 import { RegistrationSuccessModalComponent } from '../registration-success-modal/registration-success-modal.component';
 import { LessonRequestService } from '../../providers/lesson-request.service';
 import { IRequestData } from '../../interfaces/class-request-data.interface';
+import { ISchedule } from '../../interfaces/schedule.interface';
 /**
  * Componente responsável pelo formulário de solicitação de aulas.
  * Gerencia a criação, validação e submissão de pedidos de aulas.
@@ -344,7 +345,7 @@ export class ClassRequestFormComponent implements OnInit {
   private prepareRequestData(): IClassRequest {
     const formValue = this.classRequestForm.value;
 
-    const preferredDates = formValue.schedules.map((schedule: any) => {
+    const preferredDates = formValue.schedules.map((schedule: ISchedule) => {
       const date = new Date(schedule.date);
       return this.formatSchedule(date, schedule.time);
     });
@@ -409,14 +410,21 @@ export class ClassRequestFormComponent implements OnInit {
         this.hasScheduleError = false;
         this.errorMessage = '';
         this.conflictingSchedule = '';
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Erro na submissão:', error);
-        if (error.error?.errors?.[0]) {
-          const firstError = error.error.errors[0];
-          if (firstError.msg && firstError.value?.[0]) {
-            this.hasScheduleError = true;
-            this.errorMessage = 'Não é possível agendar este horário:';
-            this.conflictingSchedule = firstError.value[0];
+        if (typeof error === 'object' && error !== null && 'error' in error) {
+          const err = error as {
+            error?: { errors?: { msg?: string; value?: string[] }[] };
+          };
+          if (err.error?.errors?.[0]) {
+            const firstError = err.error.errors[0];
+            if (firstError.msg && firstError.value?.[0]) {
+              this.hasScheduleError = true;
+              this.errorMessage = 'Não é possível agendar este horário:';
+              this.conflictingSchedule = firstError.value[0];
+            } else {
+              this.conflictingSchedule = '';
+            }
           } else {
             this.conflictingSchedule = '';
           }
