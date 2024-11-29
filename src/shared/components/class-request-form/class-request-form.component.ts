@@ -21,6 +21,8 @@ import { RegistrationSuccessModalComponent } from '../registration-success-modal
 import { LessonRequestService } from '../../providers/lesson-request.service';
 import { IRequestData } from '../../interfaces/class-request-data.interface';
 import { ISchedule } from '../../interfaces/schedule.interface';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 /**
  * Componente responsável pelo formulário de solicitação de aulas.
  * Gerencia a criação, validação e submissão de pedidos de aulas.
@@ -108,6 +110,9 @@ export class ClassRequestFormComponent implements OnInit {
   /** Indica se a requisição está em andamento */
   isLoading: boolean = false;
 
+  /** Subject para gerenciar a assinatura de observadores */
+  private destroy$ = new Subject<void>();
+
   /**
    * Construtor do componente
    * @param fb - Serviço FormBuilder para criação de formulários reativos
@@ -144,6 +149,19 @@ export class ClassRequestFormComponent implements OnInit {
    */
   ngOnInit(): void {
     this.initializeComponent();
+
+    // Adicionar observador de mudanças no formulário com gerenciamento de destruição
+    this.classRequestForm.valueChanges
+      .pipe(takeUntil(this.destroy$)) // Usando takeUntil para gerenciar a assinatura
+      .subscribe(() => {
+        this.validateForm();
+        this.isFormModified = true;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(); // Emitindo para completar a assinatura
+    this.destroy$.complete(); // Completando o Subject
   }
 
   /**
@@ -184,12 +202,6 @@ export class ClassRequestFormComponent implements OnInit {
     } finally {
       this.isLoading = false; // Finaliza o loading
     }
-
-    // Adicionar observador de mudanças no formulário
-    this.classRequestForm.valueChanges.subscribe(() => {
-      this.validateForm();
-      this.isFormModified = true;
-    });
   }
 
   /**
