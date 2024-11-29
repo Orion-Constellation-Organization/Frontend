@@ -1,6 +1,7 @@
 @import "../../../app/styles/theme.scss";
 
-.class-card-manager-container {
+// Bloco: lesson-card-manager
+.lesson-card-manager {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -16,101 +17,99 @@
     border-radius: 40px;
     padding: 30px;
   }
-}
 
-.class-card-manager-info {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-}
+  // elementos
+  &__info {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
 
-.class-card-manager-student-info {
-  width: 50%;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 150%;
-  margin: auto;
-  text-align: left;
+  &__student-info {
+    width: 50%;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 150%;
+    margin: auto;
+    text-align: left;
 
-  @media (max-width: 1366px) {
-    font-size: 20px;
+    @media (max-width: 1366px) {
+      font-size: 20px;
+    }
+  }
+
+  &__student-reason {
+    width: 50%;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 150%;
+    margin: auto;
+    text-align: left;
+
+    @media (max-width: 1366px) {
+      font-size: 20px;
+    }
+  }
+
+  &__tutor-description {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 150%;
+
+    @media (max-width: 1366px) {
+      font-size: 20px;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  &__actions-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__actions-container-title {
+    width: 60%;
+
+    @media (max-width: 1366px) {
+      font-size: 20px;
+    }
+  }
+
+  &__actions-item-title {
+    width: 60%;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 150%;
+
+    @media (max-width: 1366px) {
+      font-size: 20px;
+    }
+  }
+
+  &__actions-item-schedule {
+    display: flex;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 150%;
+
+    @media (max-width: 1366px) {
+      font-size: 20px;
+    }
+  }
+
+  &__actions-container-buttons {
+    width: 40%;
+    gap: 10px;
   }
 }
 
-.class-card-manager-student-reason {
-  width: 50%;
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 150%;
-  margin: auto;
-  text-align: left;
-
-  @media (max-width: 1366px) {
-    font-size: 20px;
-  }
-}
-
-.class-card-manager-tutor-description {
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 150%;
-
-  @media (max-width: 1366px) {
-    font-size: 20px;
-  }
-}
-
-.class-card-manager-actions-item-title {
-  width: 60%;
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 150%;
-
-  @media (max-width: 1366px) {
-    font-size: 20px;
-  }
-}
-
-.class-card-manager-actions-container-title {
-  width: 60%;
-
-  @media (max-width: 1366px) {
-    font-size: 20px;
-  }
-}
-
-.class-card-manager-actions-container-buttons {
-  width: 40%;
-}
-
-.class-card-manager-actions-item-schedule {
-  display: flex;
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 150%;
-
-  @media (max-width: 1366px) {
-    font-size: 20px;
-  }
-}
-
-.class-card-manager-actions {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-}
-
-.class-card-manager-actions-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.class-card-manager-actions-container-buttons {
-  gap: 10px;
-}
-
-.class-card-manager-error-message {
+.lesson-card-manager__error-message {
   font-size: 24px;
   font-weight: 500;
   line-height: 150%;

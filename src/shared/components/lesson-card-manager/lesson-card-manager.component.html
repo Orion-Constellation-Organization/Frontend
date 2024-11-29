@@ -1,32 +1,32 @@
-<div *ngFor="let request of lessonRequests" class="class-card-manager-container">
-    <div class="class-card-manager-info">
-        <div class="class-card-manager-student-info">
+<div *ngFor="let request of lessonRequests" class="lesson-card-manager">
+    <div class="lesson-card-manager__info">
+        <div class="lesson-card-manager__student-info">
             <p>{{ request.userName || 'Usuário não identificado' }}</p>
             <p>{{ request.educationLevel || 'Nível de ensino não definido' }}</p>
             <p>{{ request.subject || 'Sem matéria definida' }}</p>
         </div>
-        <div class="class-card-manager-student-reason">
+        <div class="lesson-card-manager__student-reason">
             <p>{{ request.reasonType || 'Sem motivo especificado' }}</p>
         </div>
     </div>
-    <p class="class-card-manager-tutor-description">
+    <p class="lesson-card-manager__tutor-description">
         "{{ request.tutorDescription || 'Sem informações adicionais' }}"
     </p>
-    <div class="class-card-manager-actions">
-        <div class="class-card-manager-actions-item class-card-manager-actions-container-title">
-            <p class="class-card-manager-actions-item-title">Horários Disponíveis:</p>
+    <div class="lesson-card-manager__actions">
+        <div class="lesson-card-manager__actions-item lesson-card-manager__actions-container-title">
+            <p class="lesson-card-manager__actions-item-title">Horários Disponíveis:</p>
             <ng-container *ngFor="let schedule of request.availableSchedules">
-                <p class="class-card-manager-actions-item-schedule">Dia {{ schedule }} horas</p>
+                <p class="lesson-card-manager__actions-item-schedule">Dia {{ schedule }} horas</p>
             </ng-container>
         </div>
-        <div class="class-card-manager-actions-item class-card-manager-actions-container-buttons">
+        <div class="lesson-card-manager__actions-item lesson-card-manager__actions-container-buttons">
             <app-button [type]="editRequest" [label]="editRequest" (click)="onEditClick(request)"></app-button>
             <app-button [type]="deleteRequest" [label]="deleteRequest"></app-button>
         </div>
     </div>
 </div>
 <div *ngIf="errorMessage">
-    <p class="class-card-manager-error-message">{{ errorMessage }}</p>
+    <p class="lesson-card-manager__error-message">{{ errorMessage }}</p>
 </div>
 <ng-container *ngIf="showEditForm">
     <app-class-request-form [isOpen]="showEditForm" [editMode]="true" [requestData]="selectedRequest" (closeModal)="onCloseForm($event)">
