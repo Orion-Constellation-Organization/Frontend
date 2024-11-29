@@ -85,6 +85,12 @@ export class ClassRequestFormComponent implements OnInit {
   errorMessage: string = '';
 
   /**
+   * Mensagem de erro exibida quando ocorre algum problema na submissão
+   * @type {string}
+   */
+  error: string = '';
+
+  /**
    * Horário conflitante identificado durante a validação
    * @type {string}
    */
@@ -172,6 +178,7 @@ export class ClassRequestFormComponent implements OnInit {
       }
     } catch (error) {
       console.error('Erro ao carregar matérias:', error);
+      this.error = 'Erro ao carregar as matérias.';
       // Inicializar com array vazio para evitar erros de renderização
       this.subjects = [];
     } finally {
@@ -272,7 +279,7 @@ export class ClassRequestFormComponent implements OnInit {
       this.cdr.detectChanges();
     } catch (error) {
       console.error('Erro ao popular formulário:', error);
-      this.errorMessage = 'Erro ao carregar os dados do pedido.';
+      this.error = 'Erro ao carregar os dados do pedido.';
     }
   }
 
@@ -430,6 +437,7 @@ export class ClassRequestFormComponent implements OnInit {
       }
     } catch (error: unknown) {
       console.error('Erro na submissão:', error);
+      this.error = 'Erro ao enviar o pedido de aula.';
       if (typeof error === 'object' && error !== null && 'error' in error) {
         const err = error as {
           error?: { errors?: { msg?: string; value?: string[] }[] };
