@@ -99,6 +99,9 @@ export class ClassRequestFormComponent implements OnInit {
   /** Indica se o formulário foi modificado */
   isFormModified: boolean = false;
 
+  /** Indica se a requisição está em andamento */
+  isLoading: boolean = false;
+
   /**
    * Construtor do componente
    * @param fb - Serviço FormBuilder para criação de formulários reativos
@@ -141,6 +144,7 @@ export class ClassRequestFormComponent implements OnInit {
    * Inicializa o componente carregando a lista de matérias disponíveis
    */
   private async initializeComponent(): Promise<void> {
+    this.isLoading = true; // Inicia o loading
     try {
       // Primeiro, garantir que o serviço de matérias está disponível
       if (!this.subjectService) {
@@ -170,6 +174,8 @@ export class ClassRequestFormComponent implements OnInit {
       console.error('Erro ao carregar matérias:', error);
       // Inicializar com array vazio para evitar erros de renderização
       this.subjects = [];
+    } finally {
+      this.isLoading = false; // Finaliza o loading
     }
 
     // Adicionar observador de mudanças no formulário
@@ -396,8 +402,9 @@ export class ClassRequestFormComponent implements OnInit {
    * @async
    */
   async onSubmit(): Promise<void> {
-    if (this.classRequestForm.valid) {
-      try {
+    this.isLoading = true; // Inicia o loading
+    try {
+      if (this.classRequestForm.valid) {
         const requestData = this.prepareRequestData();
 
         // Verifica se está em modo de edição e se tem um ID válido
@@ -420,28 +427,30 @@ export class ClassRequestFormComponent implements OnInit {
         this.hasScheduleError = false;
         this.errorMessage = '';
         this.conflictingSchedule = '';
-      } catch (error: unknown) {
-        console.error('Erro na submissão:', error);
-        if (typeof error === 'object' && error !== null && 'error' in error) {
-          const err = error as {
-            error?: { errors?: { msg?: string; value?: string[] }[] };
-          };
-          if (err.error?.errors?.[0]) {
-            const firstError = err.error.errors[0];
-            if (firstError.msg && firstError.value?.[0]) {
-              this.hasScheduleError = true;
-              this.errorMessage = 'Não é possível agendar este horário:';
-              this.conflictingSchedule = firstError.value[0];
-            } else {
-              this.conflictingSchedule = '';
-            }
+      }
+    } catch (error: unknown) {
+      console.error('Erro na submissão:', error);
+      if (typeof error === 'object' && error !== null && 'error' in error) {
+        const err = error as {
+          error?: { errors?: { msg?: string; value?: string[] }[] };
+        };
+        if (err.error?.errors?.[0]) {
+          const firstError = err.error.errors[0];
+          if (firstError.msg && firstError.value?.[0]) {
+            this.hasScheduleError = true;
+            this.errorMessage = 'Não é possível agendar este horário:';
+            this.conflictingSchedule = firstError.value[0];
           } else {
             this.conflictingSchedule = '';
           }
         } else {
           this.conflictingSchedule = '';
         }
+      } else {
+        this.conflictingSchedule = '';
       }
+    } finally {
+      this.isLoading = false; // Finaliza o loading
     }
   }
 

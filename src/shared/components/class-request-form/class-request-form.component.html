@@ -99,5 +99,8 @@
         </form>
         <app-registration-success-modal [message]="message" (onClose)="closeRegistrationSuccessDialog()">
         </app-registration-success-modal>
+        <div *ngIf="isLoading" class="loading-spinner">
+            Carregando...
+        </div>
     </div>
 </div>
