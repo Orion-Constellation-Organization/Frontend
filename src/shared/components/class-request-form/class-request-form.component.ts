@@ -149,14 +149,6 @@ export class ClassRequestFormComponent implements OnInit {
    */
   ngOnInit(): void {
     this.initializeComponent();
-
-    // Adicionar observador de mudanças no formulário com gerenciamento de destruição
-    this.classRequestForm.valueChanges
-      .pipe(takeUntil(this.destroy$)) // Usando takeUntil para gerenciar a assinatura
-      .subscribe(() => {
-        this.validateForm();
-        this.isFormModified = true;
-      });
   }
 
   /**
@@ -208,6 +200,14 @@ export class ClassRequestFormComponent implements OnInit {
     } finally {
       this.isLoading = false; // Finaliza o loading
     }
+
+    // Adicionar observador de mudanças no formulário com gerenciamento de destruição
+    this.classRequestForm.valueChanges
+      .pipe(takeUntil(this.destroy$)) // Usando takeUntil para gerenciar a assinatura
+      .subscribe(() => {
+        this.validateForm();
+        this.isFormModified = true;
+      });
   }
 
   /**
