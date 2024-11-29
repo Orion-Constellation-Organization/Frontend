@@ -263,28 +263,7 @@ export class ClassRequestFormComponent implements OnInit {
       // Processar horários
       if (Array.isArray(this.requestData.availableSchedules)) {
         this.requestData.availableSchedules.forEach((schedule: string) => {
-          if (!schedule || !schedule.includes(' às ')) {
-            console.warn(
-              'Horário inválido encontrado ou formato incorreto:',
-              schedule
-            );
-            return;
-          }
-
-          const [datePart, timePart] = schedule
-            .split(' às ')
-            .map((part) => part?.trim());
-          const [day, month, year] = datePart.split('/').map(Number);
-          const date = new Date(year, month - 1, day);
-
-          if (isNaN(date.getTime()) || !day || !month || !year) {
-            console.warn('Data inválida encontrada:', datePart);
-            return;
-          }
-
-          schedulesArray.push(
-            this.fb.group({ date: [date], time: [timePart] })
-          );
+          this.processSchedule(schedule, schedulesArray);
         });
       }
 
@@ -300,6 +279,35 @@ export class ClassRequestFormComponent implements OnInit {
       console.error('Erro ao popular formulário:', error);
       this.error = 'Erro ao carregar os dados do pedido.';
     }
+  }
+
+  /**
+   * Processa um horário e o adiciona ao FormArray de horários.
+   * @param {string} schedule - O horário a ser processado.
+   * @param {FormArray} schedulesArray - O FormArray onde o horário será adicionado.
+   * @private
+   */
+  private processSchedule(schedule: string, schedulesArray: FormArray): void {
+    if (!schedule || !schedule.includes(' às ')) {
+      console.warn(
+        'Horário inválido encontrado ou formato incorreto:',
+        schedule
+      );
+      return;
+    }
+
+    const [datePart, timePart] = schedule
+      .split(' às ')
+      .map((part) => part?.trim());
+    const [day, month, year] = datePart.split('/').map(Number);
+    const date = new Date(year, month - 1, day);
+
+    if (isNaN(date.getTime()) || !day || !month || !year) {
+      console.warn('Data inválida encontrada:', datePart);
+      return;
+    }
+
+    schedulesArray.push(this.fb.group({ date: [date], time: [timePart] }));
   }
 
   /**
