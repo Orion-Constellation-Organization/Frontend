@@ -243,14 +243,15 @@ export class ClassRequestFormComponent implements OnInit {
         const reasonLabels = this.requestData.reasonType
           .split(', ')
           .filter(Boolean);
-        reasonLabels.forEach((label: string) => {
-          const reasonEntry = Object.entries(ReasonLabel).find(
-            ([_, value]) => value === label
-          );
-          if (reasonEntry) {
-            reasonsArray.push(this.fb.control(reasonEntry[0]));
-          }
-        });
+
+        reasonLabels
+          .map((label) =>
+            Object.entries(ReasonLabel).find(([_, value]) => value === label)
+          )
+          .filter((entry): entry is [string, string] => entry !== undefined) // Remove entradas não encontradas
+          .forEach(([key]) => {
+            reasonsArray.push(this.fb.control(key));
+          });
       }
 
       // Populando o FormArray de horários
