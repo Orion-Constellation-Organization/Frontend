@@ -128,9 +128,19 @@ export class ClassRequestFormComponent implements OnInit {
   }
 
   /**
+   * Método chamado durante a inicialização do componente.
+   * Este método é responsável por configurar o componente e carregar os dados necessários.
+   *
+   * @returns {void}
+   */
+  ngOnInit(): void {
+    this.initializeComponent();
+  }
+
+  /**
    * Inicializa o componente carregando a lista de matérias disponíveis
    */
-  async ngOnInit(): Promise<void> {
+  private async initializeComponent(): Promise<void> {
     try {
       // Primeiro, garantir que o serviço de matérias está disponível
       if (!this.subjectService) {
