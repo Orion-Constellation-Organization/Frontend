@@ -159,6 +159,12 @@ export class ClassRequestFormComponent implements OnInit {
       });
   }
 
+  /**
+   * Método chamado quando o componente é destruído.
+   * Este método é responsável por limpar as assinaturas e evitar vazamentos de memória.
+   *
+   * @returns {void}
+   */
   ngOnDestroy(): void {
     this.destroy$.next(); // Emitindo para completar a assinatura
     this.destroy$.complete(); // Completando o Subject
