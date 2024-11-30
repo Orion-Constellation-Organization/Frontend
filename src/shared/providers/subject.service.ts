@@ -16,6 +16,6 @@ export class SubjectService extends BaseService {
    * @throws {Error} Pode lançar um erro se a requisição falhar
    */
   async getSubjects(): Promise<ISubject[]> {
-    return this.call<ISubject[]>('GET', 'get/subject');
+    return this.call<ISubject[]>('GET', '/subject');
   }
 }

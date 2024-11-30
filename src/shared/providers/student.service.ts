@@ -24,7 +24,7 @@ import { IStudentResponse } from '../interfaces/student-response.interface';
  */
 export class StudentService extends BaseService {
   async createStudent(payload: ICreateStudent): Promise<IStudentResponse> {
-    return this.call('POST', 'register/student', payload);
+    return this.call('POST', '/student', payload);
   }
 
   /**
@@ -34,6 +34,6 @@ export class StudentService extends BaseService {
    * @returns {Promise<ISubject>} Promessa com os dados do estudante encontrado
    */
   async getStudentById(id: number): Promise<any> {
-    return this.call('GET', `get/student/${id}`);
+    return this.call('GET', `/student/${id}`);
   }
 }

@@ -455,7 +455,6 @@ export class ClassRequestFormComponent implements OnInit {
           this.message = 'Seu pedido de aula foi enviado com sucesso!';
           this.scrollToTop();
           this.openRegistrationSuccessDialog();
-          this.closeModal.emit();
         }
 
         this.hasScheduleError = false;
