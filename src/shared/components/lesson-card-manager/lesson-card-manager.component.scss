@@ -18,39 +18,42 @@
     padding: 30px;
   }
 
-  // elementos
+  // elemento: info
   &__info {
     display: flex;
     flex-direction: row;
     gap: 10px;
-  }
 
-  &__student-info {
-    width: 50%;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 150%;
-    margin: auto;
-    text-align: left;
+    // elemento: student
+    &__student {
+      width: 50%;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 150%;
+      margin: auto;
+      text-align: left;
 
-    @media (max-width: 1366px) {
-      font-size: 20px;
+      @media (max-width: 1366px) {
+        font-size: 20px;
+      }
+    }
+
+    // elemento: student-reason
+    &__student-reason {
+      width: 50%;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 150%;
+      margin: auto;
+      text-align: left;
+
+      @media (max-width: 1366px) {
+        font-size: 20px;
+      }
     }
   }
 
-  &__student-reason {
-    width: 50%;
-    font-size: 24px;
-    font-weight: 500;
-    line-height: 150%;
-    margin: auto;
-    text-align: left;
-
-    @media (max-width: 1366px) {
-      font-size: 20px;
-    }
-  }
-
+  // elemento: tutor-description
   &__tutor-description {
     font-size: 24px;
     font-weight: 500;
@@ -61,54 +64,61 @@
     }
   }
 
+  // elemento: actions
   &__actions {
     display: flex;
     flex-direction: row;
     gap: 10px;
-  }
 
-  &__actions-item {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  &__actions-container-title {
-    width: 60%;
-
-    @media (max-width: 1366px) {
-      font-size: 20px;
+    // elemento: item
+    &__item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
-  }
 
-  &__actions-item-title {
-    width: 60%;
-    font-size: 24px;
-    font-weight: 500;
-    line-height: 150%;
+    // elemento: container-title
+    &__container-title {
+      width: 60%;
 
-    @media (max-width: 1366px) {
-      font-size: 20px;
+      @media (max-width: 1366px) {
+        font-size: 20px;
+      }
     }
-  }
 
-  &__actions-item-schedule {
-    display: flex;
-    font-size: 24px;
-    font-weight: 500;
-    line-height: 150%;
+    // elemento: item-title
+    &__item-title {
+      width: 60%;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 150%;
 
-    @media (max-width: 1366px) {
-      font-size: 20px;
+      @media (max-width: 1366px) {
+        font-size: 20px;
+      }
     }
-  }
 
-  &__actions-container-buttons {
-    width: 40%;
-    gap: 10px;
+    // elemento: item-schedule
+    &__item-schedule {
+      display: flex;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 150%;
+
+      @media (max-width: 1366px) {
+        font-size: 20px;
+      }
+    }
+
+    // elemento: container-buttons
+    &__container-buttons {
+      width: 40%;
+      gap: 10px;
+    }
   }
 }
 
+// Bloco: error-message
 .lesson-card-manager__error-message {
   font-size: 24px;
   font-weight: 500;
