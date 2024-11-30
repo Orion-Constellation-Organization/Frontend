@@ -42,88 +42,6 @@ export class MainComponent implements OnInit {
   beginTitle = EnvironmentMenuTitles.BEGIN;
 
   /**
-   * Título exibido para a seção de aulas.
-   *
-   * @memberof MainComponent
-   * @type {EnvironmentMenuTitles}
-   */
-  classesTitle = EnvironmentMenuTitles.CLASSES;
-
-  /**
-   * Título exibido para a seção de dados cadastrais.
-   *
-   * @memberof MainComponent
-   * @type {EnvironmentMenuTitles}
-   */
-  registrationDataTitle = EnvironmentMenuTitles.REGISTRATION_DATA;
-
-  /**
-   * Título exibido para a seção de segurança.
-   *
-   * @memberof MainComponent
-   * @type {EnvironmentMenuTitles}
-   */
-  securityTitle = EnvironmentMenuTitles.SECURITY;
-
-  /**
-   * Título exibido para a seção de agendamentos.
-   *
-   * @memberof MainComponent
-   * @type {EnvironmentMenuTitles}
-   */
-  scheduledTitle = EnvironmentMenuTitles.SCHEDULED;
-
-  /**
-   * Título exibido para a seção de pedidos de tutoria.
-   *
-   * @memberof MainComponent
-   * @type {EnvironmentMenuTitles}
-   */
-  tutoringRequestsTitle = EnvironmentMenuTitles.TUTORING_REQUESTS;
-
-  /**
-   * Título exibido para a seção de aguardando confirmação do aluno.
-   *
-   * @memberof MainComponent
-   * @type {EnvironmentMenuTitles}
-   */
-  pendingStudentConfirmationTitle =
-    EnvironmentMenuTitles.PENDING_STUDENT_CONFIRMATION;
-
-  /**
-   * Título exibido para a seção desabilitada.
-   *
-   * @memberof MainComponent
-   * @type {EnvironmentMenuTitles}
-   */
-  disabledTitle = EnvironmentMenuTitles.DISABLED;
-
-  /**
-   * aguardando voluntário
-   *
-   * @memberof MainComponent
-   * @type {EnvironmentMenuTitles}
-   */
-  waitingVolunteerTitle = EnvironmentMenuTitles.WAITING_VOLUNTEER;
-
-  /**
-   * aguardando sua confirmação
-   *
-   * @memberof MainComponent
-   * @type {EnvironmentMenuTitles}
-   */
-  waitingYourConfirmationTitle =
-    EnvironmentMenuTitles.WAITING_YOUR_CONFIRMATION;
-
-  /**
-   * aulas agendadas
-   *
-   * @memberof MainComponent
-   * @type {EnvironmentMenuTitles}
-   */
-  scheduledLessonsTitle = EnvironmentMenuTitles.SCHEDULED_LESSONS;
-
-  /**
    * Nome do tutor atualmente em uso.
    *
    * @memberof MainComponent
@@ -307,9 +225,9 @@ export class MainComponent implements OnInit {
    */
   private getButtonTitleClasses(): EnvironmentMenuTitles {
     if (this.showProfile) {
-      return this.registrationDataTitle;
+      return EnvironmentMenuTitles.REGISTRATION_DATA;
     }
-    return this.classesTitle;
+    return EnvironmentMenuTitles.CLASSES;
   }
 
   /**
@@ -325,7 +243,7 @@ export class MainComponent implements OnInit {
   public get buttonTitleClasses(): string {
     return !this.showProfile
       ? this.getButtonTitleClasses()
-      : this.registrationDataTitle;
+      : EnvironmentMenuTitles.REGISTRATION_DATA;
   }
 
   /**
@@ -342,11 +260,11 @@ export class MainComponent implements OnInit {
    */
   private getButtonTitleOne(): EnvironmentMenuTitles {
     if (this.showProfile) {
-      return this.securityTitle;
+      return EnvironmentMenuTitles.SECURITY;
     }
     return this.userType === UserType.STUDENT
-      ? this.waitingVolunteerTitle
-      : this.scheduledTitle;
+      ? EnvironmentMenuTitles.WAITING_VOLUNTEER
+      : EnvironmentMenuTitles.SCHEDULED;
   }
 
   /**
@@ -359,7 +277,9 @@ export class MainComponent implements OnInit {
    * @returns {string} O título do primeiro botão ou o título de segurança se o perfil estiver visível.
    */
   public get buttonTitleOne(): string {
-    return !this.showProfile ? this.getButtonTitleOne() : this.securityTitle;
+    return !this.showProfile
+      ? this.getButtonTitleOne()
+      : EnvironmentMenuTitles.SECURITY;
   }
 
   /**
@@ -379,8 +299,8 @@ export class MainComponent implements OnInit {
       return EnvironmentMenuTitles.NONE;
     }
     return this.userType === UserType.STUDENT
-      ? this.waitingYourConfirmationTitle
-      : this.tutoringRequestsTitle;
+      ? EnvironmentMenuTitles.WAITING_YOUR_CONFIRMATION
+      : EnvironmentMenuTitles.TUTORING_REQUESTS;
   }
 
   /**
@@ -413,8 +333,8 @@ export class MainComponent implements OnInit {
       return EnvironmentMenuTitles.NONE;
     }
     return this.userType === UserType.STUDENT
-      ? this.scheduledLessonsTitle
-      : this.pendingStudentConfirmationTitle;
+      ? EnvironmentMenuTitles.SCHEDULED_LESSONS
+      : EnvironmentMenuTitles.PENDING_STUDENT_CONFIRMATION;
   }
 
   /**
@@ -443,7 +363,7 @@ export class MainComponent implements OnInit {
     if (this.showProfile) {
       return EnvironmentMenuTitles.NONE;
     }
-    return this.disabledTitle;
+    return EnvironmentMenuTitles.DISABLED;
   }
 
   /**
