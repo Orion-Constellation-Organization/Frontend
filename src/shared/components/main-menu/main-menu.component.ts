@@ -122,24 +122,6 @@ export class MainMenuComponent {
   }
 
   /**
-   * Construtor do componente MainMenu.
-   * Inicializa o estado do componente e adiciona um listener para redimensionamento da janela.
-   */
-  constructor() {
-    this.checkScreenSize();
-    window.addEventListener('resize', () => this.checkScreenSize());
-  }
-
-  /**
-   * Verifica o tamanho da tela e atualiza a flag isMobile.
-   * Define isMobile como true se a largura da janela for menor ou igual a 768 pixels.
-   * @returns {void}
-   */
-  checkScreenSize() {
-    this.isMobile = window.innerWidth <= 768;
-  }
-
-  /**
    * Alterna o estado do menu.
    * @returns {void}
    */
