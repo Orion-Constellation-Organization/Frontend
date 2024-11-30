@@ -16,7 +16,7 @@ export class ClassRequestService extends BaseService {
    * @returns Promise que resolve com a resposta da criação da solicitação
    */
   async createClassRequest(request: IClassRequest): Promise<IClassRequest> {
-    return this.call<IClassRequest>('POST', 'register/lessonrequest', request);
+    return this.call<IClassRequest>('POST', '/lessonrequest', request);
   }
 
   /**
@@ -29,10 +29,6 @@ export class ClassRequestService extends BaseService {
     id: number,
     request: IClassRequest
   ): Promise<IClassRequest> {
-    return this.call<IClassRequest>(
-      'PATCH',
-      `update/lessonrequest/${id}`,
-      request
-    );
+    return this.call<IClassRequest>('PATCH', `/lessonrequest/${id}`, request);
   }
 }

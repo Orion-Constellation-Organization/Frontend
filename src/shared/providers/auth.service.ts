@@ -93,10 +93,10 @@ export class AuthService {
       let endpoint = '';
       switch (decodedToken.role) {
         case UserType.TUTOR:
-          endpoint = `${environment.urlBase}/get/tutor/${decodedToken.id}`;
+          endpoint = `${environment.urlBase}/tutor/${decodedToken.id}`;
           break;
         case UserType.STUDENT:
-          endpoint = `${environment.urlBase}/get/student/${decodedToken.id}`;
+          endpoint = `${environment.urlBase}/student/${decodedToken.id}`;
           break;
         default:
           throw new Error('Tipo de usuário não reconhecido');
