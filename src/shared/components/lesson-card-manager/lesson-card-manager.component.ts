@@ -101,42 +101,50 @@ export class LessonCardManagerComponent implements OnInit {
         }
 
         // Mapear as solicitações de aula para o formato do card
-        this.lessonRequests = studentData.lessonRequests.map((request: any) => {
-          const requestId = request.ClassId;
-
-          if (!requestId) {
-            console.warn('Solicitação sem ID:', request);
-          }
-
-          // Formatar todos os horários disponíveis
-          const formattedSchedules = Array.isArray(request.preferredDates)
-            ? request.preferredDates
-                .filter(Boolean)
-                .map(this.formatSchedule)
-                .filter(Boolean)
-            : [];
-
-          return {
-            classId: requestId,
-            userName: studentData.username,
-            educationLevel: studentData.educationLevel.levelType,
-            subject:
-              request.subject.subjectName || 'Erro ao obter a disciplina',
-            reasonType: request.reason
-              .map((r: string) => ReasonLabel[r as Reason] || r)
-              .join(', '),
-            tutorDescription:
-              request.additionalInfo || 'Sem informações adicionais',
-            availableSchedules: this.getAvailableSchedules(formattedSchedules),
-            subjectId: request.subject.subjectId,
-            studentId: studentData.id,
-          };
-        });
+        this.lessonRequests = studentData.lessonRequests.map((request: any) =>
+          this.mapLessonRequest(request, studentData)
+        );
       }
     } catch (error) {
       console.error('Erro ao carregar dados do usuário', error);
       this.errorMessage = 'Erro ao carregar dados do usuário';
     }
+  }
+
+  /**
+   * Mapeia uma solicitação de aula para o formato do card.
+   * @param request - A solicitação de aula a ser mapeada.
+   * @param studentData - Os dados do estudante relacionados à solicitação.
+   * @returns Um objeto contendo os dados formatados da solicitação de aula.
+   */
+  private mapLessonRequest(request: any, studentData: any) {
+    const requestId = request.ClassId;
+
+    if (!requestId) {
+      console.warn('Solicitação sem ID:', request);
+    }
+
+    // Formatar todos os horários disponíveis
+    const formattedSchedules = Array.isArray(request.preferredDates)
+      ? request.preferredDates
+          .filter(Boolean)
+          .map(this.formatSchedule)
+          .filter(Boolean)
+      : [];
+
+    return {
+      classId: requestId,
+      userName: studentData.username,
+      educationLevel: studentData.educationLevel.levelType,
+      subject: request.subject.subjectName || 'Erro ao obter a disciplina',
+      reasonType: request.reason
+        .map((r: string) => ReasonLabel[r as Reason] || r)
+        .join(', '),
+      tutorDescription: request.additionalInfo || 'Sem informações adicionais',
+      availableSchedules: this.getAvailableSchedules(formattedSchedules),
+      subjectId: request.subject.subjectId,
+      studentId: studentData.id,
+    };
   }
 
   /**
