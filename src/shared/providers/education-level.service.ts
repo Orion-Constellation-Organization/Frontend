@@ -24,6 +24,6 @@ export class EducationLevelService extends BaseService {
    * @returns Promise contendo um array de níveis de educação
    */
   getEducationLevels(): Promise<IEducationLevel[]> {
-    return this.call('GET', 'get/educationLevel');
+    return this.call('GET', '/educationLevel');
   }
 }

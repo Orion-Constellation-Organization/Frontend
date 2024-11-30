@@ -48,7 +48,7 @@ export class BaseService {
    * @returns {Promise<T>} Promise que resolve com a resposta da API do tipo T
    */
   protected call<T>(method: string, endpoint: string, body?: any): Promise<T> {
-    const url = `${this.serverUrl}/${endpoint}`;
+    const url = `${this.serverUrl}${endpoint}`;
     const token = localStorage.getItem('authToken');
 
     const headers = new HttpHeaders({
