@@ -16,42 +16,32 @@ export class LessonCardManagerComponent implements OnInit {
   /**
    * Nome do usuário.
    */
-  @Input() userName: string = '';
+  @Input() public userName: string = '';
 
   /**
    * Nível de educação do usuário.
    */
-  @Input() educationLevel: string = '';
+  @Input() public educationLevel: string = '';
 
   /**
    * Solicitações de aula do usuário.
    */
-  @Input() lessonRequests: any[] = [];
-
-  /**
-   * Botão para editar a solicitação.
-   */
-  editRequest = EnvironmentButton.EDIT;
-
-  /**
-   * Botão para deletar a solicitação.
-   */
-  deleteRequest = EnvironmentButton.DELETE;
+  @Input() public lessonRequests: any[] = [];
 
   /**
    * Indica se o formulário de edição deve ser exibido.
    */
-  showEditForm = false;
+  public showEditForm = false;
 
   /**
    * Solicitação selecionada para edição.
    */
-  selectedRequest: any = null;
+  public selectedRequest: any = null;
 
   /**
    * Mensagem de erro.
    */
-  errorMessage: string | null = null;
+  public errorMessage: string | null = null;
 
   /**
    * Cria uma instância do componente LessonCardManager.
@@ -69,7 +59,7 @@ export class LessonCardManagerComponent implements OnInit {
    * Método de ciclo de vida que é chamado após a inicialização do componente.
    * Carrega os dados do usuário logado.
    */
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.loadUserData();
   }
 
@@ -78,7 +68,7 @@ export class LessonCardManagerComponent implements OnInit {
    * @param preferredDates - Datas preferidas.
    * @returns Horários disponíveis.
    */
-  getAvailableSchedules(preferredDates: string[]): string[] {
+  public getAvailableSchedules(preferredDates: string[]): string[] {
     return preferredDates.length > 3
       ? preferredDates.slice(0, 3)
       : preferredDates;
@@ -189,7 +179,7 @@ export class LessonCardManagerComponent implements OnInit {
    * Manipula o clique no botão de edição.
    * @param request - Solicitação a ser editada.
    */
-  onEditClick(request: any): void {
+  public onEditClick(request: any): void {
     if (!request.classId) {
       console.error('Tentativa de edição sem ID da solicitação:', request);
       return;
@@ -244,7 +234,7 @@ export class LessonCardManagerComponent implements OnInit {
    * Fecha o formulário de edição.
    * @param result - Resultado da edição.
    */
-  onCloseForm(result?: string): void {
+  public onCloseForm(result?: string): void {
     this.showEditForm = false;
     this.selectedRequest = null;
     this.cdr.detectChanges();
@@ -254,5 +244,17 @@ export class LessonCardManagerComponent implements OnInit {
         this.loadUserData();
       }, 100);
     }
+  }
+
+  /**
+   * Obtém os tipos de botões disponíveis para edição e exclusão.
+   * @returns Um objeto contendo os tipos de botões de edição e exclusão.
+   */
+  public get buttonTypes() {
+    const { EDIT, DELETE } = EnvironmentButton;
+    return {
+      editRequest: EDIT,
+      deleteRequest: DELETE,
+    };
   }
 }

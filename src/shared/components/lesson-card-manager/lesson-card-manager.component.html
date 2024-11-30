@@ -20,8 +20,8 @@
             </ng-container>
         </div>
         <div class="lesson-card-manager__actions-item lesson-card-manager__actions-container-buttons">
-            <app-button [type]="editRequest" [label]="editRequest" (click)="onEditClick(request)"></app-button>
-            <app-button [type]="deleteRequest" [label]="deleteRequest"></app-button>
+            <app-button [type]="buttonTypes.editRequest" [label]="buttonTypes.editRequest" (click)="onEditClick(request)"></app-button>
+            <app-button [type]="buttonTypes.deleteRequest" [label]="buttonTypes.deleteRequest"></app-button>
         </div>
     </div>
 </div>
