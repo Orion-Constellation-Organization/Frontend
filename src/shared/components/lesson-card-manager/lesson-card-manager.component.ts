@@ -108,47 +108,11 @@ export class LessonCardManagerComponent implements OnInit {
             console.warn('Solicitação sem ID:', request);
           }
 
-          // Função auxiliar para formatar a data
-          const formatSchedule = (dateString: string): string => {
-            try {
-              if (!dateString) return 'Ocorreu um erro ao formatar a data';
-
-              // Verifica se já está no formato desejado
-              if (dateString.includes(' às ')) {
-                return dateString;
-              }
-
-              // Parse da data em formato ISO ou outro formato
-              const [datePart, timePart] = dateString.split(' ');
-              const date = new Date(datePart);
-
-              if (isNaN(date.getTime())) {
-                console.warn('Data inválida:', dateString);
-                return 'Ocorreu um erro ao formatar a data';
-              }
-
-              // Formatar a data para dd/MM/yyyy
-              const day = date.getDate().toString().padStart(2, '0');
-              const month = (date.getMonth() + 1).toString().padStart(2, '0');
-              const year = date.getFullYear();
-
-              // Formatar a hora (assumindo que timePart está em formato HH:mm)
-              const formattedTime = timePart
-                ? timePart.substring(0, 5)
-                : '00:00';
-
-              return `${day}/${month}/${year} às ${formattedTime}`;
-            } catch (error) {
-              console.error('Erro ao formatar data:', dateString, error);
-              return 'Ocorreu um erro ao formatar a data';
-            }
-          };
-
           // Formatar todos os horários disponíveis
           const formattedSchedules = Array.isArray(request.preferredDates)
             ? request.preferredDates
                 .filter(Boolean)
-                .map(formatSchedule)
+                .map(this.formatSchedule)
                 .filter(Boolean)
             : [];
 
@@ -174,6 +138,44 @@ export class LessonCardManagerComponent implements OnInit {
       this.errorMessage = 'Erro ao carregar dados do usuário';
     }
   }
+
+  /**
+   * Função auxiliar para formatar a data.
+   * @param dateString - A string da data a ser formatada.
+   * @returns A data formatada ou uma mensagem de erro.
+   */
+  private formatSchedule = (dateString: string): string => {
+    try {
+      if (!dateString) return 'Ocorreu um erro ao formatar a data';
+
+      // Verifica se já está no formato desejado
+      if (dateString.includes(' às ')) {
+        return dateString;
+      }
+
+      // Parse da data em formato ISO ou outro formato
+      const [datePart, timePart] = dateString.split(' ');
+      const date = new Date(datePart);
+
+      if (isNaN(date.getTime())) {
+        console.warn('Data inválida:', dateString);
+        return 'Ocorreu um erro ao formatar a data';
+      }
+
+      // Formatar a data para dd/MM/yyyy
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear();
+
+      // Formatar a hora (assumindo que timePart está em formato HH:mm)
+      const formattedTime = timePart ? timePart.substring(0, 5) : '00:00';
+
+      return `${day}/${month}/${year} às ${formattedTime}`;
+    } catch (error) {
+      console.error('Erro ao formatar data:', dateString, error);
+      return 'Ocorreu um erro ao formatar a data';
+    }
+  };
 
   /**
    * Manipula o clique no botão de edição.
