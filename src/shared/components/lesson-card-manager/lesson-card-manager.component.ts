@@ -5,6 +5,8 @@ import { StudentService } from 'src/shared/providers/student.service';
 import { Reason, ReasonLabel } from 'src/utils/enum/reason.enum';
 import { EnvironmentButton } from 'src/utils/enum/environmentButton.enum';
 import { Observable } from 'rxjs';
+import { timer } from 'rxjs';
+import { take } from 'rxjs/operators';
 /**
  * Componente para gerenciar cards de solicitações de aula.
  */
@@ -241,7 +243,8 @@ export class LessonCardManagerComponent implements OnInit {
   }
 
   /**
-   * Fecha o formulário de edição.
+ Fecha o formulário de edição e emite um evento quando a operação é concluída.
+   * Este método também atualiza os dados do usuário se o resultado da edição for 'updated'.
    * @param result - Resultado da edição.
    */
   public onCloseForm(result?: string): void {
@@ -250,9 +253,11 @@ export class LessonCardManagerComponent implements OnInit {
     this.cdr.detectChanges();
 
     if (result === 'updated') {
-      setTimeout(() => {
-        this.loadUserData();
-      }, 100);
+      timer(100)
+        .pipe(take(1))
+        .subscribe(() => {
+          this.loadUserData();
+        });
     }
   }
 
