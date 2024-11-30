@@ -4,17 +4,17 @@
 .lesson-card-manager {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  max-width: 796px;
+  gap: $gap-default;
+  max-width: $max-width-large;
   background-color: $color-customization-angular-material;
-  border-radius: 80px;
+  border-radius: $border-radius-large;
   padding: 45px;
   margin: auto auto 20px auto;
 
   @media (max-width: 1366px) {
     gap: 0px;
-    max-width: 700px;
-    border-radius: 40px;
+    max-width: $max-width-medium;
+    border-radius: $border-radius-medium;
     padding: 30px;
   }
 
@@ -22,53 +22,41 @@
   &__info {
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: $gap-default;
 
     // elemento: student
     &__student {
       width: 50%;
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 150%;
+      @include responsive-font($font-size-large, $font-size-medium);
+      font-weight: $font-weight-bold;
+      line-height: $line-height;
       margin: auto;
       text-align: left;
-
-      @media (max-width: 1366px) {
-        font-size: 20px;
-      }
     }
 
     // elemento: student-reason
     &__student-reason {
       width: 50%;
-      font-size: 24px;
-      font-weight: 500;
-      line-height: 150%;
+      @include responsive-font($font-size-large, $font-size-medium);
+      font-weight: $font-weight-medium;
+      line-height: $line-height;
       margin: auto;
       text-align: left;
-
-      @media (max-width: 1366px) {
-        font-size: 20px;
-      }
     }
   }
 
   // elemento: tutor-description
   &__tutor-description {
-    font-size: 24px;
-    font-weight: 500;
-    line-height: 150%;
-
-    @media (max-width: 1366px) {
-      font-size: 20px;
-    }
+    @include responsive-font($font-size-large, $font-size-medium);
+    font-weight: $font-weight-medium;
+    line-height: $line-height;
   }
 
   // elemento: actions
   &__actions {
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: $gap-default;
 
     // elemento: item
     &__item {
@@ -80,52 +68,35 @@
     // elemento: container-title
     &__container-title {
       width: 60%;
-
-      @media (max-width: 1366px) {
-        font-size: 20px;
-      }
+      @include responsive-font($font-size-large, $font-size-medium);
     }
 
     // elemento: item-title
     &__item-title {
       width: 60%;
-      font-size: 24px;
-      font-weight: 500;
-      line-height: 150%;
-
-      @media (max-width: 1366px) {
-        font-size: 20px;
-      }
+      @include responsive-font($font-size-large, $font-weight-medium);
+      line-height: $line-height;
     }
 
     // elemento: item-schedule
     &__item-schedule {
       display: flex;
-      font-size: 24px;
-      font-weight: 500;
-      line-height: 150%;
-
-      @media (max-width: 1366px) {
-        font-size: 20px;
-      }
+      @include responsive-font($font-size-large, $font-weight-medium);
+      line-height: $line-height;
     }
 
     // elemento: container-buttons
     &__container-buttons {
       width: 40%;
-      gap: 10px;
+      gap: $gap-default;
     }
   }
 }
 
 // Bloco: error-message
 .lesson-card-manager__error-message {
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 150%;
+  @include responsive-font($font-size-large, $font-size-medium);
+  font-weight: $font-weight-medium;
+  line-height: $line-height;
   color: $color-alert-error;
-
-  @media (max-width: 1366px) {
-    font-size: 20px;
-  }
 }
