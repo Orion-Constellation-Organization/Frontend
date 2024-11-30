@@ -1,4 +1,6 @@
 import { IClassRequest } from './class-request.interface';
+import { IStudentResponse } from './student-response.interface';
+import { ITutorResponse } from './tutor-response.interface';
 
 /**
  * Representa um pedido de aula.
@@ -22,8 +24,8 @@ export interface ILessonRequest extends IClassRequest {
   };
 
   /** Estudante associado ao pedido, pode ser nulo */
-  student: any | null;
+  student: IStudentResponse | null;
 
   /** Tutores associados ao pedido, pode ser nulo */
-  tutors: any | null;
+  tutors: ITutorResponse | null;
 }
