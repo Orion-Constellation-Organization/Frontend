@@ -33,7 +33,7 @@ export class LessonRequestService extends BaseService {
    * @param id - ID da solicitação a ser deletada
    * @returns Promise com a resposta da deleção
    */
-  async deleteLessonRequest(id: number): Promise<any> {
+  async deleteLessonRequest(id: number): Promise<void> {
     return this.call('DELETE', `delete/lessonrequest/${id}`);
   }
 
@@ -43,8 +43,10 @@ export class LessonRequestService extends BaseService {
    * @param request - Dados atualizados da solicitação
    * @returns Promise com a resposta da atualização
    */
-  async updateLessonRequest(id: number, request: IClassRequest): Promise<any> {
-    console.log('Atualizando solicitação:', { id, request });
+  async updateLessonRequest(
+    id: number,
+    request: IClassRequest
+  ): Promise<IClassRequest> {
     return this.call('PATCH', `update/lessonrequest/${id}`, request);
   }
 }
