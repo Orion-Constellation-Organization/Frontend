@@ -4,6 +4,7 @@ import { UserType } from 'src/utils/enum/userType.enum';
 import { StudentService } from 'src/shared/providers/student.service';
 import { Reason, ReasonLabel } from 'src/utils/enum/reason.enum';
 import { EnvironmentButton } from 'src/utils/enum/environmentButton.enum';
+import { Observable } from 'rxjs';
 /**
  * Componente para gerenciar cards de solicitações de aula.
  */
@@ -187,22 +188,21 @@ export class LessonCardManagerComponent implements OnInit {
 
   /**
    * Manipula o clique no botão de edição.
+   * Este método verifica se a solicitação possui um ID válido antes de abrir o formulário de edição.
+   * Se um formulário de edição já estiver aberto, ele será fechado antes de abrir o novo.
    * @param request - Solicitação a ser editada.
    */
   public onEditClick(request: any): void {
     if (!request.classId) {
       console.error('Tentativa de edição sem ID da solicitação:', request);
+      this.errorMessage = 'Tentativa de edição sem ID da solicitação';
       return;
     }
-
     // Fechar qualquer modal aberto anteriormente
     if (this.showEditForm) {
-      this.showEditForm = false;
-      this.selectedRequest = null;
-      // Dar tempo para o componente ser destruído adequadamente
-      setTimeout(() => {
+      this.closeEditForm().subscribe(() => {
         this.openEditForm(request);
-      }, 100);
+      });
     } else {
       this.openEditForm(request);
     }
@@ -266,5 +266,19 @@ export class LessonCardManagerComponent implements OnInit {
       editRequest: EDIT,
       deleteRequest: DELETE,
     };
+  }
+
+  /**
+   * Fecha o formulário de edição e emite um evento quando a operação é concluída.
+   * @returns Um Observable que emite um valor quando o formulário é fechado.
+   */
+  private closeEditForm(): Observable<void> {
+    return new Observable<void>((observer) => {
+      this.showEditForm = false;
+      this.selectedRequest = null;
+      this.cdr.detectChanges();
+      observer.next();
+      observer.complete();
+    });
   }
 }
