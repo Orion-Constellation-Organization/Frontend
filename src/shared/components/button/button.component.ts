@@ -31,15 +31,27 @@ export class ButtonComponent {
    * @returns {Object} Objeto com as classes CSS
    */
   get buttonClass() {
+    const {
+      PRIMARY,
+      SECONDARY,
+      CANCEL,
+      DELETE,
+      SAVE,
+      EDIT,
+      CLOSE,
+      SUBMIT,
+      GHOST,
+    } = EnvironmentButton;
     return {
-      'button-primary': this.type === EnvironmentButton.PRIMARY,
-      'button-secondary': this.type === EnvironmentButton.SECONDARY,
-      'button-cancel': this.type === EnvironmentButton.CANCEL,
-      'button-delete': this.type === EnvironmentButton.DELETE,
-      'button-save': this.type === EnvironmentButton.SAVE,
-      'button-close': this.type === EnvironmentButton.CLOSE,
-      'button-submit': this.type === EnvironmentButton.SUBMIT,
-      'button-ghost': this.type === EnvironmentButton.GHOST,
+      'button-primary': this.type === PRIMARY,
+      'button-secondary': this.type === SECONDARY,
+      'button-cancel': this.type === CANCEL,
+      'button-delete': this.type === DELETE,
+      'button-save': this.type === SAVE,
+      'button-edit': this.type === EDIT,
+      'button-close': this.type === CLOSE,
+      'button-submit': this.type === SUBMIT,
+      'button-ghost': this.type === GHOST,
       'button-disabled': this.disabled,
     };
   }

@@ -12,22 +12,16 @@
         <button class="main-nav-btn-secondary" [ngClass]="{'main-nav-btn-secondary-profile': hideButtonsProfile}">{{navMenuBtnTitleClasses}}</button>
     </div>
     <div class="main-nav-box">
-        <button class="main-nav-btn-tertiary-click" [ngClass]="{'main-nav-btn-tertiary-click-profile': hideButtonsProfile}">{{navMenuBtnTitleOne}}</button>
+        <button class="main-nav-btn-tertiary-click" (click)="onButtonOneClick()" [ngClass]="{'main-nav-btn-tertiary-click-profile': hideButtonsProfile}">{{navMenuBtnTitleOne}}</button>
     </div>
     <div class="main-nav-box">
-        <button *ngIf="!hideButtonsProfile" class="main-nav-btn-tertiary-click">{{navMenuBtnTitleTwo}}</button>
+        <button *ngIf="!hideButtonsProfile" class="main-nav-btn-tertiary-click" (click)="onButtonTwoClick()">{{navMenuBtnTitleTwo}}</button>
     </div>
     <div class="main-nav-box">
-        <button *ngIf="!hideButtonsProfile" class="main-nav-btn-tertiary-click">{{navMenuBtnTitleThree}}</button>
+        <button *ngIf="!hideButtonsProfile" class="main-nav-btn-tertiary-click" (click)="onButtonThreeClick()">{{navMenuBtnTitleThree}}</button>
     </div>
     <div class="main-nav-box">
         <button *ngIf="!hideButtonsProfile" class="main-nav-btn-secondary" disabled>{{navMenuBtnTitleDisabled}}</button>
-    </div>
-    <div class="main-nav-box">
-        <button *ngIf="!hideButtonsProfile" class="main-nav-btn-tertiary" disabled>{{navMenuBtnTitleDisabled}}</button>
-    </div>
-    <div class="main-nav-box">
-        <button *ngIf="!hideButtonsProfile" class="main-nav-btn-tertiary" disabled>{{navMenuBtnTitleDisabled}}</button>
     </div>
     <div class="main-nav-box">
         <button *ngIf="!hideButtonsProfile" class="main-nav-btn-tertiary last" disabled>{{navMenuBtnTitleDisabled}}</button>

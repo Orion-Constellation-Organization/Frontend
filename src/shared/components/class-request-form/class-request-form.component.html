@@ -11,7 +11,7 @@
             <div class="form-section">
                 <p class="form-label form-label-reason">Qual o motivo do pedido de aula? *</p>
                 <div class="checkbox-group">
-                    <mat-checkbox class="checkbox-item" *ngFor="let reason of reasonOptions" (change)="onReasonChange(reason.value, $event)" required>
+                    <mat-checkbox class="checkbox-item" *ngFor="let reason of reasonOptions" [checked]="isReasonSelected(reason.value)" (change)="onReasonChange(reason.value, $event)" required>
                         {{reason.label}}
                     </mat-checkbox>
                 </div>
@@ -93,11 +93,17 @@
             </div>
 
             <div class="form-actions">
-                <app-button [label]="'Enviar'" [type]="EnvironmentButton.PRIMARY" [disabled]="!classRequestForm.valid || hasScheduleError">
+                <app-button [label]="editMode ? 'Atualizar' : 'Enviar'" [type]="EnvironmentButton.PRIMARY" [disabled]="classRequestForm.invalid || hasScheduleError || !isFormModified">
                 </app-button>
             </div>
         </form>
         <app-registration-success-modal [message]="message" (onClose)="closeRegistrationSuccessDialog()">
         </app-registration-success-modal>
+        <div *ngIf="isLoading" class="loading-spinner">
+            Carregando...
+        </div>
+        <div *ngIf="error" class="error-message">
+            <p>{{ error }}</p>
+        </div>
     </div>
 </div>

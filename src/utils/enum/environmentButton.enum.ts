@@ -12,9 +12,11 @@ export enum EnvironmentButton {
   /** Botão para cancelar ações */
   CANCEL = 'Cancel',
   /** Botão para deletar itens */
-  DELETE = 'Delete',
+  DELETE = 'Excluir',
   /** Botão para salvar alterações */
   SAVE = 'Save',
+  /** Botão para editar itens */
+  EDIT = 'Editar',
   /** Botão para fechar modais ou seções */
   CLOSE = 'Close',
   /** Botão para enviar formulários */

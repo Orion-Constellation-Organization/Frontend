@@ -32,6 +32,7 @@
   border: none;
   padding: 0 89.5px;
   cursor: pointer;
+
   &:hover {
     background-color: $color-hover-light-primary;
   }
@@ -45,5 +46,32 @@
     font-size: 16px;
     padding: 0 50px;
     border-radius: 30px;
+  }
+}
+
+.button-edit {
+  @extend .button-primary;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 150%;
+  width: 100%;
+  height: 45px;
+}
+
+.button-delete {
+  background-color: transparent;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 150%;
+  text-align: center;
+  width: 100%;
+  height: 45px;
+  border-radius: 44.8px;
+  border: 4px solid $color-primary-dark;
+  color: $color-neutral-black;
+  cursor: pointer;
+  &:hover {
+    background-color: $color-primary-dark;
+    color: $color-neutral-white;
   }
 }

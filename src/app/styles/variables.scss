@@ -35,3 +35,22 @@ $button-color-background: $color-background;
 
 $font-primary: "Inter", sans-serif;
 $font-secondary: "Montserrat", sans-serif;
+
+$font-size-large: 24px;
+$font-size-medium: 20px;
+$font-weight-bold: 700;
+$font-weight-medium: 500;
+$line-height: 150%;
+$gap-default: 10px;
+$max-width-large: 796px;
+$max-width-medium: 700px;
+$border-radius-large: 80px;
+$border-radius-medium: 40px;
+
+@mixin responsive-font($size-large, $size-medium) {
+  font-size: $size-large;
+
+  @media (max-width: 1366px) {
+    font-size: $size-medium;
+  }
+}

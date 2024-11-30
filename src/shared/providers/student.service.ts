@@ -31,7 +31,7 @@ export class StudentService extends BaseService {
    * Busca um estudante pelo seu ID.
    *
    * @param id - ID do estudante a ser buscado
-   * @returns Promessa com os dados do estudante encontrado
+   * @returns {Promise<ISubject>} Promessa com os dados do estudante encontrado
    */
   async getStudentById(id: number): Promise<any> {
     return this.call('GET', `get/student/${id}`);

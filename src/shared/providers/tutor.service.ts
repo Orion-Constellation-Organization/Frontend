@@ -32,7 +32,7 @@ export class TutorService extends BaseService {
    * Busca um tutor específico pelo seu ID.
    *
    * @param id - O identificador único do tutor
-   * @returns Promessa com os dados do tutor encontrado
+   * @returns {Promise<ISubject>} Promessa com os dados do tutor encontrado
    */
   async getTutorById(id: number): Promise<any> {
     return this.call('GET', `get/tutor/${id}`);
