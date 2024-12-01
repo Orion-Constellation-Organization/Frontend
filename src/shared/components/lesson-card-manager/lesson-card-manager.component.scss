@@ -104,3 +104,11 @@
   line-height: $line-height;
   color: $color-alert-error;
 }
+
+// Bloco: empty
+.lesson-card-manager__empty {
+  @include responsive-font($font-size-large, $font-size-medium);
+  font-weight: $font-weight-medium;
+  line-height: $line-height;
+  margin-top: 180px;
+}
