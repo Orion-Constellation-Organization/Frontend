@@ -21,7 +21,7 @@
         </div>
         <div class="lesson-card-manager__actions__item lesson-card-manager__actions__container-buttons">
             <app-button [type]="buttonTypes.editRequest" [label]="buttonTypes.editRequest" (click)="onEditClick(request)"></app-button>
-            <app-button [type]="buttonTypes.deleteRequest" [label]="buttonTypes.deleteRequest"></app-button>
+            <app-button [type]="buttonTypes.deleteRequest" [label]="buttonTypes.deleteRequest" (click)="onDeleteClick(request.classId)"></app-button>
         </div>
     </div>
 </div>

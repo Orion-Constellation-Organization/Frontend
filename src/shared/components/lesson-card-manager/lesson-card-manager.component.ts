@@ -7,6 +7,7 @@ import { EnvironmentButton } from 'src/utils/enum/environmentButton.enum';
 import { Observable } from 'rxjs';
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { LessonRequestService } from 'src/shared/providers/lesson-request.service';
 /**
  * Componente para gerenciar cards de solicitações de aula.
  */
@@ -55,6 +56,7 @@ export class LessonCardManagerComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private studentService: StudentService,
+    private lessonRequestService: LessonRequestService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -207,6 +209,36 @@ export class LessonCardManagerComponent implements OnInit {
       });
     } else {
       this.openEditForm(request);
+    }
+  }
+
+  /**
+   * Manipula o clique no botão de deletar uma solicitação de aula.
+   *
+   * Este método realiza as seguintes operações:
+   * 1. Valida se o ID da solicitação é válido
+   * 2. Chama o serviço para deletar a solicitação
+   * 3. Recarrega os dados do usuário após a exclusão
+   *
+   * @param classId - O identificador único da solicitação de aula a ser deletada
+   * @throws {Error} Se houver falha na comunicação com o servidor
+   * @returns Promise que resolve quando a operação é concluída com sucesso
+   */
+  public async onDeleteClick(classId: number): Promise<void> {
+    try {
+      if (!classId) {
+        console.error('Tentativa de exclusão sem ID da solicitação');
+        this.errorMessage = 'Tentativa de exclusão sem ID da solicitação';
+        return;
+      }
+
+      await this.lessonRequestService.deleteLessonRequest(classId);
+
+      // Recarrega os dados após deletar
+      await this.loadUserData();
+    } catch (error) {
+      console.error('Erro ao deletar solicitação:', error);
+      this.errorMessage = 'Erro ao deletar a solicitação';
     }
   }
 
