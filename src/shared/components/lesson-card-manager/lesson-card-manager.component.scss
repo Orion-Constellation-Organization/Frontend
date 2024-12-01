@@ -5,17 +5,20 @@
   display: flex;
   flex-direction: column;
   gap: $gap-default;
-  max-width: $max-width-large;
   background-color: $color-customization-angular-material;
   border-radius: $border-radius-large;
   padding: 45px;
   margin: auto auto 20px auto;
 
   @media (max-width: 1366px) {
+    width: 650px;
     gap: 0px;
-    max-width: $max-width-medium;
     border-radius: $border-radius-medium;
     padding: 30px;
+  }
+
+  @media (max-width: 1024px) {
+    width: 100%;
   }
 
   // elemento: info
@@ -67,27 +70,28 @@
 
     // elemento: container-title
     &__container-title {
-      width: 60%;
+      width: 100%;
       @include responsive-font($font-size-large, $font-size-medium);
     }
 
     // elemento: item-title
     &__item-title {
-      width: 60%;
-      @include responsive-font($font-size-large, $font-weight-medium);
+      width: 100%;
+      @include responsive-font($font-size-medium, $font-weight-medium);
       line-height: $line-height;
     }
 
     // elemento: item-schedule
     &__item-schedule {
+      width: 100%;
       display: flex;
-      @include responsive-font($font-size-large, $font-weight-medium);
+      @include responsive-font($font-size-medium, $font-weight-medium);
       line-height: $line-height;
     }
 
     // elemento: container-buttons
     &__container-buttons {
-      width: 40%;
+      width: 80%;
       gap: $gap-default;
     }
   }

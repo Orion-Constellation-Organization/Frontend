@@ -1,4 +1,12 @@
-import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  ChangeDetectorRef,
+  Output,
+  EventEmitter,
+  ViewChild,
+} from '@angular/core';
 import { AuthService } from 'src/shared/providers/auth.service';
 import { UserType } from 'src/utils/enum/userType.enum';
 import { StudentService } from 'src/shared/providers/student.service';
@@ -8,6 +16,7 @@ import { Observable } from 'rxjs';
 import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { LessonRequestService } from 'src/shared/providers/lesson-request.service';
+import { RegistrationSuccessModalComponent } from '../registration-success-modal/registration-success-modal.component';
 /**
  * Componente para gerenciar cards de solicitações de aula.
  */
@@ -46,6 +55,62 @@ export class LessonCardManagerComponent implements OnInit {
    * Mensagem de erro.
    */
   public errorMessage: string | null = null;
+
+  /**
+   * Mensagem que será exibida nas ações do modal.
+   * @type {string}
+   */
+  @Input() message: string = '';
+
+  /**
+   * Flag que controla se o modal está aberto.
+   * @type {boolean}
+   */
+  @Input() isOpen = false;
+
+  /**
+   * EventEmitter para fechar o modal.
+   * @type {EventEmitter<string>}
+   */
+  @Output() closeModal = new EventEmitter<string>();
+
+  /**
+   * Referência ao componente do modal de sucesso.
+   * Este componente é utilizado para exibir uma mensagem de sucesso após a realização de uma ação.
+   * @type {RegistrationSuccessModalComponent}
+   */
+  @ViewChild(RegistrationSuccessModalComponent)
+  registrationSuccessModal!: RegistrationSuccessModalComponent;
+
+  /**
+   * Armazena o ID da solicitação de aula que será excluída.
+   * Este valor é definido quando o usuário clica no botão de exclusão
+   * É usado durante o processo de confirmação de exclusão.
+   *
+   * @type {number | null}
+   * @default null
+   */
+  public requestToDelete: number | null = null;
+
+  /**
+   * Controla a visibilidade dos botões de cancelar e excluir.
+   * Exibe os botões no modal de sucesso quando o usuário clica no botão de exclusão.
+   *
+   * @type {boolean}
+   * @default false
+   */
+  @Input() showDeleteButtons = false;
+
+  /**
+   * Controla a visibilidade do botão de fechar.
+   *
+   * @type {boolean}
+   * @default true
+   */
+  @Input() showCloseButton = false;
+
+  /** Indica se a requisição está em andamento */
+  public isLoading: boolean = false;
 
   /**
    * Cria uma instância do componente LessonCardManager.
@@ -216,29 +281,63 @@ export class LessonCardManagerComponent implements OnInit {
    * Manipula o clique no botão de deletar uma solicitação de aula.
    *
    * Este método realiza as seguintes operações:
-   * 1. Valida se o ID da solicitação é válido
-   * 2. Chama o serviço para deletar a solicitação
-   * 3. Recarrega os dados do usuário após a exclusão
+   * 1. Valida se o ID da solicitação é válido.
+   * 2. Define a mensagem de confirmação para o usuário.
+   * 3. Exibe os botões de cancelar e excluir.
+   * 4. Abre o modal de sucesso para confirmação da exclusão.
    *
-   * @param classId - O identificador único da solicitação de aula a ser deletada
-   * @throws {Error} Se houver falha na comunicação com o servidor
-   * @returns Promise que resolve quando a operação é concluída com sucesso
+   * @param classId - O identificador único da solicitação de aula a ser deletada.
+   * @throws {Error} Se houver falha na comunicação com o servidor.
+   * @returns Promise que resolve quando a operação é concluída com sucesso.
    */
   public async onDeleteClick(classId: number): Promise<void> {
+    this.isLoading = true;
     try {
-      if (!classId) {
-        console.error('Tentativa de exclusão sem ID da solicitação');
-        this.errorMessage = 'Tentativa de exclusão sem ID da solicitação';
+      this.requestToDelete = classId;
+      this.message =
+        'Ao clicar em excluir, o pedido será apagado do sistema. Não poderá dar andamento para o agendamento, somente fazendo um novo pedido de aula.';
+      this.showCloseButton = false;
+      this.showDeleteButtons = true;
+      this.openRegistrationSuccessDialog();
+    } catch (error) {
+      console.error('Erro ao deletar solicitação:', error);
+      this.errorMessage = 'Erro ao deletar a solicitação';
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  /**
+   * Manipula a confirmação da exclusão de uma solicitação de aula.
+   * Este método realiza as seguintes operações:
+   * 1. Verifica se o ID da solicitação a ser deletada está definido.
+   * 2. Chama o serviço para deletar a solicitação.
+   * 3. Recarrega os dados do usuário após a exclusão.
+   * 4. Trata erros que possam ocorrer durante o processo de exclusão.
+   * 5. Limpa o ID da solicitação após a exclusão.
+   * 6. Exibe mensagens de erro caso ocorram falhas na comunicação com o servidor.
+   *
+   * @returns Promise<void> - Uma promessa que resolve quando a operação de exclusão é concluída.
+   */
+  public async handleConfirmDelete(): Promise<void> {
+    this.isLoading = true;
+    try {
+      if (!this.requestToDelete) {
+        console.error('ID da solicitação não encontrado');
+        this.errorMessage = 'ID da solicitação não encontrado';
         return;
       }
 
-      await this.lessonRequestService.deleteLessonRequest(classId);
+      await this.lessonRequestService.deleteLessonRequest(this.requestToDelete);
+      this.requestToDelete = null;
 
       // Recarrega os dados após deletar
       await this.loadUserData();
     } catch (error) {
       console.error('Erro ao deletar solicitação:', error);
       this.errorMessage = 'Erro ao deletar a solicitação';
+    } finally {
+      this.isLoading = false;
     }
   }
 
@@ -317,5 +416,23 @@ export class LessonCardManagerComponent implements OnInit {
       observer.next();
       observer.complete();
     });
+  }
+
+  /**
+   * Abre o modal ao definir `isOpen` como `true`.
+   * @public
+   */
+  public openRegistrationSuccessDialog(): void {
+    this.registrationSuccessModal.isOpen = true;
+  }
+
+  /**
+   * Fecha o modal ao definir `isOpen` como `false`
+   * Emite o evento `closeModal` para informar o fechamento.
+   * @public
+   */
+  public closeRegistrationSuccessDialog(): void {
+    this.registrationSuccessModal.isOpen = false;
+    this.closeModal.emit();
   }
 }

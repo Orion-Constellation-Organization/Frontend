@@ -25,9 +25,18 @@
         </div>
     </div>
 </div>
+
+<app-registration-success-modal [message]="message" (onClose)="closeRegistrationSuccessDialog()" (onConfirmDelete)="handleConfirmDelete()" [showDeleteButtons]="true" [showCloseButton]="false">
+</app-registration-success-modal>
+
 <div *ngIf="errorMessage">
     <p class="lesson-card-manager__error-message">{{ errorMessage }}</p>
 </div>
+
+<div *ngIf="isLoading" class="loading-spinner">
+    Carregando...
+</div>
+
 <ng-container *ngIf="showEditForm">
     <app-class-request-form [isOpen]="showEditForm" [editMode]="true" [requestData]="selectedRequest" (closeModal)="onCloseForm($event)">
     </app-class-request-form>

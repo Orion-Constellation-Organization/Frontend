@@ -60,9 +60,9 @@ export class ClassRequestFormComponent implements OnInit {
   @Input() requestData: IRequestData | null = null;
 
   /** Formulário principal de solicitação de aulas */
-  classRequestForm: FormGroup;
+  public classRequestForm: FormGroup;
   /** Lista de opções de motivos para a solicitação */
-  reasonOptions = Object.values(Reason).map((reason) => ({
+  public reasonOptions = Object.values(Reason).map((reason) => ({
     value: reason,
     label: ReasonLabel[reason],
   }));
@@ -71,44 +71,44 @@ export class ClassRequestFormComponent implements OnInit {
    * Lista de matérias disponíveis para seleção
    * Carregada durante a inicialização do componente
    */
-  subjects: ISubject[] = [];
+  public subjects: ISubject[] = [];
 
   /** Enum de botões de ambiente */
-  EnvironmentButton = EnvironmentButton;
+  public EnvironmentButton = EnvironmentButton;
 
   /** Referência ao componente do modal de sucesso */
   @ViewChild(RegistrationSuccessModalComponent)
-  registrationSuccessModal!: RegistrationSuccessModalComponent;
+  public registrationSuccessModal!: RegistrationSuccessModalComponent;
 
   /**
    * Mensagem de erro exibida quando ocorre algum problema na submissão
    * @type {string}
    */
-  errorMessage: string = '';
+  public errorMessage: string = '';
 
   /**
    * Mensagem de erro exibida quando ocorre algum problema na submissão
    * @type {string}
    */
-  error: string = '';
+  public error: string = '';
 
   /**
    * Horário conflitante identificado durante a validação
    * @type {string}
    */
-  conflictingSchedule: string = '';
+  public conflictingSchedule: string = '';
 
   /**
    * Indica se existe um erro relacionado aos horários selecionados
    * @type {boolean}
    */
-  hasScheduleError: boolean = false;
+  public hasScheduleError: boolean = false;
 
   /** Indica se o formulário foi modificado */
-  isFormModified: boolean = false;
+  public isFormModified: boolean = false;
 
   /** Indica se a requisição está em andamento */
-  isLoading: boolean = false;
+  public isLoading: boolean = false;
 
   /** Subject para gerenciar a assinatura de observadores */
   private destroy$ = new Subject<void>();
@@ -147,7 +147,7 @@ export class ClassRequestFormComponent implements OnInit {
    *
    * @returns {void}
    */
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.initializeComponent();
   }
 
@@ -157,7 +157,7 @@ export class ClassRequestFormComponent implements OnInit {
    *
    * @returns {void}
    */
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.destroy$.next(); // Emitindo para completar a assinatura
     this.destroy$.complete(); // Completando o Subject
   }
@@ -325,7 +325,7 @@ export class ClassRequestFormComponent implements OnInit {
    * Getter que retorna o FormArray de agendamentos do formulário
    * @returns {FormArray} Array de controles de agendamento
    */
-  get schedules(): FormArray {
+  public get schedules(): FormArray {
     return this.classRequestForm.get('schedules') as FormArray;
   }
 
@@ -333,7 +333,7 @@ export class ClassRequestFormComponent implements OnInit {
    * Verifica se é possível adicionar mais horários ao formulário
    * @returns {boolean} true se podem ser adicionados mais horários (máximo 3)
    */
-  addSchedule(): void {
+  public addSchedule(): void {
     if (this.schedules.length < 3) {
       this.schedules.push(this.createScheduleControl());
     }
@@ -343,7 +343,7 @@ export class ClassRequestFormComponent implements OnInit {
    * Verifica se é possível adicionar mais horários
    * @returns boolean indicando se podem ser adicionados mais horários
    */
-  get canAddMoreSchedules(): boolean {
+  public get canAddMoreSchedules(): boolean {
     return this.schedules.length < 3;
   }
 
@@ -351,7 +351,7 @@ export class ClassRequestFormComponent implements OnInit {
    * Remove um agendamento específico do formulário
    * @param {number} index - Índice do agendamento a ser removido
    */
-  removeSchedule(index: number): void {
+  public removeSchedule(index: number): void {
     this.schedules.removeAt(index);
   }
 
@@ -360,7 +360,7 @@ export class ClassRequestFormComponent implements OnInit {
    * @param {Reason} reason - Motivo selecionado/desselecionado
    * @param {MatCheckboxChange} event - Evento do checkbox
    */
-  onReasonChange(reason: Reason, event: MatCheckboxChange): void {
+  public onReasonChange(reason: Reason, event: MatCheckboxChange): void {
     const reasonsArray = this.classRequestForm.get('reasons') as FormArray;
     if (event.checked) {
       reasonsArray.push(this.fb.control(reason));
@@ -422,7 +422,7 @@ export class ClassRequestFormComponent implements OnInit {
   /**
    * Manipula mudanças nos campos de data/hora
    */
-  onScheduleChange(): void {
+  public onScheduleChange(): void {
     this.errorMessage = '';
     this.conflictingSchedule = '';
     this.validateForm();

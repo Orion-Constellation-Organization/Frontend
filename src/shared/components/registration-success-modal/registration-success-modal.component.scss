@@ -1,6 +1,7 @@
 @import "../../../app/styles/theme.scss";
 
-div.modal-overlay {
+// Bloco: modal-overlay
+.modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -10,40 +11,66 @@ div.modal-overlay {
   z-index: 999;
 }
 
-div.dialog-container {
+// Bloco: dialog-container
+.dialog-container {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  padding: 24px;
+  padding: $padding-large;
   border-radius: 8px;
-  width: 80%;
-  max-width: 400px;
+  width: 100%;
+  max-width: 575px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   text-align: center;
 
-  button.close-button {
+  // elemento: close-button
+  &__close-button {
     position: absolute;
     top: 10px;
     right: 10px;
     background: none;
     border: none;
-    font-size: 24px;
+    font-size: $font-size-large;
     cursor: pointer;
-    color: #555;
+    color: $color-neutral-dark-gray-medium;
   }
 
-  div.content {
+  // elemento: content
+  &__content {
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    h1 {
-      font-size: 24px;
-      margin-bottom: 10px;
-      color: #333;
+    &__message {
+      font-size: $font-size-large;
+      padding: $padding-large;
+      color: $color-neutral-dark-gray;
+    }
+
+    &__message--warning {
+      color: $color-alert-warning;
+    }
+  }
+
+  // elemento: button-container
+  &__button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 20px;
+
+    // elemento: button-cancel
+    &__button-cancel {
+      width: 200px;
+    }
+
+    // elemento: button-delete
+    &__button-delete {
+      width: 200px;
     }
   }
 }
