@@ -1,0 +1,46 @@
+@import "src/app/styles/theme.scss";
+
+.profile {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    text-align: left;
+
+    &__title {
+        font-size: 34px;
+        margin-bottom: 50px;
+    }
+
+    &__info-section {
+        margin-bottom: 50px;
+
+        &__email {
+            font-size: 24px;
+            text-decoration: underline;
+        }
+    }
+
+    &__password-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &__password {
+            font-size: 24px;
+        }
+
+        &__change-password-button {
+            background-color: $color-primary-light;
+            color: $color-neutral-white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: $color-hover-light-primary;
+            }
+        }
+    }
+}

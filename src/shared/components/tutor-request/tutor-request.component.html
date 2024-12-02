@@ -1,0 +1,37 @@
+<ng-container *ngIf="!isLoading">
+    <ng-container *ngIf="pendingRequests.length > 0; else noRequests">
+        <div *ngFor="let request of pendingRequests" class="tutor-request">
+            <div class="tutor-request__information">
+                <div class="tutor-request__information__student">
+                    <p>{{ request.student?.username }}</p>
+                    <p>{{ request.student?.educationLevel?.levelType }}</p>
+                    <p>Aula de {{ request.subject.subjectName }}</p>
+                </div>
+                <div class="tutor-request__information__reason">
+                    <p *ngFor="let reason of request.reason">{{ reason }}</p>
+                </div>
+            </div>
+            <div class="tutor-request__additional">
+                <p>"{{ request.additionalInfo }}"</p>
+            </div>
+            <div class="tutor-request__time">
+                <div class="tutor-request__time__dates">
+                    <p>Horários disponíveis:</p>
+                    <mat-radio-group>
+                        <mat-radio-button *ngFor="let date of request.preferredDates; let i = index" [value]="i">
+                            {{ date }}
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="tutor-request__time__buttons">
+                    <button mat-button class="tutor-request__time__buttons--accept">Aceitar</button>
+                    <button mat-button class="tutor-request__time__buttons--reject">Recusar</button>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+  
+    <ng-template #noRequests>
+        <p class="tutor-request__none">{{ messageUnavailable }}</p>
+    </ng-template>
+</ng-container>

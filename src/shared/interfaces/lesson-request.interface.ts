@@ -28,4 +28,5 @@ export interface ILessonRequest extends IClassRequest {
 
   /** Tutores associados ao pedido, pode ser nulo */
   tutors: ITutorResponse | null;
+
 }

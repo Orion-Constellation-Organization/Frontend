@@ -15,8 +15,16 @@ export class LessonRequestService extends BaseService {
    * Obtém a lista de todas as solicitações de aula.
    * @returns Promise contendo um array de solicitações de aula
    */
-  async getLessonRequests(): Promise<ILessonRequest[]> {
-    return this.call('GET', 'get/lessonrequest');
+  async getLessonRequests(id: number, filtered: boolean, page: number, size: number, order: 'ASC' | 'DESC'): Promise<ILessonRequest[]> {
+    const params = new URLSearchParams({
+      id: String(id),
+      filtered: String(filtered),
+      page: String(page),
+      size: String(size),
+      order: order,
+    });
+  
+    return this.call('GET', `/lessonrequest?${params.toString()}`);
   }
 
   /**
@@ -25,7 +33,7 @@ export class LessonRequestService extends BaseService {
    * @returns Promise com os dados da solicitação de aula encontrada
    */
   async getLessonRequestById(id: number): Promise<ILessonRequest> {
-    return this.call('GET', `get/lessonrequest/${id}`);
+    return this.call('GET', `/lessonrequest/${id}`);
   }
 
   /**
@@ -34,7 +42,7 @@ export class LessonRequestService extends BaseService {
    * @returns Promise com a resposta da deleção
    */
   async deleteLessonRequest(id: number): Promise<void> {
-    return this.call('DELETE', `delete/lessonrequest/${id}`);
+    return this.call('DELETE', `/lessonrequest/${id}`);
   }
 
   /**
@@ -47,6 +55,6 @@ export class LessonRequestService extends BaseService {
     id: number,
     request: IClassRequest
   ): Promise<IClassRequest> {
-    return this.call('PATCH', `update/lessonrequest/${id}`, request);
+    return this.call('PATCH', `/lessonrequest/${id}`, request);
   }
 }

@@ -14,6 +14,9 @@
     <div class="main-nav-box">
         <button class="main-nav-btn-tertiary-click" (click)="onButtonOneClick()" [ngClass]="{'main-nav-btn-tertiary-click-profile': hideButtonsProfile}">{{navMenuBtnTitleOne}}</button>
     </div>
+    <div class="main-nav-box" *ngIf="showPersonalDataButton">
+        <button class="main-nav-btn-tertiary-click personal-data" (click)="onPersonalDataClick()">{{navMenuBtnTitlePersonalData || 'Dados Pessoais'}}</button>
+    </div>
     <div class="main-nav-box">
         <button *ngIf="!hideButtonsProfile" class="main-nav-btn-tertiary-click" (click)="onButtonTwoClick()">{{navMenuBtnTitleTwo}}</button>
     </div>

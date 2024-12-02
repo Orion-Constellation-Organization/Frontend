@@ -4,6 +4,7 @@ import { EnvironmentButton } from 'src/utils/enum/environmentButton.enum';
 import { AuthService } from 'src/shared/providers/auth.service';
 import { UserType } from 'src/utils/enum/userType.enum';
 import { SelectedMenu } from 'src/utils/enum/selectedMenu.enum';
+import { TutorService } from 'src/shared/providers/tutor.service';
 
 /**
  * Componente principal da aplicação que gerencia o estado do menu e os títulos exibidos.
@@ -98,13 +99,20 @@ export class MainComponent implements OnInit {
    */
   showProfile = false;
 
+  tutorHasSubjects: boolean = false;
+  showPersonalData = false;
+  showSecurity = false;
+
   /**
    * Cria uma instância do MainComponent.
    *
    * @param {AuthService} authService - Serviço de autenticação utilizado para gerenciar dados do usuário.
    * @memberof MainComponent
    */
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private tutorService: TutorService
+  ) {}
 
   /**
    * Método chamado ao inicializar o componente.
@@ -118,6 +126,10 @@ export class MainComponent implements OnInit {
    */
   async ngOnInit() {
     await this.loadUserData();
+
+    if (this.isTutor()) {
+      this.selectedMenu = SelectedMenu.TUTOR_BEGIN;
+    }
   }
 
   /**
@@ -136,6 +148,11 @@ export class MainComponent implements OnInit {
       if (userData && userData.username && userData.role) {
         this.userName = userData.username;
         this.userType = userData.role;
+
+        if (this.isTutor()) {
+          const tutorData = await this.tutorService.getTutorById(userData.id);
+          this.tutorHasSubjects = tutorData.subjects && tutorData.subjects.length > 0;
+        }
       } else {
         // se o usuário não possui username e role, preencho os campos com valores padrão
         console.warn('Dados do usuário incompletos ou inválidos');
@@ -171,6 +188,11 @@ export class MainComponent implements OnInit {
   toggleProfile() {
     this.showProfile = !this.showProfile;
     this.toggleMenu();
+    
+    if (!this.showProfile) {
+      this.showPersonalData = false;
+      this.showSecurity = false;
+    }
   }
 
   /**
@@ -296,7 +318,7 @@ export class MainComponent implements OnInit {
    */
   private getButtonTitleTwo(): EnvironmentMenuTitles {
     if (this.showProfile) {
-      return EnvironmentMenuTitles.NONE;
+      return EnvironmentMenuTitles.PERSONAL_DATA;
     }
     return this.userType === UserType.STUDENT
       ? EnvironmentMenuTitles.WAITING_YOUR_CONFIRMATION
@@ -313,7 +335,9 @@ export class MainComponent implements OnInit {
    * @returns {string} O título do segundo botão ou uma string vazia se o perfil estiver visível.
    */
   public get buttonTitleTwo(): string {
-    return !this.showProfile ? this.getButtonTitleTwo() : '';
+    return !this.showProfile 
+      ? this.getButtonTitleTwo()
+      : EnvironmentMenuTitles.PERSONAL_DATA;
   }
 
   /**
@@ -387,20 +411,45 @@ export class MainComponent implements OnInit {
    * @param menuItem string identificando qual menu foi clicado
    * @returns {void} - Não retorna nenhum valor.
    */
-  onMenuSelect(menuItem: string) {
+  public onMenuSelect(menuItem: string) {
     this.selectedMenu = menuItem as SelectedMenu;
     this.closeMenus();
   }
 
   /**
-   * Verifica se deve mostrar o card manager
-   *
-   * Este método avalia se o menu selecionado é o de "aguardando voluntário".
-   *
-   * @returns {boolean} - Se a condição for verdadeira, o componente LessonCardManager será exibido.
+   * Mostra um componente dependendo do tipo de usuário e qual botão foi selecionado
+   * @param componentType O tipo do componente a ser verificado
+   * @returns Retorna 'true' se o componente correspondente deve ser exibido, 'false' caso contrário
    */
-  shouldShowCardManager(): boolean {
-    return this.selectedMenu === SelectedMenu.WAITING_VOLUNTEER;
+  public shouldShowComponent(componentType: string): boolean {
+    if (this.isStudent()) {
+      switch (componentType) {
+        case 'begin':
+          return this.selectedMenu === SelectedMenu.BEGIN && !this.showProfile;
+        case 'first':
+          return this.selectedMenu === SelectedMenu.WAITING_VOLUNTEER && !this.showProfile;
+        case 'second':
+          return this.selectedMenu === SelectedMenu.WAITING_CONFIRMATION && !this.showProfile;
+        case 'third':
+          return this.selectedMenu === SelectedMenu.CLASSES_SCHEDULED && !this.showProfile;
+        default:
+          return false;
+      }
+    } else if (this.isTutor()) {
+      switch (componentType) {
+        case 'begin':
+          return this.selectedMenu === SelectedMenu.TUTOR_BEGIN && !this.showProfile;
+        case 'first':
+          return this.selectedMenu === SelectedMenu.TUTOR_SCHEDULED && !this.showProfile;
+        case 'second':
+          return this.selectedMenu === SelectedMenu.TUTOR_REQUEST && !this.showProfile;
+        case 'third':
+          return this.selectedMenu === SelectedMenu.TUTOR_WAITING_CONFIRMATION && !this.showProfile;
+        default:
+          return false;
+      }
+    }
+    return false;
   }
 
   /**
@@ -411,11 +460,79 @@ export class MainComponent implements OnInit {
    *
    * @returns {boolean} - Se a condição for verdadeira, o botão de solicitar aula será exibido.
    */
-  shouldShowRequestButton(): boolean {
+  public shouldShowRequestButton(): boolean {
     return (
       this.isStudent() &&
       !this.showProfile &&
       this.selectedMenu !== SelectedMenu.WAITING_VOLUNTEER
     );
+  }
+
+  /**
+   * Manipula o clique do botão de início e executa a ação associada
+   */
+  public handleBeginButtonClick(): void {
+    if (this.isStudent()) {
+      this.onMenuSelect(SelectedMenu.BEGIN);
+    } else {
+      this.onMenuSelect(SelectedMenu.TUTOR_BEGIN);
+    }
+  }
+
+  /**
+   * Manipula o clique do primeiro botão e executa a ação associada
+   */
+  public handleFirstButtonClick(): void {
+    if (this.isStudent()) {
+      this.onMenuSelect(SelectedMenu.WAITING_VOLUNTEER);
+    } else {
+      this.onMenuSelect(SelectedMenu.TUTOR_SCHEDULED);
+    }
+  }
+
+  /**
+   * Manipula o clique do segundo botão e executa a ação associada
+   */
+  public handleSecondButtonClick(): void {
+    if (this.isStudent()) {
+      this.onMenuSelect(SelectedMenu.WAITING_CONFIRMATION);
+    } else {
+      this.onMenuSelect(SelectedMenu.TUTOR_REQUEST);
+    }
+  }
+
+  /**
+   * Manipula o clique do terceiro botão e executa a ação associada
+   */
+  public handleThirdButtonClick(): void {
+    if (this.isStudent()) {
+      this.onMenuSelect(SelectedMenu.CLASSES_SCHEDULED);
+    } else {
+      this.onMenuSelect(SelectedMenu.TUTOR_WAITING_CONFIRMATION);
+    }
+  }
+
+  /**
+   * Método para verificar se deve mostrar o botão de Dados Pessoais
+   * @returns 'true' se o usuário for um tutor e estiver na área de perfil, 'false' caso contrário
+   */
+  public showPersonalDataButton(): boolean {
+    return this.isTutor() && this.showProfile;
+  }
+
+  /**
+   * Mostra o componente para os Dados Pessoais e não mostra o de Dados Cadastrais
+   */
+  public togglePersonalData(): void {
+    this.showPersonalData = true;
+    this.showSecurity = false;
+  }
+
+  /**
+   * Mostra o componente para os Dados Cadastrais e não mostra o de Dados Pessoais
+   */
+  public toggleSecurity(): void {
+    this.showPersonalData = false;
+    this.showSecurity = true;
   }
 }

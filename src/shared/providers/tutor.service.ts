@@ -25,7 +25,7 @@ import { ITutorResponse } from '../interfaces/tutor-response.interface';
  */
 export class TutorService extends BaseService {
   async createTutor(payload: ICreateTutor): Promise<ITutorResponse> {
-    return this.call('POST', 'register/tutor', payload);
+    return this.call('POST', '/tutor', payload);
   }
 
   /**
@@ -35,6 +35,6 @@ export class TutorService extends BaseService {
    * @returns {Promise<ISubject>} Promessa com os dados do tutor encontrado
    */
   async getTutorById(id: number): Promise<any> {
-    return this.call('GET', `get/tutor/${id}`);
+    return this.call('GET', `/tutor/${id}`);
   }
 }
