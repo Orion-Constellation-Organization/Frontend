@@ -11,8 +11,14 @@ export interface ILessonRequest extends IClassRequest {
   /** ID da classe associada ao pedido de aula */
   ClassId: number;
 
+  reason: string[];
+
+  preferredDates: string[];
+
   /** Status do pedido de aula */
   status: string;
+
+  additionalInfo: string;
 
   /** Informações sobre a disciplina */
   subject: {

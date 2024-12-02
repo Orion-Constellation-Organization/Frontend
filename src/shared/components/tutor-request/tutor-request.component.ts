@@ -40,12 +40,12 @@ export class TutorRequestComponent implements OnInit {
   
       const userId = currentUser.id;
       const allRequests = await this.lessonRequestService.getLessonRequests(userId, true, 1, 10, 'ASC');
-      console.log(allRequests);
       this.pendingRequests = allRequests.filter(
         (request) => request.status === 'pendente'
       );
-    } catch (error: any) {
-      if (error.status === 404) {
+    } catch (error) {
+      const err = error as { status: number };
+      if (err.status === 404) {
         this.messageUnavailable = "No momento, não há pedidos disponíveis que coincidem com a sua preferência.";
       }
     } finally {

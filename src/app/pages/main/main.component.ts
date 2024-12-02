@@ -156,8 +156,6 @@ export class MainComponent implements OnInit {
       } else {
         // se o usuário não possui username e role, preencho os campos com valores padrão
         console.warn('Dados do usuário incompletos ou inválidos');
-        console.log('username:', userData?.username);
-        console.log('role:', userData?.role);
         this.userName = 'Usuário';
         this.userType = 'Não definido';
       }
@@ -188,7 +186,7 @@ export class MainComponent implements OnInit {
   toggleProfile() {
     this.showProfile = !this.showProfile;
     this.toggleMenu();
-    
+
     if (!this.showProfile) {
       this.showPersonalData = false;
       this.showSecurity = false;
@@ -421,35 +419,27 @@ export class MainComponent implements OnInit {
    * @param componentType O tipo do componente a ser verificado
    * @returns Retorna 'true' se o componente correspondente deve ser exibido, 'false' caso contrário
    */
-  public shouldShowComponent(componentType: string): boolean {
-    if (this.isStudent()) {
-      switch (componentType) {
-        case 'begin':
-          return this.selectedMenu === SelectedMenu.BEGIN && !this.showProfile;
-        case 'first':
-          return this.selectedMenu === SelectedMenu.WAITING_VOLUNTEER && !this.showProfile;
-        case 'second':
-          return this.selectedMenu === SelectedMenu.WAITING_CONFIRMATION && !this.showProfile;
-        case 'third':
-          return this.selectedMenu === SelectedMenu.CLASSES_SCHEDULED && !this.showProfile;
-        default:
-          return false;
-      }
-    } else if (this.isTutor()) {
-      switch (componentType) {
-        case 'begin':
-          return this.selectedMenu === SelectedMenu.TUTOR_BEGIN && !this.showProfile;
-        case 'first':
-          return this.selectedMenu === SelectedMenu.TUTOR_SCHEDULED && !this.showProfile;
-        case 'second':
-          return this.selectedMenu === SelectedMenu.TUTOR_REQUEST && !this.showProfile;
-        case 'third':
-          return this.selectedMenu === SelectedMenu.TUTOR_WAITING_CONFIRMATION && !this.showProfile;
-        default:
-          return false;
-      }
-    }
-    return false;
+  public shouldShowComponent(componentType: 'begin' | 'first' | 'second' | 'third'): boolean {
+    const studentMenus = {
+      begin: SelectedMenu.BEGIN,
+      first: SelectedMenu.WAITING_VOLUNTEER,
+      second: SelectedMenu.WAITING_CONFIRMATION,
+      third: SelectedMenu.CLASSES_SCHEDULED,
+    };
+
+    const tutorMenus = {
+      begin: SelectedMenu.TUTOR_BEGIN,
+      first: SelectedMenu.TUTOR_SCHEDULED,
+      second: SelectedMenu.TUTOR_REQUEST,
+      third: SelectedMenu.TUTOR_WAITING_CONFIRMATION,
+    };
+
+    const userMenus = this.isStudent() ? studentMenus : this.isTutor() ? tutorMenus : null;
+
+    if (!userMenus) return false;
+
+    const selectedMenu = userMenus[componentType];
+    return selectedMenu === this.selectedMenu && !this.showProfile;
   }
 
   /**
@@ -469,47 +459,26 @@ export class MainComponent implements OnInit {
   }
 
   /**
-   * Manipula o clique do botão de início e executa a ação associada
+   * Manipula o clique dos botões do menu baseado no tipo de usuário
+   * @param buttonType O tipo do botão clicado
    */
-  public handleBeginButtonClick(): void {
-    if (this.isStudent()) {
-      this.onMenuSelect(SelectedMenu.BEGIN);
-    } else {
-      this.onMenuSelect(SelectedMenu.TUTOR_BEGIN);
-    }
-  }
+  public handleMenuButtonClick(buttonType: 'begin' | 'first' | 'second' | 'third'): void {
+    const studentMenus = {
+      begin: SelectedMenu.BEGIN,
+      first: SelectedMenu.WAITING_VOLUNTEER,
+      second: SelectedMenu.WAITING_CONFIRMATION,
+      third: SelectedMenu.CLASSES_SCHEDULED,
+    };
 
-  /**
-   * Manipula o clique do primeiro botão e executa a ação associada
-   */
-  public handleFirstButtonClick(): void {
-    if (this.isStudent()) {
-      this.onMenuSelect(SelectedMenu.WAITING_VOLUNTEER);
-    } else {
-      this.onMenuSelect(SelectedMenu.TUTOR_SCHEDULED);
-    }
-  }
+    const tutorMenus = {
+      begin: SelectedMenu.TUTOR_BEGIN,
+      first: SelectedMenu.TUTOR_SCHEDULED,
+      second: SelectedMenu.TUTOR_REQUEST,
+      third: SelectedMenu.TUTOR_WAITING_CONFIRMATION,
+    };
 
-  /**
-   * Manipula o clique do segundo botão e executa a ação associada
-   */
-  public handleSecondButtonClick(): void {
-    if (this.isStudent()) {
-      this.onMenuSelect(SelectedMenu.WAITING_CONFIRMATION);
-    } else {
-      this.onMenuSelect(SelectedMenu.TUTOR_REQUEST);
-    }
-  }
-
-  /**
-   * Manipula o clique do terceiro botão e executa a ação associada
-   */
-  public handleThirdButtonClick(): void {
-    if (this.isStudent()) {
-      this.onMenuSelect(SelectedMenu.CLASSES_SCHEDULED);
-    } else {
-      this.onMenuSelect(SelectedMenu.TUTOR_WAITING_CONFIRMATION);
-    }
+    const userMenus = this.isStudent() ? studentMenus : tutorMenus;
+    this.onMenuSelect(userMenus[buttonType]);
   }
 
   /**
