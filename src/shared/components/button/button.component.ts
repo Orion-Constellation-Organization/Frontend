@@ -43,16 +43,16 @@ export class ButtonComponent {
       GHOST,
     } = EnvironmentButton;
     return {
-      'button-primary': this.type === PRIMARY,
-      'button-secondary': this.type === SECONDARY,
-      'button-cancel': this.type === CANCEL,
-      'button-delete': this.type === DELETE,
-      'button-save': this.type === SAVE,
-      'button-edit': this.type === EDIT,
-      'button-close': this.type === CLOSE,
-      'button-submit': this.type === SUBMIT,
-      'button-ghost': this.type === GHOST,
-      'button-disabled': this.disabled,
+      'button--primary': this.type === PRIMARY,
+      'button--secondary': this.type === SECONDARY,
+      'button--cancel': this.type === CANCEL,
+      'button--delete': this.type === DELETE,
+      'button--save': this.type === SAVE,
+      'button--edit': this.type === EDIT,
+      'button--close': this.type === CLOSE,
+      'button--submit': this.type === SUBMIT,
+      'button--ghost': this.type === GHOST,
+      'button--disabled': this.disabled,
     };
   }
 }
