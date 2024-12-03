@@ -1,0 +1,8 @@
+<div class="tutor-begin">
+    <div class="tutor-begin__none-subjects" *ngIf="!hasSubjects">
+        <p class="tutor-begin-none-subjects__message">Você já deu mais um passo para melhorar o mundo! Complete seu <b (click)="onProfileClick()">perfil</b> para que os alunos possam te encontrar!</p>
+    </div>
+    <div class="tutor-begin__none-scheduled" *ngIf="hasSubjects">
+        <p class="tutor-begin-none-scheduled__message">Você ainda não possui aulas agendadas</p>
+    </div>
+</div>

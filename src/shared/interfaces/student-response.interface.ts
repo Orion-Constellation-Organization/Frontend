@@ -7,4 +7,9 @@ import { IClassRequest } from './class-request.interface';
 export interface IStudentResponse extends IBaseUserResponse {
   // Herda todos os campos de IBaseUserResponse
   lessonRequests: IClassRequest[];
+
+  educationLevel: {
+    educationId: number;
+    levelType: string;
+  };
 }

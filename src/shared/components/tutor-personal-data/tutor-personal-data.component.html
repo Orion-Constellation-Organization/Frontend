@@ -1,0 +1,20 @@
+<div class="profile">
+    <p class="profile__title">{{ username }}</p>
+    
+    <div class="profile__info-section">
+        <p class="profile__info-title">Qual a sua ocupação?</p>
+        <div class="profile__info-box">{{ expertise }}</div>
+    </div>
+    
+    <div class="profile__info-section">
+        <p class="profile__info-title">Porque você escolheu esse projeto?</p>
+        <div class="profile__info-box">{{ projectReason }}</div>
+    </div>
+    
+    <div class="profile__info-section">
+        <p class="profile__info-title">Em quais disciplinas você pode ser tutor?</p>
+        <div class="profile__info-box">{{ subjects.join(', ') }}</div>
+    </div>
+    
+    <button class="profile__edit-button">Editar</button>
+</div>

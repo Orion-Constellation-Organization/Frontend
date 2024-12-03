@@ -21,6 +21,8 @@ export enum EnvironmentMenuTitles {
    */
   SECURITY = 'Segurança',
 
+  PERSONAL_DATA = 'Dados pessoais',
+
   /**
    * Seção que lista todas as aulas disponíveis
    */

@@ -1,0 +1,48 @@
+@import "../../../app/styles/theme.scss";
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    max-width: 494px;
+    margin: auto;
+    padding: 20px;
+    text-align: left;
+
+    &__title {
+        font-size: 30px;
+        margin-bottom: 30px;
+    }
+
+    &__info-section {
+        margin-bottom: 20px;
+    }
+
+    &__info-title {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    &__info-box {
+        background-color: $color-neutral-gray-light;
+        padding: 25px 25px;
+        border-radius: 37px;
+        font-size: 20px;
+        line-height: 36px;
+    }
+
+    &__edit-button {
+        width: 200px;
+        padding: 16px;
+        margin: auto;
+        background-color: $color-primary-dark;
+        color: $color-neutral-white;
+        border: none;
+        border-radius: 23px;
+        font-size: 20px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $color-hover-dark-primary;
+        }
+    }
+}
