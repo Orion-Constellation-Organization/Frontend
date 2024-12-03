@@ -1,10 +1,21 @@
-<div class="modal-overlay" *ngIf="isOpen" (click)="closeDialog()"></div>
+<div class="modal-overlay" *ngIf="isOpen"></div>
 
 <div class="dialog-container" *ngIf="isOpen">
-  <button class="close-button" (click)="closeDialog()">
+  <button class="dialog-container__close-button" *ngIf="showCloseButton" (click)="closeDialog()">
     <mat-icon>close</mat-icon>
   </button>
-  <div class="content">
-    <h1>{{message}}</h1>
+  <div class="dialog-container__content">
+    <h1 class="dialog-container__content__message" [ngClass]="{'dialog-container__content__message--warning': showDeleteButtons}">{{message}}</h1>
+    <div class="dialog-container__button-container" *ngIf="showDeleteButtons">
+      <div class="dialog-container__button-container__button-cancel">
+        <app-button [type]="EnvironmentButton.CANCEL" [label]="'Cancelar'" (click)="closeDialog()">
+        </app-button>
+      </div>
+
+      <div class="dialog-container__button-container__button-delete">
+        <app-button [type]="EnvironmentButton.DELETE" [label]="'Excluir'" (click)="confirmDelete()">
+        </app-button>
+      </div>
+    </div>
   </div>
 </div>

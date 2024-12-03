@@ -1,33 +1,49 @@
-<div *ngFor="let request of lessonRequests" class="lesson-card-manager">
-    <div class="lesson-card-manager__info">
-        <div class="lesson-card-manager__info__student">
-            <p>{{ request.userName || 'Usuário não identificado' }}</p>
-            <p>{{ request.educationLevel || 'Nível de ensino não definido' }}</p>
-            <p>{{ request.subject || 'Sem matéria definida' }}</p>
+<ng-container *ngIf="lessonRequests?.length">
+    <div *ngFor="let request of lessonRequests" class="lesson-card-manager">
+        <div class="lesson-card-manager__info">
+            <div class="lesson-card-manager__info__student">
+                <p>{{ request.userName || 'Usuário não identificado' }}</p>
+                <p>{{ request.educationLevel || 'Nível de ensino não definido' }}</p>
+                <p>{{ request.subject || 'Sem matéria definida' }}</p>
+            </div>
+            <div class="lesson-card-manager__info__student-reason">
+                <p>{{ request.reasonType || 'Sem motivo especificado' }}</p>
+            </div>
         </div>
-        <div class="lesson-card-manager__info__student-reason">
-            <p>{{ request.reasonType || 'Sem motivo especificado' }}</p>
+        <p class="lesson-card-manager__tutor-description">
+            "{{ request.tutorDescription || 'Sem informações adicionais' }}"
+        </p>
+        <div class="lesson-card-manager__actions">
+            <div class="lesson-card-manager__actions__item lesson-card-manager__actions__container-title">
+                <p class="lesson-card-manager__actions__item-title">Horários Disponíveis:</p>
+                <ng-container *ngFor="let schedule of request.availableSchedules">
+                    <p class="lesson-card-manager__actions__item-schedule">Dia {{ schedule }} horas</p>
+                </ng-container>
+            </div>
+            <div class="lesson-card-manager__actions__item lesson-card-manager__actions__container-buttons">
+                <app-button [type]="buttonTypes.editRequest" [label]="buttonTypes.editRequest" (click)="onEditClick(request)"></app-button>
+                <app-button [type]="buttonTypes.deleteRequest" [label]="buttonTypes.deleteRequest" (click)="onDeleteClick(request.classId)"></app-button>
+            </div>
         </div>
     </div>
-    <p class="lesson-card-manager__tutor-description">
-        "{{ request.tutorDescription || 'Sem informações adicionais' }}"
-    </p>
-    <div class="lesson-card-manager__actions">
-        <div class="lesson-card-manager__actions__item lesson-card-manager__actions__container-title">
-            <p class="lesson-card-manager__actions__item-title">Horários Disponíveis:</p>
-            <ng-container *ngFor="let schedule of request.availableSchedules">
-                <p class="lesson-card-manager__actions__item-schedule">Dia {{ schedule }} horas</p>
-            </ng-container>
-        </div>
-        <div class="lesson-card-manager__actions__item lesson-card-manager__actions__container-buttons">
-            <app-button [type]="buttonTypes.editRequest" [label]="buttonTypes.editRequest" (click)="onEditClick(request)"></app-button>
-            <app-button [type]="buttonTypes.deleteRequest" [label]="buttonTypes.deleteRequest"></app-button>
-        </div>
-    </div>
-</div>
+</ng-container>
+
+<app-registration-success-modal [message]="message" (onClose)="closeRegistrationSuccessDialog()" (onConfirmDelete)="handleConfirmDelete()" [showDeleteButtons]="true" [showCloseButton]="false">
+</app-registration-success-modal>
+
 <div *ngIf="errorMessage">
     <p class="lesson-card-manager__error-message">{{ errorMessage }}</p>
 </div>
+
+<!-- Mostra a mensagem quando não há solicitações -->
+<div *ngIf="!lessonRequests?.length" class="lesson-card-manager__empty">
+    <p>Você não possui pedidos de aula aguardando voluntários</p>
+</div>
+
+<div *ngIf="isLoading" class="loading-spinner">
+    Carregando...
+</div>
+
 <ng-container *ngIf="showEditForm">
     <app-class-request-form [isOpen]="showEditForm" [editMode]="true" [requestData]="selectedRequest" (closeModal)="onCloseForm($event)">
     </app-class-request-form>

@@ -1,77 +1,94 @@
 @import "../../../app/styles/variables.scss";
 
-.button-disabled {
-  background-color: $color-neutral-gray-dark;
-  cursor: not-allowed;
-  opacity: 0.5;
-  &:hover {
-    background-color: $color-neutral-gray-dark;
-  }
-}
-
 .button-container {
   display: flex;
   justify-content: center;
   align-items: center;
 
   &:disabled {
-    @extend .button-disabled;
+    @extend .button--disabled;
   }
 }
 
-.button-primary {
-  background-color: $color-primary-light;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 150%;
-  text-align: center;
-  color: $color-neutral-white;
-  width: 327px;
-  height: 112px;
-  border-radius: 44.8px;
-  border: none;
-  padding: 0 89.5px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: $color-hover-light-primary;
-  }
-  &:disabled {
-    @extend .button-disabled;
+.button {
+  &--disabled {
+    background-color: $color-neutral-gray-dark;
+    cursor: not-allowed;
+    opacity: 0.5;
+    &:hover {
+      background-color: $color-neutral-gray-dark;
+    }
   }
 
-  @media (max-width: 1366px) {
-    width: 230px;
-    height: 80px;
-    font-size: 16px;
-    padding: 0 50px;
-    border-radius: 30px;
-  }
-}
-
-.button-edit {
-  @extend .button-primary;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 150%;
-  width: 100%;
-  height: 45px;
-}
-
-.button-delete {
-  background-color: transparent;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 150%;
-  text-align: center;
-  width: 100%;
-  height: 45px;
-  border-radius: 44.8px;
-  border: 4px solid $color-primary-dark;
-  color: $color-neutral-black;
-  cursor: pointer;
-  &:hover {
-    background-color: $color-primary-dark;
+  &--primary {
+    background-color: $color-primary-light;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 150%;
+    text-align: center;
     color: $color-neutral-white;
+    width: 327px;
+    height: 112px;
+    border-radius: 44.8px;
+    border: none;
+    padding: 0 89.5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $color-hover-light-primary;
+    }
+    &:disabled {
+      @extend .button--disabled;
+    }
+
+    @media (max-width: 1366px) {
+      width: 230px;
+      height: 80px;
+      font-size: 16px;
+      padding: 0 50px;
+      border-radius: 30px;
+    }
+  }
+
+  &--edit {
+    @extend .button--primary;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 150%;
+    width: 100%;
+    height: 45px;
+  }
+
+  &--delete {
+    background-color: transparent;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 150%;
+    text-align: center;
+    width: 100%;
+    height: 45px;
+    border-radius: 44.8px;
+    border: 4px solid $color-primary-dark;
+    color: $color-neutral-black;
+    cursor: pointer;
+    &:hover {
+      background-color: $color-primary-dark;
+      color: $color-neutral-white;
+    }
+  }
+
+  &--cancel {
+    @extend .button--primary;
+    background-color: $color-primary-dark;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 150%;
+    text-align: center;
+    width: 100%;
+    height: 45px;
+    border-radius: 44.8px;
+    &:hover {
+      background-color: $color-hover-dark-primary;
+    }
   }
 }
