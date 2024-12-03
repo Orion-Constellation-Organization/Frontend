@@ -138,10 +138,6 @@
   }
 }
 
-.main-nav-btn-tertiary-click-profile {
-  border-radius: 0 0 10px 10px !important;
-}
-
 .main-nav-btn-tertiary-click {
   font-size: 24px;
   font-weight: 500;
@@ -161,6 +157,10 @@
     width: 140px;
     font-size: 16px;
   }
+}
+
+.personal-data {
+  border-radius: 0 0 10px 10px !important;
 }
 
 .last {

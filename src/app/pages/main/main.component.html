@@ -19,16 +19,42 @@
     </div>
 </header>
 <div class="main-container">
-    <app-main-menu [navMenuBtnTitleBegin]="beginTitle" [navMenuBtnTitleClasses]="buttonTitleClasses" [navMenuBtnTitleOne]="buttonTitleOne" [navMenuBtnTitleTwo]="buttonTitleTwo" [navMenuBtnTitleThree]="buttonTitleThree" [navMenuBtnTitleDisabled]="buttonTitleDisabled" [hideButtonsProfile]="showProfile" (beginButtonClick)="onMenuSelect('Begin')" (buttonOneClick)="onMenuSelect('Waiting_volunteer')" (buttonTwoClick)="onMenuSelect('Waiting_confirmation')" (buttonThreeClick)="onMenuSelect('Classes_scheduled')">
-    </app-main-menu>
+    <app-main-menu 
+  [navMenuBtnTitleBegin]="beginTitle" 
+  [navMenuBtnTitleClasses]="buttonTitleClasses" 
+  [navMenuBtnTitleOne]="buttonTitleOne" 
+  [navMenuBtnTitleTwo]="buttonTitleTwo" 
+  [navMenuBtnTitleThree]="buttonTitleThree" 
+  [navMenuBtnTitleDisabled]="buttonTitleDisabled" 
+  [hideButtonsProfile]="showProfile"
+  [showPersonalDataButton]="showPersonalDataButton()"
+  (beginButtonClick)="handleMenuButtonClick('begin')"
+  (buttonOneClick)="handleMenuButtonClick('first')"
+  (buttonTwoClick)="handleMenuButtonClick('second')"
+  (buttonThreeClick)="handleMenuButtonClick('third')"
+  (personalDataButtonClick)="togglePersonalData()"
+  (securityButtonClick)="toggleSecurity()">
+</app-main-menu>
     <div class="main-container-button" *ngIf="shouldShowRequestButton()">
         <app-button [label]="buttonTitle" (click)="toggleClassRequestModal()">
         </app-button>
     </div>
-    <div class="main-container-lesson-card-manager" *ngIf="shouldShowCardManager()">
+    <div class="main-container-lesson-card-manager" *ngIf="shouldShowComponent('first') && isStudent()">
         <app-lesson-card-manager></app-lesson-card-manager>
     </div>
-    <app-profile *ngIf="showProfile"></app-profile>
+    <div class="main-container-tutor-begin" *ngIf="shouldShowComponent('begin') && isTutor()">
+        <app-tutor-begin [hasSubjects]="tutorHasSubjects" (profileClick)="toggleProfile()"></app-tutor-begin>
+    </div>
+    <div class="main-container-tutor-request" *ngIf="shouldShowComponent('second') && isTutor()">
+        <app-tutor-request></app-tutor-request>
+    </div>
+    <app-profile *ngIf="showProfile && !showPersonalData && !showSecurity"></app-profile>
+    <div class="main-container-tutor-security" *ngIf="showProfile && showSecurity">
+        <app-tutor-security></app-tutor-security>
+    </div>
+    <div class="main-container-tutor-personal-data" *ngIf="isTutor() && showProfile && showPersonalData">
+        <app-tutor-personal-data></app-tutor-personal-data>
+    </div>
 </div>
 <app-class-request-form *ngIf="showClassRequestModal" (closeModal)="toggleClassRequestModal()">
 </app-class-request-form>

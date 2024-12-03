@@ -15,8 +15,16 @@ export class LessonRequestService extends BaseService {
    * Obtém a lista de todas as solicitações de aula.
    * @returns Promise contendo um array de solicitações de aula
    */
-  async getLessonRequests(): Promise<ILessonRequest[]> {
-    return this.call('GET', '/lessonrequest');
+  async getLessonRequests(id: number, filtered: boolean, page: number, size: number, order: 'ASC' | 'DESC'): Promise<ILessonRequest[]> {
+    const params = new URLSearchParams({
+      id: String(id),
+      filtered: String(filtered),
+      page: String(page),
+      size: String(size),
+      order: order,
+    });
+  
+    return this.call('GET', `/lessonrequest?${params.toString()}`);
   }
 
   /**

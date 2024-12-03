@@ -14,6 +14,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { NgxMatDatetimePickerModule } from '@angular-material-components/datetime-picker';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegistrationSuccessModalComponent } from './registration-success-modal/registration-success-modal.component';
@@ -24,6 +26,12 @@ import { ButtonComponent } from './button/button.component';
 import { ClassRequestFormComponent } from './class-request-form/class-request-form.component';
 import { LessonCardManagerComponent } from './lesson-card-manager/lesson-card-manager.component';
 import { ProfileComponent } from './profile/profile.component';
+import { TutorRequestComponent } from './tutor-request/tutor-request.component';
+import { LoadingService } from '../providers/loading.service';
+import { LoadingComponent } from './loading/loading.component';
+import { TutorBeginComponent } from './tutor-begin/tutor-begin.component';
+import { TutorPersonalDataComponent } from './tutor-personal-data/tutor-personal-data.component';
+import { TutorSecurityComponent } from './tutor-security/tutor-security.component';
 
 const COMPONENTS = [
   RegistrationSuccessModalComponent,
@@ -34,10 +42,15 @@ const COMPONENTS = [
   ClassRequestFormComponent,
   LessonCardManagerComponent,
   ProfileComponent,
+  TutorBeginComponent,
+  TutorRequestComponent,
+  TutorSecurityComponent,
+  TutorPersonalDataComponent,
+  LoadingComponent,
 ] as const;
 
 @NgModule({
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, TutorBeginComponent, TutorPersonalDataComponent, TutorSecurityComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -56,8 +69,11 @@ const COMPONENTS = [
     NgxMaskDirective,
     MatCheckboxModule,
     NgxMatDatetimePickerModule,
+    MatRadioModule,
+    MatProgressSpinnerModule,
+    MatDialogModule
   ],
   exports: [...COMPONENTS],
-  providers: [provideNgxMask()],
+  providers: [provideNgxMask(), LoadingService],
 })
 export class SharedComponentsModule {}

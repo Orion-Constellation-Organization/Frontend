@@ -85,6 +85,11 @@ export class MainMenuComponent {
    */
   isMobile = false;
 
+  @Input() showPersonalDataButton: boolean = false;
+  @Input() navMenuBtnTitlePersonalData: string = '';
+  @Output() personalDataButtonClick = new EventEmitter<void>();
+  @Output() securityButtonClick = new EventEmitter<void>();
+
   /**
    * Manipula o evento de clique do botão inicial.
    * Emite um evento através do beginButtonClick.
@@ -137,5 +142,19 @@ export class MainMenuComponent {
    */
   closeMenu() {
     this.isMenuOpen = false;
+  }
+
+  /**
+   * Manipula o clique do botão de Dados Pessoais
+   */
+  public onPersonalDataClick(): void {
+    this.personalDataButtonClick.emit();
+  }
+
+  /**
+   * Manipula o clique do botão de Segurança
+   */
+  public onSecurityClick(): void {
+    this.securityButtonClick.emit();
   }
 }
