@@ -382,8 +382,19 @@ export class ClassRequestFormComponent implements OnInit {
    * @private
    */
   private formatSchedule(date: Date, time: string): string {
-    const formattedDate = formatDate(date, 'dd/MM/yyyy', 'en-US');
-    return `${formattedDate} às ${time}`;
+    // Formata a data para YYYY-MM-DD
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    // Remove qualquer segundo que possa vir no time e garante o formato HH:mm
+    const formattedTime = time.split(':').slice(0, 2).join(':');
+
+    // Retorna no formato YYYY-MM-DDThh:mm
+    // return `${year}-${month}-${day}T${formattedTime}`;
+    const formattedDate = `${year}-${month}-${day}T${formattedTime}`;
+    console.log('Data formatada:', formattedDate); // Log 1
+    return formattedDate;
   }
 
   /**

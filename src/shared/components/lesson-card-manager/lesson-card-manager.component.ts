@@ -226,13 +226,13 @@ export class LessonCardManagerComponent implements OnInit {
     try {
       if (!dateString) return 'Ocorreu um erro ao formatar a data';
 
-      // Verifica se já está no formato desejado
+      // Se já estiver no formato de exibição, retorna como está
       if (dateString.includes(' às ')) {
         return dateString;
       }
 
-      // Parse da data em formato ISO ou outro formato
-      const [datePart, timePart] = dateString.split(' ');
+      // Parse da data no novo formato YYYY-MM-DDThh:mm
+      const [datePart, timePart] = dateString.split('T');
       const date = new Date(datePart);
 
       if (isNaN(date.getTime())) {
@@ -248,6 +248,7 @@ export class LessonCardManagerComponent implements OnInit {
       // Formatar a hora (assumindo que timePart está em formato HH:mm)
       const formattedTime = timePart ? timePart.substring(0, 5) : '00:00';
 
+      // Retorna no formato de exibição dd/MM/yyyy às HH:mm
       return `${day}/${month}/${year} às ${formattedTime}`;
     } catch (error) {
       console.error('Erro ao formatar data:', dateString, error);
