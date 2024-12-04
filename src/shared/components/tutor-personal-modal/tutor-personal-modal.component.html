@@ -1,0 +1,33 @@
+<div class="form">
+    <p class="form__username">{{ username }}</p>
+    <p class="form__question">Qual sua ocupação?</p>
+    <mat-form-field subscriptSizing="dynamic" appearance="outline" class="form__field">
+        <input matInput [(ngModel)]="expertise" maxlength="50"/>
+        <mat-hint align="end">{{expertise.length}}/50</mat-hint>
+    </mat-form-field>
+
+    <p class="form__question">Por que você escolheu esse projeto?</p>
+    <mat-form-field subscriptSizing="dynamic" appearance="outline" class="form__field">
+        <input matInput [(ngModel)]="projectReason" maxlength="200" />
+        <mat-hint align="end">{{projectReason.length}}/200</mat-hint>
+    </mat-form-field>
+
+    <p class="form__question">Em quais disciplinas você pode ser tutor?</p>
+    <div class="form__subjects">
+        <div class="form__subjects__grid">
+            <button
+            mat-button
+            *ngFor="let subject of subjects"
+            [class.selected]="tempSelectedSubjects.includes(subject)"
+            (click)="toggleSubject(subject)"
+            class="form__subjects__grid__options">
+                {{ subject }}
+            </button>
+        </div>
+    </div>
+
+    <div class="form__button">
+        <button mat-button color="primary" (click)="onCancel()" class="form__button--cancel">Cancelar</button>
+        <button mat-button color="primary" (click)="onSave()" class="form__button--save">Salvar</button>
+    </div>
+</div>

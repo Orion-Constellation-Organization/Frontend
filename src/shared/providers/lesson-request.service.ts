@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { ILessonRequest } from '../interfaces/lesson-request.interface';
 import { IClassRequest } from '../interfaces/class-request.interface';
+import { ITutorAcceptLesson } from '../interfaces/ITutorAcceptLesson.interface';
 
 /**
  * Serviço responsável por gerenciar operações relacionadas a solicitações de aulas
@@ -51,10 +52,11 @@ export class LessonRequestService extends BaseService {
    * @param request - Dados atualizados da solicitação
    * @returns Promise com a resposta da atualização
    */
-  async updateLessonRequest(
-    id: number,
-    request: IClassRequest
-  ): Promise<IClassRequest> {
+  async updateLessonRequest(id: number, request: IClassRequest): Promise<IClassRequest> {
     return this.call('PATCH', `/lessonrequest/${id}`, request);
+  }
+
+  public async updateTutorAcceptLesson(data: ITutorAcceptLesson): Promise<ITutorAcceptLesson> {
+    return this.call('PATCH', '/tutor-accept-lesson', data)
   }
 }

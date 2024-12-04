@@ -1,0 +1,16 @@
+@import "../../../app/styles/theme.scss";
+
+.dialog {
+  padding: 10px 20px;
+}
+
+.dialog-button {
+    color: $color-neutral-white;
+    background-color: $color-alert-info;
+}  
+
+@media screen and (max-width: 630px) {
+  .dialog-text {
+    font-size: 16px;
+  }
+}

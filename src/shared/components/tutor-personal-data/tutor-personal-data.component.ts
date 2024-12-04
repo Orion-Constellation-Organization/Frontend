@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ISubjects } from 'src/shared/interfaces/ITutorPersonalData.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { ISubjects, ITutorPersonalModal } from 'src/shared/interfaces/ITutorPersonalData.interface';
 import { AuthService } from 'src/shared/providers/auth.service';
 import { TutorService } from 'src/shared/providers/tutor.service';
+import { TutorPersonalModalComponent } from '../tutor-personal-modal/tutor-personal-modal.component';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-tutor-personal-data',
@@ -16,10 +19,11 @@ export class TutorPersonalDataComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private tutorService: TutorService
+    private tutorService: TutorService,
+    private dialog: MatDialog
   ) {}
 
-  async ngOnInit() {
+  public async ngOnInit() {
     try {
       const currentUser = await this.authService.getCurrentUser();
       
@@ -29,13 +33,37 @@ export class TutorPersonalDataComponent implements OnInit {
         this.username = tutorData.username || 'Usuário';
         this.expertise = tutorData.expertise || 'Ocupação não informada';
         this.projectReason = tutorData.projectReason || 'Motivo não informado';
-        
         this.subjects = tutorData.subjects && tutorData.subjects.length > 0 
           ? tutorData.subjects.map((subject: ISubjects) => subject.name) 
-          : ['Disciplinas não informadas'];
+          : [];
       }
     } catch (error) {
       console.error('Erro ao carregar dados do tutor:', error);
     }
+  }
+
+  /**
+   * Abre o modal de edição dos dados pessoais do tutor
+   * E atualiza as informações exibidas após o fechamento do modal
+   */
+  public openEditModal(): void {
+    const dialogRef = this.dialog.open(TutorPersonalModalComponent, {
+        data: {
+            username: this.username,
+            expertise: this.expertise,
+            projectReason: this.projectReason,
+            selectedSubjects: this.subjects
+        }
+    });
+
+    dialogRef.afterClosed().pipe(take(1)).subscribe((result?: ITutorPersonalModal) => {
+        if (result) {
+            const { expertise, projectReason, selectedSubjects } = result;
+
+            this.expertise = expertise || this.expertise;
+            this.projectReason = projectReason || this.projectReason;
+            this.subjects = selectedSubjects || this.subjects;
+        }
+    });
   }
 }

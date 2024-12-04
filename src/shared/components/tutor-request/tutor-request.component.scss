@@ -66,6 +66,13 @@ app-tutor-request {
                 border-radius: 20px;
                 font-size: 16px;
                 letter-spacing: 0;
+                transition: 0.5s ease;
+
+                &:disabled {
+                    background-color: $color-neutral-dark-gray-medium;
+                    border: none;
+                    cursor: not-allowed;
+                }
             }
 
             &--reject {

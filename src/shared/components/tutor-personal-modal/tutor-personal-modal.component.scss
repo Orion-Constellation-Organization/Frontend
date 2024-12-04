@@ -1,0 +1,75 @@
+@import "../../../app/styles/theme.scss";
+
+.form {
+    max-width: 500px;
+    width: 400px;
+    margin: auto;
+    padding: 0;
+    margin: 50px;
+
+    &__username {
+        font-size: 30px;
+        font-weight: 700;
+        margin-bottom: 26px;
+    }
+
+    &__question {
+        font-size: 20px;
+        margin-bottom: 12px;
+    }
+
+    &__field {
+        width: 100%;
+        cursor: text;
+        margin-bottom: 40px;
+    }
+
+    &__subjects {
+        &__grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            width: 100%;
+
+            &__options {
+                width: 100%;
+                text-transform: none;
+                background-color: $color-neutral-gray-light;
+                border: 1px solid rgba(0, 0, 0, 0.2);
+                border-radius: 0;
+
+                &.selected {
+                    background-color: $color-primary-light;
+                    color: white;
+                }
+            }
+        }
+    }
+
+    &__button {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+
+        &--cancel {
+            width: 36%;
+            background-color: rgba(0, 0, 72, 0.5);
+            color: $color-neutral-white !important;
+            border: 4px solid rgba(0, 0, 72, 0);
+            border-radius: 24px;
+            padding: 20px 40px;
+        }
+
+        &--save {
+            width: 36%;
+            background-color: $color-primary-dark;
+            color: $color-neutral-white !important;
+            border: 4px solid $border-color-dark-blue;
+            border-radius: 24px;
+            padding: 20px 40px;
+        }
+    }
+}
+
+::ng-deep .mat-mdc-button-touch-target {
+    height: auto !important;
+}
