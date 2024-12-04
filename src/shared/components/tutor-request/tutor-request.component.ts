@@ -32,21 +32,30 @@ export class TutorRequestComponent implements OnInit {
     this.loadingService.show();
     this.isLoading = true;
     try {
-      const currentUser  = await this.authService.getCurrentUser();
-      if (!currentUser ) {
-        this.messageUnavailable = "Usuário não encontrado"
+      const currentUser = await this.authService.getCurrentUser();
+      if (!currentUser) {
+        this.messageUnavailable = 'Usuário não encontrado';
         return;
       }
-  
+
       const userId = currentUser.id;
-      const allRequests = await this.lessonRequestService.getLessonRequests(userId, true, 1, 10, 'ASC');
+      const allRequests = await this.lessonRequestService.getLessonRequests(
+        'pendente',
+        userId,
+        true,
+        1,
+        10,
+        'ASC',
+        'classId'
+      );
       this.pendingRequests = allRequests.filter(
         (request) => request.status === 'pendente'
       );
     } catch (error) {
       const err = error as { status: number };
       if (err.status === 404) {
-        this.messageUnavailable = "No momento, não há pedidos disponíveis que coincidem com a sua preferência.";
+        this.messageUnavailable =
+          'No momento, não há pedidos disponíveis que coincidem com a sua preferência.';
       }
     } finally {
       this.loadingService.hide();
