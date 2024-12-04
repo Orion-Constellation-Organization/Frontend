@@ -113,6 +113,11 @@ export class LessonCardManagerComponent implements OnInit {
   public isLoading: boolean = false;
 
   /**
+   * Status das solicitações a serem exibidas
+   */
+  @Input() public status: string = '';
+
+  /**
    * Cria uma instância do componente LessonCardManager.
    * @param authService - Serviço de autenticação para gerenciar usuários.
    * @param studentService - Serviço para gerenciar dados de estudantes.
@@ -170,10 +175,12 @@ export class LessonCardManagerComponent implements OnInit {
           this.educationLevel = 'Não definido';
         }
 
-        // Mapear as solicitações de aula para o formato do card
-        this.lessonRequests = studentData.lessonRequests.map((request: any) =>
-          this.mapLessonRequest(request, studentData)
-        );
+        // Filtrar as solicitações pelo status, se houver
+        this.lessonRequests = studentData.lessonRequests
+          .filter(
+            (request: any) => !this.status || request.status === this.status
+          )
+          .map((request: any) => this.mapLessonRequest(request, studentData));
       }
     } catch (error) {
       console.error('Erro ao carregar dados do usuário', error);
@@ -188,7 +195,7 @@ export class LessonCardManagerComponent implements OnInit {
    * @returns Um objeto contendo os dados formatados da solicitação de aula.
    */
   private mapLessonRequest(request: any, studentData: any) {
-    const requestId = request.ClassId;
+    const requestId = request.classId;
 
     if (!requestId) {
       console.warn('Solicitação sem ID:', request);

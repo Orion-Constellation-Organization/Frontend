@@ -151,7 +151,8 @@ export class MainComponent implements OnInit {
 
         if (this.isTutor()) {
           const tutorData = await this.tutorService.getTutorById(userData.id);
-          this.tutorHasSubjects = tutorData.subjects && tutorData.subjects.length > 0;
+          this.tutorHasSubjects =
+            tutorData.subjects && tutorData.subjects.length > 0;
         }
       } else {
         // se o usuário não possui username e role, preencho os campos com valores padrão
@@ -333,7 +334,7 @@ export class MainComponent implements OnInit {
    * @returns {string} O título do segundo botão ou uma string vazia se o perfil estiver visível.
    */
   public get buttonTitleTwo(): string {
-    return !this.showProfile 
+    return !this.showProfile
       ? this.getButtonTitleTwo()
       : EnvironmentMenuTitles.PERSONAL_DATA;
   }
@@ -419,7 +420,9 @@ export class MainComponent implements OnInit {
    * @param componentType O tipo do componente a ser verificado
    * @returns Retorna 'true' se o componente correspondente deve ser exibido, 'false' caso contrário
    */
-  public shouldShowComponent(componentType: 'begin' | 'first' | 'second' | 'third'): boolean {
+  public shouldShowComponent(
+    componentType: 'begin' | 'first' | 'second' | 'third'
+  ): boolean {
     const studentMenus = {
       begin: SelectedMenu.BEGIN,
       first: SelectedMenu.WAITING_VOLUNTEER,
@@ -434,7 +437,11 @@ export class MainComponent implements OnInit {
       third: SelectedMenu.TUTOR_WAITING_CONFIRMATION,
     };
 
-    const userMenus = this.isStudent() ? studentMenus : this.isTutor() ? tutorMenus : null;
+    const userMenus = this.isStudent()
+      ? studentMenus
+      : this.isTutor()
+      ? tutorMenus
+      : null;
 
     if (!userMenus) return false;
 
@@ -454,7 +461,19 @@ export class MainComponent implements OnInit {
     return (
       this.isStudent() &&
       !this.showProfile &&
-      this.selectedMenu !== SelectedMenu.WAITING_VOLUNTEER
+      this.selectedMenu !== SelectedMenu.WAITING_VOLUNTEER &&
+      this.selectedMenu !== SelectedMenu.WAITING_CONFIRMATION
+    );
+  }
+
+  /**
+   * Verifica se deve mostrar os cards com status "aceito"
+   */
+  public shouldShowAcceptedCards(): boolean {
+    return (
+      this.isStudent() &&
+      !this.showProfile &&
+      this.selectedMenu === SelectedMenu.WAITING_CONFIRMATION
     );
   }
 
@@ -462,7 +481,9 @@ export class MainComponent implements OnInit {
    * Manipula o clique dos botões do menu baseado no tipo de usuário
    * @param buttonType O tipo do botão clicado
    */
-  public handleMenuButtonClick(buttonType: 'begin' | 'first' | 'second' | 'third'): void {
+  public handleMenuButtonClick(
+    buttonType: 'begin' | 'first' | 'second' | 'third'
+  ): void {
     const studentMenus = {
       begin: SelectedMenu.BEGIN,
       first: SelectedMenu.WAITING_VOLUNTEER,
