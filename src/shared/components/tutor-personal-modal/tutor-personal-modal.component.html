@@ -1,33 +1,52 @@
-<div class="form">
+<form [formGroup]="tutorForm" (ngSubmit)="onSubmit()" class="form">
     <p class="form__username">{{ username }}</p>
+  
     <p class="form__question">Qual sua ocupação?</p>
     <mat-form-field subscriptSizing="dynamic" appearance="outline" class="form__field">
-        <input matInput [(ngModel)]="expertise" maxlength="50"/>
-        <mat-hint align="end">{{expertise.length}}/50</mat-hint>
-    </mat-form-field>
-
+        <input matInput formControlName="expertise" maxlength="50"/>
+            <mat-hint align="end">
+                {{ tutorForm.get('expertise')?.value?.length || 0 }}/50
+            </mat-hint>
+            <mat-error *ngIf="tutorForm.get('expertise')?.invalid && tutorForm.get('expertise')?.touched">
+                Ocupação é obrigatória (máximo 50 caracteres)
+            </mat-error>
+        </mat-form-field>
+  
     <p class="form__question">Por que você escolheu esse projeto?</p>
     <mat-form-field subscriptSizing="dynamic" appearance="outline" class="form__field">
-        <input matInput [(ngModel)]="projectReason" maxlength="200" />
-        <mat-hint align="end">{{projectReason.length}}/200</mat-hint>
+        <input matInput formControlName="projectReason" maxlength="200"/>
+        <mat-hint align="end">
+            {{ tutorForm.get('projectReason')?.value?.length || 0 }}/200
+        </mat-hint>
+        <mat-error *ngIf="tutorForm.get('projectReason')?.invalid && tutorForm.get('projectReason')?.touched">
+            Motivo é obrigatório (máximo 200 caracteres)
+        </mat-error>
     </mat-form-field>
-
+  
     <p class="form__question">Em quais disciplinas você pode ser tutor?</p>
     <div class="form__subjects">
         <div class="form__subjects__grid">
             <button
             mat-button
+            type="button"
             *ngFor="let subject of subjects"
-            [class.selected]="tempSelectedSubjects.includes(subject)"
+            [class.selected]="tutorForm.get('subjects')?.value.includes(subject)"
             (click)="toggleSubject(subject)"
             class="form__subjects__grid__options">
                 {{ subject }}
             </button>
         </div>
+        <mat-error *ngIf="tutorForm.get('subjects')?.invalid && tutorForm.get('subjects')?.touched">
+            Selecione pelo menos uma disciplina
+        </mat-error>
     </div>
-
+  
     <div class="form__button">
-        <button mat-button color="primary" (click)="onCancel()" class="form__button--cancel">Cancelar</button>
-        <button mat-button color="primary" (click)="onSave()" class="form__button--save">Salvar</button>
+        <button mat-button type="button" (click)="onCancel()" class="form__button--cancel">
+            Cancelar
+        </button>
+        <button mat-button type="submit" [disabled]="tutorForm.invalid" class="form__button--save">
+            Salvar
+        </button>
     </div>
-</div>
+</form>

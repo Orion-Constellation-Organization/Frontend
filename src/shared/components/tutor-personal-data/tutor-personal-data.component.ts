@@ -5,6 +5,7 @@ import { AuthService } from 'src/shared/providers/auth.service';
 import { TutorService } from 'src/shared/providers/tutor.service';
 import { TutorPersonalModalComponent } from '../tutor-personal-modal/tutor-personal-modal.component';
 import { take } from 'rxjs';
+import { DialogService } from 'src/shared/providers/dialog.service';
 
 @Component({
   selector: 'app-tutor-personal-data',
@@ -20,7 +21,8 @@ export class TutorPersonalDataComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private tutorService: TutorService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private dialogService: DialogService
   ) {}
 
   public async ngOnInit() {
@@ -39,6 +41,7 @@ export class TutorPersonalDataComponent implements OnInit {
       }
     } catch (error) {
       console.error('Erro ao carregar dados do tutor:', error);
+      return this.showMessage('Erro ao carregar dados do tutor');
     }
   }
 
@@ -64,6 +67,17 @@ export class TutorPersonalDataComponent implements OnInit {
             this.projectReason = projectReason || this.projectReason;
             this.subjects = selectedSubjects || this.subjects;
         }
+    });
+  }
+
+  /**
+   * Mostra uma mensagem usando o dialog service
+   * @param message A própria mensagem
+   */
+  private showMessage(message: string): void {
+    this.dialogService.openInfoDialog({
+      title: message,
+      buttonText: 'Fechar'
     });
   }
 }
