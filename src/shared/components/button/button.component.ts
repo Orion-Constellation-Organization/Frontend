@@ -41,6 +41,7 @@ export class ButtonComponent {
       CLOSE,
       SUBMIT,
       GHOST,
+      SCHEDULE,
     } = EnvironmentButton;
     return {
       'button--primary': this.type === PRIMARY,
@@ -52,6 +53,7 @@ export class ButtonComponent {
       'button--close': this.type === CLOSE,
       'button--submit': this.type === SUBMIT,
       'button--ghost': this.type === GHOST,
+      'button--schedule': this.type === SCHEDULE,
       'button--disabled': this.disabled,
     };
   }
