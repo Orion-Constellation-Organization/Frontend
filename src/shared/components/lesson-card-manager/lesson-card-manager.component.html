@@ -39,7 +39,12 @@
 
 <!-- Mostra a mensagem quando não há solicitações -->
 <div *ngIf="!lessonRequests?.length" class="lesson-card-manager__empty">
-    <p>Você não possui pedidos de aula aguardando voluntários</p>
+    <p *ngIf="isWaitingConfirmation">
+        No momento, não há pedidos com voluntários aguardando sua confirmação
+    </p>
+    <p *ngIf="!isWaitingConfirmation">
+        Você não possui pedidos de aula aguardando voluntários
+    </p>
 </div>
 
 <div *ngIf="isLoading" class="loading-spinner">

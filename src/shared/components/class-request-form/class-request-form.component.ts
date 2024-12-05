@@ -447,15 +447,29 @@ export class ClassRequestFormComponent implements OnInit {
    * @async
    */
   async onSubmit(): Promise<void> {
-    this.isLoading = true; // Inicia o loading
+    this.isLoading = true;
     try {
       if (this.classRequestForm.valid) {
         const requestData = this.prepareRequestData();
 
+        // Obter o usuário logado
+        const currentUser = await this.authService.getCurrentUser();
+
+        if (!currentUser?.id) {
+          throw new Error('Usuário não encontrado');
+        }
+
         // Verifica se está em modo de edição e se tem um ID válido
         if (this.editMode && this.requestData?.classId) {
+          console.log('Enviando requisição de update:', {
+            userId: currentUser.id,
+            lessonId: this.requestData.classId,
+            requestData,
+          });
+
           await this.lessonRequestService.updateLessonRequest(
-            this.requestData.classId,
+            currentUser.id, // ID do usuário logado
+            this.requestData.classId, // lessonId
             requestData
           );
           this.message = 'Seu pedido de aula foi atualizado com sucesso!';
@@ -495,7 +509,7 @@ export class ClassRequestFormComponent implements OnInit {
         this.conflictingSchedule = '';
       }
     } finally {
-      this.isLoading = false; // Finaliza o loading
+      this.isLoading = false;
     }
   }
 

@@ -51,8 +51,12 @@ export class LessonRequestService extends BaseService {
    * @param id - ID da solicitação a ser deletada
    * @returns Promise com a resposta da deleção
    */
-  async deleteLessonRequest(id: number): Promise<void> {
-    return this.call('DELETE', `/lessonrequest/${id}`);
+  async deleteLessonRequest(id: number, classId: number): Promise<void> {
+    const payload = {
+      id,
+      classId,
+    };
+    return this.call('DELETE', '/lessonrequest', payload);
   }
 
   /**
@@ -62,10 +66,20 @@ export class LessonRequestService extends BaseService {
    * @returns Promise com a resposta da atualização
    */
   async updateLessonRequest(
-    id: number,
+    userId: number,
+    lessonId: number,
     request: IClassRequest
   ): Promise<IClassRequest> {
-    return this.call('PATCH', `/lessonrequest/${id}`, request);
+    const params = new URLSearchParams({
+      lessonId: String(lessonId),
+      id: String(userId),
+    });
+
+    return this.call(
+      'PATCH',
+      `/lessonrequest/${lessonId}?${params.toString()}`,
+      request
+    );
   }
 
   /**

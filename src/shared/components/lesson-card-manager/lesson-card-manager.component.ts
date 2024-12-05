@@ -26,6 +26,8 @@ import { RegistrationSuccessModalComponent } from '../registration-success-modal
   styleUrls: ['./lesson-card-manager.component.scss'],
 })
 export class LessonCardManagerComponent implements OnInit {
+  @Input() isWaitingConfirmation: boolean = false;
+
   console = console;
   /**
    * Nome do usuário.
@@ -345,6 +347,16 @@ export class LessonCardManagerComponent implements OnInit {
     this.isLoading = true;
     try {
       this.requestToDelete = classId;
+      this.selectedRequest = this.lessonRequests.find(
+        (request) => request.classId === classId
+      );
+
+      if (!this.selectedRequest) {
+        console.error('Solicitação não encontrada para o classId:', classId);
+        this.errorMessage = 'Solicitação não encontrada';
+        return;
+      }
+
       this.message =
         'Ao clicar em excluir, o pedido será apagado do sistema. Não poderá dar andamento para o agendamento, somente fazendo um novo pedido de aula.';
       this.showCloseButton = false;
@@ -373,16 +385,29 @@ export class LessonCardManagerComponent implements OnInit {
   public async handleConfirmDelete(): Promise<void> {
     this.isLoading = true;
     try {
-      if (!this.requestToDelete) {
-        console.error('ID da solicitação não encontrado');
-        this.errorMessage = 'ID da solicitação não encontrado';
+      // Obter o usuário logado
+      const currentUser = await this.authService.getCurrentUser();
+
+      if (!currentUser?.id || !this.selectedRequest?.classId) {
+        console.error('IDs não encontrados:', {
+          userId: currentUser?.id,
+          classId: this.selectedRequest?.classId,
+        });
+        this.errorMessage = 'IDs da solicitação não encontrados';
         return;
       }
 
-      await this.lessonRequestService.deleteLessonRequest(this.requestToDelete);
-      this.requestToDelete = null;
+      console.log('Enviando requisição de delete:', {
+        id: currentUser.id,
+        classId: this.selectedRequest.classId,
+      });
 
-      // Recarrega os dados após deletar
+      await this.lessonRequestService.deleteLessonRequest(
+        currentUser.id, // ID do usuário logado
+        this.selectedRequest.classId
+      );
+
+      this.selectedRequest = null;
       await this.loadUserData();
     } catch (error) {
       console.error('Erro ao deletar solicitação:', error);

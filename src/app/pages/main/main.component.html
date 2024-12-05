@@ -26,10 +26,10 @@
         </app-button>
     </div>
     <div class="main-container-lesson-card-manager" *ngIf="shouldShowComponent('first') && isStudent()">
-        <app-lesson-card-manager></app-lesson-card-manager>
+        <app-lesson-card-manager [isWaitingConfirmation]="false"></app-lesson-card-manager>
     </div>
     <div class="main-container-lesson-card-manager" *ngIf="shouldShowAcceptedCards()">
-        <app-lesson-card-manager [status]="'aceito'"></app-lesson-card-manager>
+        <app-lesson-card-manager [isWaitingConfirmation]="true" [status]="'aceito'"></app-lesson-card-manager>
     </div>
     <div class="main-container-tutor-begin" *ngIf="shouldShowComponent('begin') && isTutor()">
         <app-tutor-begin [hasSubjects]="tutorHasSubjects" (profileClick)="toggleProfile()"></app-tutor-begin>
