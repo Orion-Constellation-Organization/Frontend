@@ -54,32 +54,39 @@
 <!-- Modal do Tutor -->
 <div class="tutor-modal" *ngIf="showTutorModal && tutorData">
     <div class="tutor-modal__content">
-        <header class="tutor-modal__header">
-            <h2>Dados do Voluntário</h2>
-            <button class="close-button" (click)="closeTutorModal()">
+        <header class="tutor-modal__content__header">
+            <button class="tutor-modal__content__header__close-button" (click)="closeTutorModal()">
                 <mat-icon>close</mat-icon>
             </button>
         </header>
 
-        <div class="tutor-modal__body">
-            <div class="tutor-modal__profile">
-                <!-- <img [src]="tutorData.photoUrl || '../../../assets/images/user-icon.png'" alt="Foto do voluntário" class="tutor-modal__profile-photo"> -->
-                <div class="tutor-modal__profile-info">
-                    <h3>{{ tutorData.username }}</h3>
-                    <p>{{ tutorData.birthDate }} anos</p>
-                    <p>{{ tutorData.expertise || 'Ocupação não informada' }}</p>
+        <div class="tutor-modal__content__body">
+            <div class="tutor-modal__content__body__profile">
+                <img [src]="tutorData.photoUrl || '../../../assets/images/tutor-foto.png'" alt="Foto do voluntário" class="tutor-modal__profile-photo">
+            </div>
+
+            <div class="tutor-modal__content__body__profile-info">
+                <div class="tutor-modal__content__body__profile-info">
+                    <h3 class="tutor-modal__content__body__profile-info__name__age">{{ tutorData.username }}, {{ tutorData.birthDate }} anos</h3>
+                    <p class="tutor-modal__content__body__profile-info__expertise">{{ tutorData.expertise || 'Ocupação não informada' }}</p>
                 </div>
-            </div>
 
-            <div class="tutor-modal__schedule">
-                <h4>Horário escolhido:</h4>
-                <p>{{ tutorData.chosenDate }}</p>
-            </div>
+                <div class="tutor-modal__content__body__profile-info__reason-schedule">
+                    <p class="tutor-modal__content__body__profile-info__reason-schedule__reason">{{ tutorData.projectReason || 'Motivo não informado' }}</p>
+                    <p class="tutor-modal__content__body__profile-info__reason-schedule__schedule">Disponível dia: {{ tutorData.chosenDate }}</p>
+                </div>
 
-            <div class="tutor-modal__reason">
-                <h4>Por que está no projeto:</h4>
-                <p>{{ tutorData.projectReason || 'Motivo não informado' }}</p>
             </div>
         </div>
+    </div>
+    <!-- Adicione este div temporário para debug -->
+    <div style="display: none;">
+        {{ console.log('tutorData:', tutorData) }}
+        {{ console.log('Modal Status:', isOpen, message) }}
+    </div>
+    <!-- Novo botão de agendamento -->
+    <div class="tutor-modal__content__body__actions">
+        <app-button [type]="buttonTypes.scheduleClass" [label]="'Agendar Aula'" (click)="scheduleClassWithTutor(tutorData.id)" class="tutor-modal__schedule-button">
+        </app-button>
     </div>
 </div>

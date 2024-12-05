@@ -67,4 +67,22 @@ export class LessonRequestService extends BaseService {
   ): Promise<IClassRequest> {
     return this.call('PATCH', `/lessonrequest/${id}`, request);
   }
+
+  /**
+   * Confirma uma aula com um tutor específico
+   * @param lessonId - ID da aula a ser confirmada
+   * @param tutorId - ID do tutor selecionado
+   * @returns Promise com a resposta da confirmação
+   */
+  public confirmLessonWithTutor(
+    lessonId: number,
+    tutorId: number
+  ): Promise<any> {
+    const payload = {
+      lessonId: Number(lessonId),
+      tutorId: Number(tutorId),
+    };
+
+    return this.call('PATCH', '/student-confirm-lesson', payload);
+  }
 }

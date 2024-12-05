@@ -112,3 +112,57 @@
   line-height: $line-height;
   margin-top: 180px;
 }
+
+// Bloco: tutor-modal
+.tutor-modal {
+  @extend .modal;
+
+  padding: 20px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__content {
+    width: 400px;
+    height: 180px;
+  }
+
+  &__content__header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
+
+  &__header__close-button {
+    border: none;
+  }
+
+  &__content__body {
+    border: 1px solid $color-neutral-black;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+  }
+
+  &__content__body__profile {
+    width: 140px;
+    margin-right: 20px;
+  }
+
+  &__content__body__profile-info__name__age {
+    padding: 0px !important;
+    margin: 0px !important;
+  }
+
+  &__content__body__profile-info__expertise {
+    padding: 0px !important;
+    margin: 0px !important;
+  }
+
+  &__content__body__profile-info__reason-schedule__reason,
+  &__content__body__profile-info__reason-schedule__schedule {
+    padding: 0px !important;
+    margin: 0px !important;
+  }
+}

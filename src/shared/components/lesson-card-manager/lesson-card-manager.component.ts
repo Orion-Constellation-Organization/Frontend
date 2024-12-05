@@ -26,6 +26,7 @@ import { RegistrationSuccessModalComponent } from '../registration-success-modal
   styleUrls: ['./lesson-card-manager.component.scss'],
 })
 export class LessonCardManagerComponent implements OnInit {
+  console = console;
   /**
    * Nome do usuário.
    */
@@ -255,7 +256,10 @@ export class LessonCardManagerComponent implements OnInit {
 
       // Parse da data no novo formato YYYY-MM-DDThh:mm
       const [datePart, timePart] = dateString.split('T');
-      const date = new Date(datePart);
+      const [year, month, day] = datePart.split('-').map(Number);
+
+      // Criar a data sem considerar o fuso horário
+      const date = new Date(Date.UTC(year, month - 1, day));
 
       if (isNaN(date.getTime())) {
         console.warn('Data inválida:', dateString);
@@ -263,15 +267,17 @@ export class LessonCardManagerComponent implements OnInit {
       }
 
       // Formatar a data para dd/MM/yyyy
-      const day = date.getDate().toString().padStart(2, '0');
-      const month = (date.getMonth() + 1).toString().padStart(2, '0');
-      const year = date.getFullYear();
+      const formattedDay = date.getUTCDate().toString().padStart(2, '0');
+      const formattedMonth = (date.getUTCMonth() + 1)
+        .toString()
+        .padStart(2, '0');
+      const formattedYear = date.getUTCFullYear();
 
       // Formatar a hora (assumindo que timePart está em formato HH:mm)
       const formattedTime = timePart ? timePart.substring(0, 5) : '00:00';
 
       // Retorna no formato de exibição dd/MM/yyyy às HH:mm
-      return `${day}/${month}/${year} às ${formattedTime}`;
+      return `${formattedDay}/${formattedMonth}/${formattedYear} às ${formattedTime}`;
     } catch (error) {
       console.error('Erro ao formatar data:', dateString, error);
       return 'Ocorreu um erro ao formatar a data';
@@ -292,7 +298,9 @@ export class LessonCardManagerComponent implements OnInit {
 
     if (shouldShowVolunteers) {
       try {
-        // Buscar dados do tutor pela rota de lessonRequest
+        // Armazena a request selecionada antes de abrir o modal
+        this.selectedRequest = request;
+
         const response = await this.lessonRequestService.getLessonRequestById(
           request.classId
         );
@@ -440,10 +448,11 @@ export class LessonCardManagerComponent implements OnInit {
    * @returns Um objeto contendo os tipos de botões de edição e exclusão.
    */
   public get buttonTypes() {
-    const { EDIT, DELETE } = EnvironmentButton;
+    const { EDIT, DELETE, SCHEDULE } = EnvironmentButton;
     return {
       editRequest: EDIT,
       deleteRequest: DELETE,
+      scheduleClass: SCHEDULE,
     };
   }
 
@@ -453,17 +462,12 @@ export class LessonCardManagerComponent implements OnInit {
    * @returns Texto do botão
    */
   public getButtonLabel(status: string | undefined): string {
-    console.log('Status da requisição:', status);
-    console.log('Status da visualização:', this.status);
-
     if (!status) return 'Editar';
 
     // Mostra "Voluntários" apenas quando o status for 'aceito' E
     // estiver na visualização de "aceito"
     const shouldShowVolunteers =
       status === 'aceito' && this.status === 'aceito';
-
-    console.log('Deve mostrar Voluntários?', shouldShowVolunteers);
 
     return shouldShowVolunteers ? 'Voluntários' : 'Editar';
   }
@@ -525,5 +529,65 @@ export class LessonCardManagerComponent implements OnInit {
     }
 
     return age;
+  }
+
+  public async scheduleClassWithTutor(tutorId: string): Promise<void> {
+    if (!this.selectedRequest?.classId) {
+      console.error('Solicitação não encontrada:', this.selectedRequest);
+      this.errorMessage = 'Erro: Solicitação de aula não encontrada';
+      return;
+    }
+
+    this.isLoading = true;
+    try {
+      // Garantir que os IDs são números
+      const lessonId = Number(this.selectedRequest.classId);
+      const parsedTutorId = Number(tutorId);
+
+      console.log('Dados antes da requisição:', {
+        lessonId,
+        tutorId: parsedTutorId,
+        originalLessonId: this.selectedRequest.classId,
+        originalTutorId: tutorId,
+      });
+
+      if (isNaN(lessonId) || isNaN(parsedTutorId)) {
+        throw new Error('IDs inválidos');
+      }
+
+      const response = await this.lessonRequestService.confirmLessonWithTutor(
+        lessonId,
+        parsedTutorId
+      );
+
+      console.log('Resposta da API:', response);
+      this.message = 'Aula agendada com sucesso!';
+      this.showTutorModal = false;
+      this.openRegistrationSuccessDialog();
+      await this.loadUserData();
+    } catch (error: any) {
+      // Log mais detalhado do erro
+      console.error('Erro detalhado ao agendar aula:', {
+        error: {
+          status: error?.status,
+          message: error?.message,
+          error: error?.error,
+          stack: error?.stack,
+          fullError: error,
+        },
+        requestData: {
+          lessonId: this.selectedRequest.classId,
+          tutorId: tutorId,
+          fullRequest: this.selectedRequest,
+        },
+      });
+
+      // Mensagem de erro mais específica para o usuário
+      this.errorMessage = `Erro ao agendar aula: ${
+        error?.error?.message || error?.message || 'Erro desconhecido'
+      }`;
+    } finally {
+      this.isLoading = false;
+    }
   }
 }
