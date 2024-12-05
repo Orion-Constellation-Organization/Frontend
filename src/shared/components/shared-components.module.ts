@@ -16,6 +16,7 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { NgxMatDatetimePickerModule } from '@angular-material-components/datetime-picker';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegistrationSuccessModalComponent } from './registration-success-modal/registration-success-modal.component';
@@ -32,6 +33,9 @@ import { LoadingComponent } from './loading/loading.component';
 import { TutorBeginComponent } from './tutor-begin/tutor-begin.component';
 import { TutorPersonalDataComponent } from './tutor-personal-data/tutor-personal-data.component';
 import { TutorSecurityComponent } from './tutor-security/tutor-security.component';
+import { TutorPersonalModalComponent } from './tutor-personal-modal/tutor-personal-modal.component';
+import { DialogComponent } from './dialog/dialog.component';
+import { DialogService } from '../providers/dialog.service';
 
 const COMPONENTS = [
   RegistrationSuccessModalComponent,
@@ -47,10 +51,11 @@ const COMPONENTS = [
   TutorSecurityComponent,
   TutorPersonalDataComponent,
   LoadingComponent,
+  DialogComponent
 ] as const;
 
 @NgModule({
-  declarations: [...COMPONENTS, TutorBeginComponent, TutorPersonalDataComponent, TutorSecurityComponent],
+  declarations: [...COMPONENTS, TutorBeginComponent, TutorPersonalDataComponent, TutorSecurityComponent, TutorPersonalModalComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -71,9 +76,10 @@ const COMPONENTS = [
     NgxMatDatetimePickerModule,
     MatRadioModule,
     MatProgressSpinnerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatGridListModule
   ],
   exports: [...COMPONENTS],
-  providers: [provideNgxMask(), LoadingService],
+  providers: [provideNgxMask(), LoadingService, DialogService],
 })
 export class SharedComponentsModule {}

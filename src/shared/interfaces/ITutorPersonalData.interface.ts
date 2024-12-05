@@ -20,3 +20,10 @@ export interface ILessonRequestTutors {
     chosenDate: string;
     lessonRequest: ILessonRequest;
 }
+
+export interface ITutorPersonalModal {
+    username: string;
+    expertise: string;
+    projectReason: string;
+    selectedSubjects: string[];
+}
