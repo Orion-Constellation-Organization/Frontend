@@ -83,6 +83,6 @@ export class LessonRequestService extends BaseService {
       tutorId: Number(tutorId),
     };
 
-    return this.call('PATCH', '/student-confirm-lesson', payload);
+    return this.call('POST', '/student-confirm-lesson', payload);
   }
 }
