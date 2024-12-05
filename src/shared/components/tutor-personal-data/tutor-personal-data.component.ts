@@ -36,7 +36,7 @@ export class TutorPersonalDataComponent implements OnInit {
         this.expertise = tutorData.expertise || 'Ocupação não informada';
         this.projectReason = tutorData.projectReason || 'Motivo não informado';
         this.subjects = tutorData.subjects && tutorData.subjects.length > 0 
-          ? tutorData.subjects.map((subject: ISubjects) => subject.name) 
+          ? tutorData.subjects.map((subject: ISubjects) => subject.subjectName) 
           : [];
       }
     } catch (error) {

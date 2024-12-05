@@ -46,11 +46,11 @@ export class TutorRequestComponent implements OnInit {
       }
   
       const tutorData = await this.tutorService.getTutorById(currentUser.id);
-      this.tutorSubjects = tutorData.subjects.map((subject: ISubjects) => subject.name);
+      this.tutorSubjects = tutorData.subjects.map((subject: ISubjects) => subject.subjectName);
   
-      const allRequests = await this.lessonRequestService.getLessonRequests(currentUser.id, true, 1, 10, 'ASC');
+      const allRequests = await this.lessonRequestService.getLessonRequests(currentUser.id, 'pendente', true, 1, 10, 'ASC', 'classId');
       this.pendingRequests = allRequests.filter(
-        (request) => request.status === 'pendente' && this.tutorSubjects.includes(request.subject.subjectName)
+        (request) => this.tutorSubjects.includes(request.subject.subjectName)
       );
 
       if (this.pendingRequests.length === 0) {
