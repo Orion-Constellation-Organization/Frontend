@@ -23,4 +23,14 @@ export interface ITutorResponse extends IBaseUserResponse {
      */
     levelType: string;
   }[];
+
+  /**
+   * Expertise do tutor
+   */
+  expertise?: string;
+
+  /**
+   * Data escolhida pelo tutor para a aula
+   */
+  chosenDate?: string;
 }

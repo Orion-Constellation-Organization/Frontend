@@ -18,7 +18,21 @@ export interface ILessonRequest extends IClassRequest {
   /** Status do pedido de aula */
   status: string;
 
+  urlMeet: string | null;
+
   additionalInfo: string;
+
+  lessonRequestTutors: {
+    id: number;
+    chosenDate: string;
+    status: string;
+    tutor: {
+      id: number;
+      username: string;
+      expertise: string;
+      projectReason: string;
+    };
+  }[];
 
   /** Informações sobre a disciplina */
   subject: {
@@ -34,5 +48,4 @@ export interface ILessonRequest extends IClassRequest {
 
   /** Tutores associados ao pedido, pode ser nulo */
   tutors: ITutorResponse | null;
-
 }

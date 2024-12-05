@@ -21,8 +21,10 @@
                 </ng-container>
             </div>
             <div class="lesson-card-manager__actions__item lesson-card-manager__actions__container-buttons">
-                <app-button [type]="buttonTypes.editRequest" [label]="buttonTypes.editRequest" (click)="onEditClick(request)"></app-button>
-                <app-button [type]="buttonTypes.deleteRequest" [label]="buttonTypes.deleteRequest" (click)="onDeleteClick(request.classId)"></app-button>
+                <app-button [type]="buttonTypes.editRequest" [label]="getButtonLabel(request.status)" (click)="onEditClick(request)">
+                </app-button>
+                <app-button [type]="buttonTypes.deleteRequest" [label]="buttonTypes.deleteRequest" (click)="onDeleteClick(request.classId)">
+                </app-button>
             </div>
         </div>
     </div>
@@ -48,3 +50,36 @@
     <app-class-request-form [isOpen]="showEditForm" [editMode]="true" [requestData]="selectedRequest" (closeModal)="onCloseForm($event)">
     </app-class-request-form>
 </ng-container>
+
+<!-- Modal do Tutor -->
+<div class="tutor-modal" *ngIf="showTutorModal && tutorData">
+    <div class="tutor-modal__content">
+        <header class="tutor-modal__header">
+            <h2>Dados do Voluntário</h2>
+            <button class="close-button" (click)="closeTutorModal()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </header>
+
+        <div class="tutor-modal__body">
+            <div class="tutor-modal__profile">
+                <!-- <img [src]="tutorData.photoUrl || '../../../assets/images/user-icon.png'" alt="Foto do voluntário" class="tutor-modal__profile-photo"> -->
+                <div class="tutor-modal__profile-info">
+                    <h3>{{ tutorData.username }}</h3>
+                    <p>{{ tutorData.birthDate }} anos</p>
+                    <p>{{ tutorData.expertise || 'Ocupação não informada' }}</p>
+                </div>
+            </div>
+
+            <div class="tutor-modal__schedule">
+                <h4>Horário escolhido:</h4>
+                <p>{{ tutorData.chosenDate }}</p>
+            </div>
+
+            <div class="tutor-modal__reason">
+                <h4>Por que está no projeto:</h4>
+                <p>{{ tutorData.projectReason || 'Motivo não informado' }}</p>
+            </div>
+        </div>
+    </div>
+</div>

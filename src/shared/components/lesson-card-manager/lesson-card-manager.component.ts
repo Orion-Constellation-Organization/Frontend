@@ -118,6 +118,16 @@ export class LessonCardManagerComponent implements OnInit {
   @Input() public status: string = '';
 
   /**
+   * Dados do tutor para exibição no modal
+   */
+  public tutorData: any = null;
+
+  /**
+   * Controla a visibilidade do modal de tutor
+   */
+  public showTutorModal = false;
+
+  /**
    * Cria uma instância do componente LessonCardManager.
    * @param authService - Serviço de autenticação para gerenciar usuários.
    * @param studentService - Serviço para gerenciar dados de estudantes.
@@ -209,7 +219,9 @@ export class LessonCardManagerComponent implements OnInit {
           .filter(Boolean)
       : [];
 
-    return {
+    console.log('Request original:', request);
+
+    const mappedRequest = {
       classId: requestId,
       userName: studentData.username,
       educationLevel: studentData.educationLevel.levelType,
@@ -221,7 +233,10 @@ export class LessonCardManagerComponent implements OnInit {
       availableSchedules: this.getAvailableSchedules(formattedSchedules),
       subjectId: request.subject.subjectId,
       studentId: studentData.id,
+      status: request.status,
     };
+    console.log('Request mapeada:', mappedRequest);
+    return mappedRequest;
   }
 
   /**
@@ -269,18 +284,38 @@ export class LessonCardManagerComponent implements OnInit {
    * Se um formulário de edição já estiver aberto, ele será fechado antes de abrir o novo.
    * @param request - Solicitação a ser editada.
    */
-  public onEditClick(request: any): void {
-    if (!request.classId) {
-      console.error('Tentativa de edição sem ID da solicitação:', request);
-      this.errorMessage = 'Tentativa de edição sem ID da solicitação';
-      return;
-    }
-    // Fechar qualquer modal aberto anteriormente
-    if (this.showEditForm) {
-      this.closeEditForm().subscribe(() => {
-        this.openEditForm(request);
-      });
+  public async onEditClick(request: any): Promise<void> {
+    // Mostra modal de voluntários apenas quando o status for 'aceito' E
+    // estiver na visualização de "aceito"
+    const shouldShowVolunteers =
+      request.status === 'aceito' && this.status === 'aceito';
+
+    if (shouldShowVolunteers) {
+      try {
+        // Buscar dados do tutor pela rota de lessonRequest
+        const response = await this.lessonRequestService.getLessonRequestById(
+          request.classId
+        );
+        if (
+          response &&
+          response.lessonRequestTutors &&
+          response.lessonRequestTutors.length > 0
+        ) {
+          const tutor = response.lessonRequestTutors[0].tutor;
+          this.tutorData = {
+            ...tutor,
+            chosenDate: response.lessonRequestTutors[0].chosenDate,
+          };
+          this.showTutorModal = true;
+        } else {
+          this.errorMessage = 'Dados do voluntário não encontrados';
+        }
+      } catch (error) {
+        console.error('Erro ao buscar dados do tutor:', error);
+        this.errorMessage = 'Erro ao carregar dados do voluntário';
+      }
     } else {
+      // Abre o formulário de edição para os outros casos
       this.openEditForm(request);
     }
   }
@@ -413,6 +448,27 @@ export class LessonCardManagerComponent implements OnInit {
   }
 
   /**
+   * Retorna o texto do botão baseado no status da solicitação
+   * @param status Status da solicitação
+   * @returns Texto do botão
+   */
+  public getButtonLabel(status: string | undefined): string {
+    console.log('Status da requisição:', status);
+    console.log('Status da visualização:', this.status);
+
+    if (!status) return 'Editar';
+
+    // Mostra "Voluntários" apenas quando o status for 'aceito' E
+    // estiver na visualização de "aceito"
+    const shouldShowVolunteers =
+      status === 'aceito' && this.status === 'aceito';
+
+    console.log('Deve mostrar Voluntários?', shouldShowVolunteers);
+
+    return shouldShowVolunteers ? 'Voluntários' : 'Editar';
+  }
+
+  /**
    * Fecha o formulário de edição e emite um evento quando a operação é concluída.
    * @returns Um Observable que emite um valor quando o formulário é fechado.
    */
@@ -442,5 +498,32 @@ export class LessonCardManagerComponent implements OnInit {
   public closeRegistrationSuccessDialog(): void {
     this.registrationSuccessModal.isOpen = false;
     this.closeModal.emit();
+  }
+
+  /**
+   * Fecha o modal do tutor
+   */
+  public closeTutorModal(): void {
+    this.showTutorModal = false;
+    this.tutorData = null;
+  }
+
+  /**
+   * Calcula a idade do tutor baseado na data de nascimento
+   */
+  public calculateAge(birthDate: string): number {
+    const today = new Date();
+    const birth = new Date(birthDate);
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birth.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
   }
 }

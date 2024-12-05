@@ -20,4 +20,13 @@ export interface IClassRequest {
 
   /** ID da solicitação */
   classId?: number;
+
+  /** Status da solicitação */
+  status?: string;
+
+  /** ID do tutor selecionado */
+  tutorId?: number;
+
+  /** Data escolhida para a aula */
+  chosenDate?: string;
 }
