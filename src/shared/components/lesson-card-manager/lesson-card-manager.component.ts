@@ -586,8 +586,11 @@ export class LessonCardManagerComponent implements OnInit {
       );
 
       console.log('Resposta da API:', response);
-      this.message = 'Aula agendada com sucesso!';
+      this.message =
+        'Aula agendada! Um e-mail será enviado para você com um link de acesso e todos os detalhes para sua aula.';
       this.showTutorModal = false;
+      this.showDeleteButtons = false;
+      this.showCloseButton = true;
       this.openRegistrationSuccessDialog();
       await this.loadUserData();
     } catch (error: any) {

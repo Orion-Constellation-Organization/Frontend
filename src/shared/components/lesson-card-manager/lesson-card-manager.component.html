@@ -30,7 +30,7 @@
     </div>
 </ng-container>
 
-<app-registration-success-modal [message]="message" (onClose)="closeRegistrationSuccessDialog()" (onConfirmDelete)="handleConfirmDelete()" [showDeleteButtons]="true" [showCloseButton]="false">
+<app-registration-success-modal [message]="message" (onClose)="closeRegistrationSuccessDialog()" (onConfirmDelete)="handleConfirmDelete()" [showDeleteButtons]="showDeleteButtons" [showCloseButton]="showCloseButton">
 </app-registration-success-modal>
 
 <div *ngIf="errorMessage">
