@@ -148,13 +148,8 @@
       background-color: rgba(0, 0, 0, 0.05);
     }
     &.selected {
-      border-color: #007bff; // ou a cor do seu tema
-      background-color: rgba(
-        0,
-        123,
-        255,
-        0.05
-      ); // versão mais clara da cor do tema
+      border-color: $color-primary-light;
+      background-color: rgba(0, 123, 255, 0.05);
     }
   }
 

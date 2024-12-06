@@ -84,12 +84,6 @@
             </div>
         </div>
     </div>
-    <!-- Adicione este div temporário para debug -->
-    <div style="display: none;">
-        {{ console.log('tutorData:', tutorData) }}
-        {{ console.log('Modal Status:', isOpen, message) }}
-    </div>
-    <!-- Novo botão de agendamento -->
     <div class="tutor-modal__content__body__actions">
         <app-button [type]="buttonTypes.scheduleClass" [label]="'Agendar Aula'" (click)="scheduleClassWithTutor(tutorData.id)" [disabled]="selectedTutorId !== tutorData.id" class="tutor-modal__schedule-button">
         </app-button>
