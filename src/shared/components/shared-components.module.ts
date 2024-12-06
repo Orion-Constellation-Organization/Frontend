@@ -37,6 +37,7 @@ import { TutorPersonalModalComponent } from './tutor-personal-modal/tutor-person
 import { DialogComponent } from './dialog/dialog.component';
 import { DialogService } from '../providers/dialog.service';
 import { TutorWaitingComponent } from './tutor-waiting/tutor-waiting.component';
+import { DatePipe } from '../pipes/date.pipe';
 
 const COMPONENTS = [
   RegistrationSuccessModalComponent,
@@ -57,7 +58,7 @@ const COMPONENTS = [
 ] as const;
 
 @NgModule({
-  declarations: [...COMPONENTS, TutorBeginComponent, TutorPersonalDataComponent, TutorSecurityComponent, TutorPersonalModalComponent, TutorWaitingComponent],
+  declarations: [...COMPONENTS, TutorBeginComponent, TutorPersonalDataComponent, TutorSecurityComponent, TutorPersonalModalComponent, TutorWaitingComponent, DatePipe],
   imports: [
     CommonModule,
     RouterModule,

@@ -56,7 +56,6 @@ export class TutorRequestComponent implements OnInit {
       }
     } catch (error) {
       console.error('Erro ao buscar pedidos:', error);
-      this.messageUnavailable = "Erro ao carregar pedidos";
     } finally {
       this.loadingService.hide();
     }
