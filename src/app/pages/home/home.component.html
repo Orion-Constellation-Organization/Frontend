@@ -1,15 +1,167 @@
-<header class="header-container">
-    <div class="header-content">
-        <div class="header-box-image">
-            <img class="header-logo" src="../../../assets/images/RB Logo circular.png" alt="Logo Reforça o Bem" (click)="navigateToHome()">
+<header class="header" id="top">
+    <img src="assets/images/RB Logo circular.png" alt="Logo do site" class="header__image" (click)="scrollToSection('banner')" tabindex="0" (keydown.enter)="scrollToSection('banner')">
+    
+    <nav class="header__nav">
+        <div class="header__nav__items">
+            <button mat-button class="header__nav__items__button" *ngFor="let item of menuItems" (click)="scrollToSection(item.section)" (keydown.enter)="scrollToSection(item.section)">
+                {{item.label}}
+            </button>
+            <button mat-button class="header__nav__items__button--join" (click)="showModal()" (keydown.enter)="showModal()">Entrar</button>
         </div>
-        <p class="header-text">Transforme o mundo através da educação</p>
-        <nav class="header-nav">
-            <button class="header-nav-btn">Saiba mais</button>
-            <button class="header-nav-btn" (click)="showModal()">Login</button>
-        </nav>
+    </nav>
+
+    <div class="header__nav__mobile">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" class="abc">
+            <button mat-menu-item *ngFor="let item of menuItems" (click)="scrollToSection(item.section)" (keydown.enter)="scrollToSection(item.section)">
+                {{item.label}}
+            </button>
+        </mat-menu>
+        <button mat-button class="header__nav__items__button--join" (click)="showModal()" (keydown.enter)="showModal()">Entrar</button>
     </div>
 </header>
+
+<main class="main">
+    <section class="banner" id="banner">
+        <div class="banner__all">
+            <div class="banner__all__content">
+                <h1 class="banner__all__content__title">Somos uma plataforma que conecta tutores voluntários com alunos do ensino médio</h1>
+                <h3 class="banner__all__content__subtitle">Encontre aulas de reforço das matérias da grade curricular</h3>
+                <div class="banner__all__content__bottom">
+                    <button mat-button class="banner__all__content__bottom__button" (click)="showModal()">Começar agora</button>
+                    <img src="assets/images/line1.png" alt="Decoração com linha roxa" class="banner__all__content__bottom__decoration">
+                </div>
+            </div>
+            <div class="banner__all__illustration">
+                <img src="assets/images/people1.png" alt="Imagem do tutor ajudando o aluno" class="banner__all__illustration__image">
+            </div>
+        </div>
+    </section>
+
+    <section class="how" id="how">
+        <div class="how__all">
+            <div class="how__all__illustration">
+                <img src="assets/images/people2.png" alt="Tutor ajudando o aluno" class="how__all__illustration__image">
+            </div>
+            <div class="how__all__content">
+                <h4 class="how__all__content__subtitle">Como funciona</h4>
+                <h1 class="how__all__content__title">Amplie seu conhecimento</h1>
+                <hr class="how__all__content__line">
+                <div class="how__all__content__type">
+                    <img src="assets/images/tutor.png" alt="Imagem de uma lâmpada" class="how__all__content__type__image">
+                    <div class="how__all__content__type__info">
+                        <h4 class="how__all__content__type__info__title">Tutor</h4>
+                        <p class="how__all__content__type__info__text">O tutor doa seu tempo e seu conhecimento para a causa nobre da educação</p>
+                    </div>
+                </div>
+                <div class="how__all__content__type">
+                    <img src="assets/images/student.png" alt="Imagem de um notebook" class="how__all__content__type__image">
+                    <div class="how__all__content__type__info">
+                        <h4 class="how__all__content__type__info__title">Aluno</h4>
+                        <p class="how__all__content__type__info__text">Os alunos recebem aulas ao vivo para tirar dúvidas sobre as matérias da grade curricular.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="flow">
+        <div class="flow__top">
+            <h1 class="flow__top__title">Conheça nosso fluxo</h1>
+            <hr class="flow__top__line">
+        </div>
+        <div class="flow__rectangle">
+            <div class="flow__rectangle__all">
+                <div class="flow__rectangle__all__item">
+                    <div class="flow__rectangle__all__item__each">
+                        <span class="flow__rectangle__all__item__each__number">1</span>
+                        <p class="flow__rectangle__all__item__each__text">O aluno escolhe um dos horários disponíveis</p>
+                    </div>
+                    <img src="assets/images/arrow1.png" alt="Seta direita" class="flow__rectangle__all__item--arrow1">
+                    <div class="flow__rectangle__all__item__each">
+                        <h3 class="flow__rectangle__all__item__each__number">2</h3>
+                        <p class="flow__rectangle__all__item__each__text">O tutor escolhe o horário que quer doar para apoiar o projeto</p>
+                    </div>
+                    <img src="assets/images/arrow2.png" alt="Seta direita" class="flow__rectangle__all__item--arrow2">
+                    <div class="flow__rectangle__all__item__each">
+                        <h3 class="flow__rectangle__all__item__each__number">3</h3>
+                        <p class="flow__rectangle__all__item__each__text">No horário marcado os dois entram no link da reunião fornecido pela plataforma</p>
+                    </div>
+                </div>
+                <button mat-button class="flow__rectangle__all__button" (click)="showModal()">Verifique agora</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="reinforce" id="reinforce">
+        <div class="reinforce__all">
+            <div class="reinforce__all__content">
+                <h4 class="reinforce__all__content__subtitle">Aqui é para você</h4>
+                <h1 class="reinforce__all__content__title">Encontre o melhor reforço escolar</h1>
+                <p class="reinforce__all__content--text1">O reforço escolar é uma atividade destinada a estudantes que, por alguma razão, não conseguiram aprender certo conteúdo durante as aulas regulares e apresentam algum tipo de dificuldade de aprendizagem.</p>
+                <p class="reinforce__all__content--text2">O objetivo do reforço é ajudar o aluno a solucionar suas dúvidas, superar suas dificuldades e desenvolver as habilidades previstas no currículo.</p>
+            </div>
+            <div class="reinforce__all__illustration">
+                <img src="assets/images/people3.png" alt="Estudante assistindo " class="reinforce__all__illustration__image">
+            </div>
+        </div>
+    </section>
+
+    <section class="monitoring" id="monitoring">
+        <div class="monitoring__all">
+            <div class="monitoring__all__illustration">
+                <img src="assets/images/people4.png" alt="Imagem de um notebook" class="monitoring__all__illustration__image">
+            </div>
+            <div class="monitoring__all__content">
+                <h4 class="monitoring__all__content__subtitle">Estamos comprometidos com você</h4>
+                <h1 class="monitoring__all__content__title">Acompanhamento</h1>
+                <hr class="monitoring__all__content__line">
+                <p class="monitoring__all__content__text">Faremos um acompanhamento da evolução do aluno para mapear o progresso e evolução nas matérias ensinadas.</p>
+                <button mat-button class="monitoring__all__content__button" (click)="showModal()">Venha participar</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="decoration">
+        <img src="assets/images/line2.png" alt="Decoração" class="decoration__image">
+    </section>
+
+    <section class="option">
+        <div class="option__all">
+            <div class="option__all__type" (click)="showModal()" tabindex="0" (keydown.enter)="showModal()">
+                <img src="assets/images/profile1.png" alt="Avatar de tutor" class="option__all__type__image">
+                <h2 class="option__all__type__title">Seja um tutor</h2>
+                <h4 class="option__all__type__subtitle">Apoie uma causa que pode ajudar a mudar a sociedade</h4>
+            </div>
+            <div class="option__all__type" (click)="showModal()" tabindex="0" (keydown.enter)="showModal()">
+                <img src="assets/images/profile2.png" alt="Avatar de aluno" class="option__all__type__image">
+                <h2 class="option__all__type__title">Seja um aluno</h2>
+                <h4 class="option__all__type__subtitle">Receba aulas agendadas ao vivo com tutores voluntários </h4>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <h1 class="footer--text1">Se interessou na plataforma?</h1>
+    <h1 class="footer--text2"><u (click)="showModal()" tabindex="0" (keydown.enter)="showModal()">Clique aqui!</u></h1>
+    <div class="footer__options">
+        <div class="footer__options__items">
+            <button mat-button class="footer__options__items__button" (click)="scrollToSection('banner')">Quem somos</button>
+            <button mat-button class="footer__options__items__button" (click)="scrollToSection('how')">Como funciona</button>
+            <button mat-button class="footer__options__items__button" (click)="scrollToSection('reinforce')">Reforço escolar</button>
+            <button mat-button class="footer__options__items__button" (click)="scrollToSection('monitoring')">Acompanhamento</button>
+        </div>
+        <div class="footer__options__social">
+            <img src="assets/images/facebook.png" alt="Logo do facebook" class="footer__options__social__media">
+            <img src="assets/images/instagram.png" alt="Logo do instagram" class="footer__options__social__media">
+        </div>
+    </div>
+    <hr class="footer__line">
+    <p class="footer__copyright">Copyright © {{ currentYear }}. Todos os direitos reservados.</p>
+</footer>
 <app-login #modalComponent></app-login>
 <app-registration-success-modal #registrationSucessModal [isOpen]="false">
 </app-registration-success-modal>

@@ -1,0 +1,107 @@
+@mixin button-base {
+  width: $button-width;
+  height: $button-height;
+  border-radius: $border-radius-24;
+  font-size: $text-size-14;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@mixin font-base {
+  font-family: $font-primary;
+  letter-spacing: 0;
+}
+
+@mixin title-text {
+  @include font-base;
+  font-size: $text-size-48;
+  font-weight: 700;
+  color: $color-primary-light;
+  line-height: 65px;
+  margin-bottom: $spacing-8;
+}
+
+@mixin subtitle-text {
+  @include font-base;
+  font-size: $text-size-20;
+  font-weight: 600;
+  color: $color-primary-light;
+  margin-bottom: $spacing-8;
+}
+
+@mixin body-text {
+  @include font-base;
+  font-size: $text-size-16;
+  font-weight: 400;
+  color: $black-variation-1;
+  line-height: 24px;
+}
+
+@mixin blue-button {
+  padding: 32px 37px;
+  @include font-base;
+  font-size: $text-size-24;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: $color-neutral-white !important;
+  background-color: $color-primary-dark;
+  border-radius: $border-radius-32;
+}
+
+@mixin section-padding-140 {
+  padding-left: 140px;
+  padding-right: 140px;
+}
+
+@mixin section-container {
+  @include flex-center;
+  @include section-padding-140;
+}
+
+@mixin yellow-line {
+  height: 4px;
+  width: 25%;
+  background-color: $yellow-variation-2;
+  border: 0;
+}
+
+@mixin responsive(
+  $size-breakpoint: none,
+  $is-min: false,
+  $dimension-type: "width"
+) {
+  $dimension: 0px;
+
+  @if $size-breakpoint == sm {
+    $dimension: 480px;
+  } @else if $size-breakpoint == md {
+    $dimension: 768px;
+  } @else if $size-breakpoint == lg {
+    $dimension: 992px;
+  } @else if $size-breakpoint == xl {
+    $dimension: 1200px;
+  } @else if type-of($size-breakpoint) == number {
+    $dimension: $size-breakpoint;
+  }
+
+  $media-condition: if($is-min, "min", "max");
+
+  @media (#{$media-condition}-#{$dimension-type}: $dimension) {
+    @content;
+  }
+}

@@ -4,6 +4,8 @@ $color-neutral-gray-lightest: #eeeeee;
 $color-neutral-gray-light: #e1e1e3;
 $color-neutral-gray-dark: #a3a3a3;
 $color-neutral-gray-medium: #c4c4c4;
+$color-neutral-dark-gray: #333333;
+$color-neutral-dark-gray-medium: #555555;
 
 $color-primary-dark: #000048;
 $color-primary-light: #4582c4;
@@ -25,6 +27,7 @@ $color-alert-info: #1976d2;
 $color-alert-info-hover: #1565c0;
 
 $color-customization-angular-material: #acc8e5;
+$border-color-dark-blue: #001B68;
 
 $color-text-dark: #1e1e1e;
 
@@ -35,3 +38,54 @@ $button-color-background: $color-background;
 
 $font-primary: "Inter", sans-serif;
 $font-secondary: "Montserrat", sans-serif;
+
+$padding-large: 24px;
+$font-size-small: 16px;
+$font-size-large: 24px;
+$font-size-medium: 20px;
+$font-weight-bold: 700;
+$font-weight-medium: 500;
+$line-height: 150%;
+$gap-default: 20px;
+$max-width-large: 796px;
+$max-width-medium: 700px;
+$border-radius-large: 80px;
+$border-radius-medium: 40px;
+
+@mixin responsive-font($size-large, $size-small) {
+  font-size: $size-large;
+
+  @media (max-width: 1366px) {
+    font-size: $size-small;
+  }
+}
+
+$black-variation-1: #1D1B20;
+$yellow-variation-1: rgba(255, 251, 0, 0.09);
+$yellow-variation-2: #FFDD57;
+$yellow-variation-3: #FFDF81;
+
+$text-size-14: 14px;
+$text-size-16: 16px;
+$text-size-18: 18px;
+$text-size-20: 20px;
+$text-size-24: 24px;
+$text-size-32: 32px;
+$text-size-40: 40px;
+$text-size-48: 48px;
+$text-size-64: 64px;
+
+$button-height: 40px;
+$button-width: 264px;
+
+$spacing-8: 8px;
+$spacing-16: 16px;
+$spacing-20: 20px;
+$spacing-24: 24px;
+$spacing-28: 28px;
+$spacing-32: 32px;
+$spacing-36: 36px;
+$spacing-64: 64px;
+
+$border-radius-24: 24px;
+$border-radius-32: 32px;

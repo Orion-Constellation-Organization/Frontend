@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MainComponent } from './main/main.component';
 import { LoginComponent } from './login/login.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [HomeComponent, MainComponent, LoginComponent],
@@ -32,6 +33,7 @@ import { LoginComponent } from './login/login.component';
     MatNativeDateModule,
     MatButtonModule,
     MatDialogModule,
+    MatMenuModule
   ],
 })
 export class PagesModule {}

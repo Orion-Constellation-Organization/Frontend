@@ -2,44 +2,36 @@ import { Component, ViewChild } from '@angular/core';
 import { LoginComponent } from '../login/login.component';
 import { Router } from '@angular/router';
 
-/**
- * Componente responsável pela página home da aplicação.
- *
- * @component
- */
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  /**
-   * Título da página home.
-   *
-   * @type {string}
-   */
-  title = 'Reforca o bem';
-
-  /**
-   * Referência ao componente de login para controle do modal de autenticação.
-   *
-   * @type {LoginComponent}
-   */
+  public currentYear: number;
+  public menuItems = [
+    { label: 'Quem somos', section: 'banner' },
+    { label: 'Como funciona', section: 'how' },
+    { label: 'Reforço escolar', section: 'reinforce' },
+    { label: 'Acompanhamento', section: 'monitoring' }
+  ];
   @ViewChild('modalComponent') modalComponent!: LoginComponent;
 
-  /**
-   * Construtor do componente Home.
-   *
-   * @param router - Serviço de roteamento do Angular para navegação entre páginas
-   */
-  constructor(private router: Router) {}
+  public constructor(private router: Router) {
+    this.currentYear = new Date().getFullYear();
+  }
 
   /**
-   * Navega para a página inicial da aplicação.
-   * Utiliza o Router do Angular para redirecionar o usuário para a rota '/home'.
+   * Sends the user to a determined section of the page.
+   * @param sectionId The id of the sectiom that the user is going to be redirected
    */
-  navigateToHome() {
-    this.router.navigate(['/home']);
+  public scrollToSection(sectionId: string): void {
+    const element = document.getElementById(sectionId);
+
+    if (element) {
+      const offsetTop = element.offsetTop - 80;
+      window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+    }
   }
 
   /**

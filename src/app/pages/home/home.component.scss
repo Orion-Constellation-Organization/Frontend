@@ -1,145 +1,748 @@
-@import "../../styles/theme.scss";
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
 
-:host {
-  @extend .font-primary;
+.main {
+  padding-top: 85px;
+
+  @include responsive(md) {
+    padding-top: 70px;
+  }
 }
 
-.header-container {
-  max-height: 284px;
+.header {
+  @include flex-center;
+  justify-content: space-around;
+  height: 85px;
+  background-color: #fefdff;
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.25);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 99999;
+
+  @include responsive(md) {
+    height: 70px;
+  }
+
+  &__image {
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+
+    @include responsive(md) {
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  &__nav {
+    display: flex;
+
+    @include responsive(xl) {
+      display: none;
+    }
+
+    &__items {
+      @include flex-center;
+      padding-left: 0;
+      gap: $spacing-64;
+
+      @include responsive(lg) {
+        gap: $spacing-32;
+      }
+
+      &__button {
+        @include font-base;
+        font-size: $text-size-16;
+        font-weight: 400;
+
+        &:hover {
+          color: $color-primary-light;
+          transition: color 0.3s ease;
+        }
+
+        &--join {
+          color: $color-neutral-white !important;
+          border-radius: $spacing-8;
+          font-weight: 500;
+          padding: $spacing-20 $spacing-20;
+          background-color: $color-primary-dark;
+          letter-spacing: 1px;
+
+          @include responsive(sm) {
+            padding: $spacing-16 $spacing-16;
+          }
+        }
+      }
+    }
+
+    &__mobile {
+      display: none;
+      align-items: center;
+      gap: $spacing-16;
+
+      @include responsive(xl) {
+        display: flex;
+      }
+    }
+  }
 }
 
-.header-content {
-  display: flex;
+.banner {
+  @include section-container;
+  height: 583px;
+  background-color: $yellow-variation-1;
+
+  @include responsive(xl) {
+    height: auto;
+    padding: $spacing-36 $spacing-24;
+  }
+
+  &__all {
+    @include flex-center;
+
+    @include responsive(lg) {
+      flex-direction: column;
+    }
+
+    &__content {
+      @include content-container;
+      width: 733px;
+      margin-right: $spacing-32;
+
+      @include responsive(xl) {
+        width: 100%;
+        margin-right: 0;
+      }
+
+      @include responsive(lg) {
+        @include flex-center;
+      }
+
+      &__title {
+        @include title-text;
+
+        @include responsive(lg) {
+          text-align: center;
+        }
+
+        @include responsive(sm) {
+          font-size: $text-size-32;
+          line-height: 42px;
+        }
+      }
+
+      &__subtitle {
+        @include font-base;
+        font-size: $text-size-24;
+        color: $color-primary-light;
+        margin-bottom: $spacing-32;
+
+        @include responsive(lg) {
+          text-align: center;
+        }
+
+        @include responsive(md) {
+          font-size: $text-size-18;
+        }
+      }
+
+      &__bottom {
+        display: flex;
+        justify-content: space-between;
+
+        &__button {
+          @include blue-button;
+          margin-top: 40px;
+
+          @include responsive(lg) {
+            line-height: $text-size-14;
+          }
+
+          @include responsive(sm) {
+            margin-top: $spacing-16;
+            font-size: $text-size-18;
+            padding: $spacing-28 $spacing-32;
+          }
+        }
+
+        &__decoration {
+          width: 100%;
+          max-width: 256px;
+          height: 62px;
+
+          @include responsive(lg) {
+            display: none;
+          }
+        }
+      }
+    }
+
+    &__illustration {
+      @include flex-center;
+
+      @include responsive(lg) {
+        display: none;
+      }
+
+      &__image {
+        max-width: 394px;
+        height: auto;
+      }
+    }
+  }
+}
+
+.how {
+  @include section-container;
+  height: 631px;
+
+  @include responsive(xl) {
+    height: auto;
+    padding: $spacing-64 $spacing-24;
+  }
+
+  &__all {
+    @include flex-center;
+
+    &__illustration {
+      @include flex-center;
+
+      @include responsive(lg) {
+        display: none;
+      }
+
+      &__image {
+        max-width: 440px;
+        height: auto;
+
+        @include responsive(md) {
+          max-width: 100%;
+          margin-top: $spacing-32;
+        }
+      }
+    }
+
+    &__content {
+      @include content-container;
+      width: 620px;
+      margin-left: 124px;
+
+      @include responsive(xl) {
+        width: 100%;
+        margin-left: $spacing-20;
+      }
+
+      @include responsive(lg) {
+        margin-left: 0;
+      }
+
+      @include responsive(sm) {
+        align-items: center;
+        text-align: center;
+      }
+
+      &__subtitle {
+        @include subtitle-text;
+
+        @include responsive(md) {
+          font-size: $text-size-18;
+        }
+      }
+
+      &__title {
+        @include title-text;
+
+        @include responsive(sm) {
+          font-size: $text-size-32;
+          line-height: 42px;
+        }
+      }
+
+      &__line {
+        @include yellow-line;
+        margin: 0;
+
+        @include responsive(sm) {
+          width: 60%;
+        }
+      }
+
+      &__type {
+        display: flex;
+        margin-top: $spacing-32;
+
+        @include responsive(sm) {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        &__image {
+          max-width: 96px;
+          height: auto;
+        }
+
+        &__info {
+          @include flex-column;
+          margin-left: $spacing-16;
+          justify-content: center;
+
+          @include responsive(sm) {
+            margin-left: 0;
+          }
+
+          &__title {
+            @include font-base;
+            font-size: $text-size-20;
+            font-weight: 600;
+            color: $black-variation-1;
+            margin-bottom: $spacing-8;
+          }
+
+          &__text {
+            @include body-text;
+          }
+        }
+      }
+
+      &__student {
+        max-width: 613px;
+
+        &__image {
+          max-width: 96px;
+          height: auto;
+        }
+      }
+    }
+  }
+}
+
+.flow {
+  @include flex-column;
+  justify-content: center;
+  align-items: center;
+
+  &__top {
+    max-width: 400px;
+    margin-bottom: $spacing-32;
+
+    @include responsive(sm) {
+      align-items: center;
+      text-align: center;
+      padding-right: $spacing-24;
+      padding-left: $spacing-24;
+      margin-bottom: $spacing-16;
+    }
+
+    &__title {
+      @include font-base;
+      font-size: $text-size-40;
+      font-weight: 700;
+      color: $color-primary-dark;
+      line-height: 54px;
+      margin-bottom: 0;
+
+      @include responsive(sm) {
+        font-size: $text-size-32;
+        line-height: 42px;
+      }
+    }
+
+    &__line {
+      @include yellow-line;
+      margin-right: 0;
+
+      @include responsive(sm) {
+        display: none;
+      }
+    }
+  }
+
+  &__rectangle {
+    @include flex-center;
+    width: 100%;
+    height: 463px;
+    background-color: $color-primary-light;
+
+    @include responsive(xl) {
+      height: auto;
+      padding: $spacing-36 $spacing-24;
+    }
+
+    &__all {
+      @include flex-center;
+      flex-direction: column;
+
+      &__item {
+        @include flex-center;
+        align-items: flex-start;
+
+        @include responsive(xl) {
+          flex-direction: column;
+          gap: $spacing-64;
+        }
+
+        &__each {
+          @include flex-center;
+          flex-direction: column;
+          width: 352px;
+
+          &__number {
+            @include flex-center;
+            @include font-base;
+            font-size: $text-size-64;
+            font-weight: 400;
+            color: $black-variation-1;
+            padding: 64px;
+            background: $yellow-variation-3;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            margin-bottom: $spacing-32;
+
+            @include responsive(xl) {
+              margin-bottom: $spacing-16;
+            }
+
+            @include responsive(sm) {
+              padding: 36px;
+              font-size: $text-size-40;
+            }
+          }
+
+          &__text {
+            @include font-base;
+            font-size: $text-size-24;
+            font-weight: 300;
+            color: $color-neutral-white;
+            line-height: 33px;
+            text-align: center;
+
+            @include responsive(sm) {
+              font-size: $text-size-16;
+              line-height: 24px;
+              width: 82%;
+            }
+          }
+        }
+
+        &--arrow1 {
+          width: 5%;
+          height: auto;
+          align-self: flex-end;
+
+          @include responsive(xl) {
+            display: none;
+          }
+        }
+
+        &--arrow2 {
+          width: 5%;
+          height: auto;
+          align-self: flex-start;
+
+          @include responsive(xl) {
+            display: none;
+          }
+        }
+      }
+
+      &__button {
+        @include blue-button;
+        margin-top: $spacing-32;
+
+        @include responsive(xl) {
+          margin-top: $spacing-64;
+        }
+
+        @include responsive(sm) {
+          font-size: $text-size-18;
+          padding: $spacing-28 $spacing-32;
+        }
+      }
+    }
+  }
+}
+
+.reinforce {
+  @include section-container;
+  height: 542px;
+  background-color: $yellow-variation-1;
+
+  &__all {
+    display: flex;
+
+    &__content {
+      @include content-container;
+      width: 626px;
+      margin-right: 40px;
+
+      &__subtitle {
+        @include subtitle-text;
+      }
+
+      &__title {
+        @include title-text;
+        margin-bottom: $spacing-28;
+      }
+
+      &--text1 {
+        @include body-text;
+        margin-bottom: $spacing-8;
+      }
+
+      &--text2 {
+        @include body-text;
+      }
+    }
+
+    &__illustration {
+      &__image {
+        max-width: 484px;
+        height: auto;
+      }
+    }
+  }
+}
+
+.monitoring {
+  @include section-container;
+  height: 565px;
+
+  &__all {
+    display: flex;
+
+    &__illustration {
+      &__image {
+        max-width: 440px;
+        height: auto;
+      }
+    }
+
+    &__content {
+      @include content-container;
+      width: 620px;
+      margin-left: 86px;
+
+      &__subtitle {
+        @include subtitle-text;
+      }
+
+      &__title {
+        @include title-text;
+      }
+
+      &__line {
+        @include yellow-line;
+        margin: 0;
+      }
+
+      &__text {
+        @include body-text;
+        margin-bottom: $spacing-8;
+        margin-top: $spacing-20;
+      }
+
+      &__button {
+        @include blue-button;
+        margin-top: 40px;
+        width: 290px;
+      }
+    }
+  }
+}
+
+.decoration {
+  @include flex-center;
+
+  &__image {
+    max-width: 20%;
+    height: auto;
+  }
+}
+
+.option {
+  @include section-container;
+  padding-left: 212px;
+  padding-right: 212px;
+  height: 530px;
+
+  @include responsive(md) {
+    height: auto;
+    padding: $spacing-32 $spacing-20;
+  }
+
+  &__all {
+    @include flex-center;
+    gap: 120px;
+
+    @include responsive(md) {
+      flex-direction: column;
+      gap: $spacing-32;
+    }
+
+    &__type {
+      @include flex-center;
+      flex-direction: column;
+      width: 448px;
+      height: 382px;
+      background-color: $color-primary-light;
+      border-radius: $border-radius-32;
+      cursor: pointer;
+
+      @include responsive(md) {
+        width: 100%;
+        height: auto;
+        padding: $spacing-32 $spacing-20;
+      }
+
+      &__image {
+        max-width: 144px;
+        height: auto;
+      }
+
+      &__title {
+        @include font-base;
+        font-size: $text-size-32;
+        font-weight: 600;
+        color: $color-neutral-white;
+        line-height: 44px;
+        letter-spacing: 1px;
+        margin-top: $spacing-28;
+        margin-bottom: $spacing-28;
+      }
+
+      &__subtitle {
+        @include font-base;
+        font-size: $text-size-20;
+        font-weight: 400;
+        color: $color-neutral-white;
+        line-height: 27px;
+        margin: 0;
+        margin-left: $spacing-64;
+        margin-right: $spacing-64;
+        text-align: center;
+
+        @include responsive(md) {
+          margin-left: $spacing-20;
+          margin-right: $spacing-20;
+        }
+      }
+    }
+  }
+}
+
+.footer {
+  @include flex-column;
+  justify-content: center;
+  padding-left: 80px;
+  padding-right: 80px;
+  height: 436px;
   background-color: $color-primary-dark;
-}
 
-.header-container,
-.header-content {
-  @media (max-width: 1200px) {
-    height: 200px;
+  @include responsive(md) {
+    height: auto;
+    padding: $spacing-32 $spacing-20;
   }
 
-  @media (max-width: 768px) {
-    height: 150px;
+  &--text1 {
+    @include font-base;
+    font-size: $text-size-32;
+    font-weight: 600;
+    color: $color-neutral-white;
+    line-height: 54px;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
   }
 
-  @media (max-width: 425px) {
-    display: block;
-    height: 220px;
-  }
-}
+  &--text2 {
+    @include font-base;
+    font-size: $text-size-32;
+    font-weight: 600;
+    color: $color-neutral-white;
+    line-height: 54px;
+    letter-spacing: 1px;
+    margin-bottom: 0;
 
-.header-box-image {
-  width: 208px;
-  margin: 38px 48px 38px 32px;
-
-  @media (max-width: 1200px) {
-    width: 120px;
-  }
-
-  @media (max-width: 768px) {
-    width: 110px;
-    margin: 25px 32px 25px 32px;
+    u {
+      cursor: pointer;
+    }
   }
 
-  @media (max-width: 425px) {
-    width: 90px;
-    margin: auto;
-    padding: 20px 0 20px 0;
-  }
-}
+  &__options {
+    display: flex;
+    justify-content: space-between;
+    margin-top: $spacing-64;
 
-.header-logo {
-  max-width: 100%;
-  height: auto;
-  border-radius: 50%;
-  cursor: pointer;
-}
+    @include responsive(md) {
+      flex-direction: column;
+      gap: $spacing-32;
+      align-items: center;
+    }
 
-.header-text {
-  font-weight: 500;
-  line-height: 150%;
-  color: $color-neutral-white;
-  font-size: 30px;
-  margin: 198px auto 0 0;
+    &__items {
+      display: flex;
+      gap: $spacing-36;
 
-  @media (max-width: 1200px) {
-    font-size: 20px;
-    margin: auto auto 40px 0;
-  }
+      @include responsive(md) {
+        flex-direction: column;
+        align-items: center;
+      }
 
-  @media (max-width: 768px) {
-    font-size: 16px;
-    margin: auto auto 25px 0;
-  }
+      &__button {
+        @include font-base;
+        font-size: $text-size-16;
+        color: $color-neutral-white !important;
+        font-weight: 400;
+        padding: 0;
 
-  @media (max-width: 425px) {
-    font-size: 16px;
-    text-align: center;
-    margin: auto;
-    padding-bottom: 10px;
-  }
+        &:hover {
+          color: $yellow-variation-3 !important;
+          transition: color 0.3s ease;
+        }
+      }
+    }
 
-  @media (max-width: 320px) {
-    font-size: 12px;
-  }
-}
+    &__social {
+      display: flex;
+      gap: $spacing-24;
 
-.header-nav {
-  display: flex;
-  gap: 42px;
-  margin: 36px 72px 0 0;
-
-  @media (max-width: 1200px) {
-    gap: 36px;
-    margin: 30px 60px 0 0;
+      &__media {
+        width: 40px;
+        height: auto;
+      }
+    }
   }
 
-  @media (max-width: 768px) {
-    gap: 26px;
-    margin: 20px 40px 0 0;
+  &__line {
+    height: 1px;
+    width: 100%;
+    background-color: $color-neutral-white;
+    border: 0;
+    margin-top: $spacing-64;
+    margin-bottom: $spacing-32;
   }
 
-  @media (max-width: 425px) {
-    gap: 26px;
-    margin: auto;
-    align-items: center;
-    justify-content: center;
+  &__copyright {
+    color: $color-neutral-white;
+    line-height: 22px;
+    letter-spacing: 1px;
   }
 }
 
-.header-nav-btn {
-  width: 144px;
-  height: 48px;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 150%;
-  color: $color-neutral-white;
-  background-color: $color-primary-light;
-  border: none;
-  border-radius: 19.2px;
-  cursor: pointer;
-  &:hover {
-    background-color: $color-hover-light-primary;
-  }
+.mat-mdc-button {
+  --mat-mdc-button-persistent-ripple-color: none;
+  --mat-mdc-button-ripple-color: none;
+}
 
-  @media (max-width: 1200px) {
-    width: 100px;
-    height: 40px;
-    font-size: 14px;
-  }
+.mat-mdc-menu-content,
+.mat-mdc-menu-content,
+.mat-mdc-menu-item,
+.mat-mdc-menu-item-text {
+  padding-top: 8px;
+  min-height: 54px;
 
-  @media (max-width: 768px) {
-    width: 85px;
-    height: 32px;
-    font-size: 12px;
-  }
-
-  @media (max-width: 425px) {
-    width: 100px;
-  }
-
-  @media (max-width: 320px) {
-    width: 90px;
+  @include responsive(sm) {
+    min-height: 42px;
   }
 }
