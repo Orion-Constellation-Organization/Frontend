@@ -21,14 +21,16 @@
                 </ng-container>
             </div>
             <div class="lesson-card-manager__actions__item lesson-card-manager__actions__container-buttons">
-                <app-button [type]="buttonTypes.editRequest" [label]="buttonTypes.editRequest" (click)="onEditClick(request)"></app-button>
-                <app-button [type]="buttonTypes.deleteRequest" [label]="buttonTypes.deleteRequest" (click)="onDeleteClick(request.classId)"></app-button>
+                <app-button [type]="buttonTypes.editRequest" [label]="getButtonLabel(request.status)" (click)="onEditClick(request)">
+                </app-button>
+                <app-button [type]="buttonTypes.deleteRequest" [label]="buttonTypes.deleteRequest" (click)="onDeleteClick(request.classId)">
+                </app-button>
             </div>
         </div>
     </div>
 </ng-container>
 
-<app-registration-success-modal [message]="message" (onClose)="closeRegistrationSuccessDialog()" (onConfirmDelete)="handleConfirmDelete()" [showDeleteButtons]="true" [showCloseButton]="false">
+<app-registration-success-modal [message]="message" (onClose)="closeRegistrationSuccessDialog()" (onConfirmDelete)="handleConfirmDelete()" [showDeleteButtons]="showDeleteButtons" [showCloseButton]="showCloseButton">
 </app-registration-success-modal>
 
 <div *ngIf="errorMessage">
@@ -37,7 +39,12 @@
 
 <!-- Mostra a mensagem quando não há solicitações -->
 <div *ngIf="!lessonRequests?.length" class="lesson-card-manager__empty">
-    <p>Você não possui pedidos de aula aguardando voluntários</p>
+    <p *ngIf="isWaitingConfirmation">
+        No momento, não há pedidos com voluntários aguardando sua confirmação
+    </p>
+    <p *ngIf="!isWaitingConfirmation">
+        Você não possui pedidos de aula aguardando voluntários
+    </p>
 </div>
 
 <div *ngIf="isLoading" class="loading-spinner">
@@ -48,3 +55,37 @@
     <app-class-request-form [isOpen]="showEditForm" [editMode]="true" [requestData]="selectedRequest" (closeModal)="onCloseForm($event)">
     </app-class-request-form>
 </ng-container>
+
+<!-- Modal do Tutor -->
+<div class="tutor-modal" *ngIf="showTutorModal && tutorData">
+    <div class="tutor-modal__content">
+        <header class="tutor-modal__content__header">
+            <button class="tutor-modal__content__header__close-button" (click)="closeTutorModal()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </header>
+
+        <div class="tutor-modal__content__body" [class.selected]="selectedTutorId === tutorData.id" (click)="selectTutor(tutorData.id)">
+            <div class="tutor-modal__content__body__profile">
+                <img [src]="tutorData.photoUrl || '../../../assets/images/tutor-foto.png'" alt="Foto do voluntário" class="tutor-modal__profile-photo">
+            </div>
+
+            <div class="tutor-modal__content__body__profile-info">
+                <div class="tutor-modal__content__body__profile-info">
+                    <h3 class="tutor-modal__content__body__profile-info__name__age">{{ tutorData.username }}, {{ tutorData.birthDate }} anos</h3>
+                    <p class="tutor-modal__content__body__profile-info__expertise">{{ tutorData.expertise || 'Ocupação não informada' }}</p>
+                </div>
+
+                <div class="tutor-modal__content__body__profile-info__reason-schedule">
+                    <p class="tutor-modal__content__body__profile-info__reason-schedule__reason">{{ tutorData.projectReason || 'Motivo não informado' }}</p>
+                    <p class="tutor-modal__content__body__profile-info__reason-schedule__schedule">Disponível dia: {{ tutorData.chosenDate }}</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="tutor-modal__content__body__actions">
+        <app-button [type]="buttonTypes.scheduleClass" [label]="'Agendar Aula'" (click)="scheduleClassWithTutor(tutorData.id)" [disabled]="selectedTutorId !== tutorData.id" class="tutor-modal__schedule-button">
+        </app-button>
+    </div>
+</div>

@@ -21,7 +21,7 @@ export interface IRequestData {
   /**
    * ID do assunto relacionado à disciplina.
    */
-  subjectId?: string;
+  subjectId?: number;
 
   /**
    * Descrição para o tutor.

@@ -21,4 +21,6 @@ export enum EnvironmentButton {
   CLOSE = 'Close',
   /** Botão para enviar formulários */
   SUBMIT = 'Submit',
+  /** Botão para agendar aulas */
+  SCHEDULE = 'schedule',
 }

@@ -16,17 +16,18 @@ export class LessonRequestService extends BaseService {
    * Obtém a lista de todas as solicitações de aula.
    * @returns Promise contendo um array de solicitações de aula
    */
-  async getLessonRequests(id: number, status: 'pendente', filtered: boolean, page: number, size: number, order: 'ASC' | 'DESC', orderBy: 'classId'): Promise<ILessonRequest[]> {
+  async getLessonRequests(status: 'pendente',id: number, filtered: boolean, page: number, size: number, order: 'ASC' | 'DESC', orderBy: 'classId'): Promise<ILessonRequest[]> {
     const params = new URLSearchParams({
+      status: status,
       id: String(id),
       status: status,
       filtered: String(filtered),
       page: String(page),
       size: String(size),
       order: order,
-      orderBy: orderBy
+      orderBy: orderBy,
     });
-  
+
     return this.call('GET', `/lessonrequest?${params.toString()}`);
   }
 
@@ -44,8 +45,12 @@ export class LessonRequestService extends BaseService {
    * @param id - ID da solicitação a ser deletada
    * @returns Promise com a resposta da deleção
    */
-  async deleteLessonRequest(id: number): Promise<void> {
-    return this.call('DELETE', `/lessonrequest/${id}`);
+  async deleteLessonRequest(id: number, classId: number): Promise<void> {
+    const payload = {
+      id,
+      classId,
+    };
+    return this.call('DELETE', '/lessonrequest', payload);
   }
 
   /**
@@ -54,8 +59,39 @@ export class LessonRequestService extends BaseService {
    * @param request - Dados atualizados da solicitação
    * @returns Promise com a resposta da atualização
    */
-  async updateLessonRequest(id: number, request: IClassRequest): Promise<IClassRequest> {
-    return this.call('PATCH', `/lessonrequest/${id}`, request);
+  async updateLessonRequest(
+    userId: number,
+    lessonId: number,
+    request: IClassRequest
+  ): Promise<IClassRequest> {
+    const params = new URLSearchParams({
+      lessonId: String(lessonId),
+      id: String(userId),
+    });
+
+    return this.call(
+      'PATCH',
+      `/lessonrequest/${lessonId}?${params.toString()}`,
+      request
+    );
+  }
+
+  /**
+   * Confirma uma aula com um tutor específico
+   * @param lessonId - ID da aula a ser confirmada
+   * @param tutorId - ID do tutor selecionado
+   * @returns Promise com a resposta da confirmação
+   */
+  public confirmLessonWithTutor(
+    lessonId: number,
+    userId: number
+  ): Promise<any> {
+    const payload = {
+      lessonId: Number(lessonId),
+      id: Number(userId),
+    };
+
+    return this.call('POST', '/student-confirm-lesson', payload);
   }
 
   public async updateTutorAcceptLesson(data: ITutorAcceptLesson): Promise<ITutorAcceptLesson> {

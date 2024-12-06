@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoadingService {
+  /**
+   * Indica se o carregamento está ativo.
+   * @default false
+   */
   private loading = false;
-  
+
   /**
    * Checks the current loading state
    * @returns 'true' if loading is active, otherwise 'false'

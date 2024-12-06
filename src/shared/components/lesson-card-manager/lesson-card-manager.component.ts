@@ -17,6 +17,16 @@ import { timer } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { LessonRequestService } from 'src/shared/providers/lesson-request.service';
 import { RegistrationSuccessModalComponent } from '../registration-success-modal/registration-success-modal.component';
+import {
+  IMappedLessonRequest,
+  ISelectedRequest,
+} from 'src/shared/interfaces/selected-request.interface';
+import { ITutorData } from 'src/shared/interfaces/ITutorPersonalData.interface';
+import {
+  ILessonRequest,
+  ILessonRequestData,
+} from 'src/shared/interfaces/lesson-request.interface';
+import { IStudentData } from 'src/shared/interfaces/student-data.interface';
 /**
  * Componente para gerenciar cards de solicitações de aula.
  */
@@ -26,6 +36,11 @@ import { RegistrationSuccessModalComponent } from '../registration-success-modal
   styleUrls: ['./lesson-card-manager.component.scss'],
 })
 export class LessonCardManagerComponent implements OnInit {
+  /**
+   * Indica se a solicitação está aguardando confirmação.
+   */
+  @Input() isWaitingConfirmation: boolean = false;
+
   /**
    * Nome do usuário.
    */
@@ -39,7 +54,12 @@ export class LessonCardManagerComponent implements OnInit {
   /**
    * Solicitações de aula do usuário.
    */
-  @Input() public lessonRequests: any[] = [];
+  @Input() public lessonRequests: ISelectedRequest[] = [];
+
+  /**
+   * ID do tutor selecionado.
+   */
+  public selectedTutorId: string | null = null;
 
   /**
    * Indica se o formulário de edição deve ser exibido.
@@ -49,7 +69,7 @@ export class LessonCardManagerComponent implements OnInit {
   /**
    * Solicitação selecionada para edição.
    */
-  public selectedRequest: any = null;
+  public selectedRequest: ISelectedRequest | null = null;
 
   /**
    * Mensagem de erro.
@@ -113,6 +133,21 @@ export class LessonCardManagerComponent implements OnInit {
   public isLoading: boolean = false;
 
   /**
+   * Status das solicitações a serem exibidas
+   */
+  @Input() public status: string = '';
+
+  /**
+   * Dados do tutor para exibição no modal
+   */
+  public tutorData: ITutorData | null = null;
+
+  /**
+   * Controla a visibilidade do modal de tutor
+   */
+  public showTutorModal = false;
+
+  /**
    * Cria uma instância do componente LessonCardManager.
    * @param authService - Serviço de autenticação para gerenciar usuários.
    * @param studentService - Serviço para gerenciar dados de estudantes.
@@ -149,6 +184,7 @@ export class LessonCardManagerComponent implements OnInit {
    * @returns Promise<void>
    */
   private async loadUserData(): Promise<void> {
+    this.isLoading = true;
     try {
       this.errorMessage = null;
       // obter os dados do usuário logado
@@ -170,14 +206,18 @@ export class LessonCardManagerComponent implements OnInit {
           this.educationLevel = 'Não definido';
         }
 
-        // Mapear as solicitações de aula para o formato do card
-        this.lessonRequests = studentData.lessonRequests.map((request: any) =>
-          this.mapLessonRequest(request, studentData)
-        );
+        // Filtrar as solicitações pelo status, se houver
+        this.lessonRequests = studentData.lessonRequests
+          .filter(
+            (request: any) => !this.status || request.status === this.status
+          )
+          .map((request: any) => this.mapLessonRequest(request, studentData));
       }
     } catch (error) {
       console.error('Erro ao carregar dados do usuário', error);
       this.errorMessage = 'Erro ao carregar dados do usuário';
+    } finally {
+      this.isLoading = false;
     }
   }
 
@@ -187,8 +227,8 @@ export class LessonCardManagerComponent implements OnInit {
    * @param studentData - Os dados do estudante relacionados à solicitação.
    * @returns Um objeto contendo os dados formatados da solicitação de aula.
    */
-  private mapLessonRequest(request: any, studentData: any) {
-    const requestId = request.ClassId;
+  private mapLessonRequest(request: ILessonRequest, studentData: IStudentData) {
+    const requestId = request.classId;
 
     if (!requestId) {
       console.warn('Solicitação sem ID:', request);
@@ -202,7 +242,9 @@ export class LessonCardManagerComponent implements OnInit {
           .filter(Boolean)
       : [];
 
-    return {
+    console.log('Request original:', request);
+
+    const mappedRequest = {
       classId: requestId,
       userName: studentData.username,
       educationLevel: studentData.educationLevel.levelType,
@@ -214,7 +256,10 @@ export class LessonCardManagerComponent implements OnInit {
       availableSchedules: this.getAvailableSchedules(formattedSchedules),
       subjectId: request.subject.subjectId,
       studentId: studentData.id,
+      status: request.status,
     };
+    console.log('Request mapeada:', mappedRequest);
+    return mappedRequest;
   }
 
   /**
@@ -226,14 +271,17 @@ export class LessonCardManagerComponent implements OnInit {
     try {
       if (!dateString) return 'Ocorreu um erro ao formatar a data';
 
-      // Verifica se já está no formato desejado
+      // Se já estiver no formato de exibição, retorna como está
       if (dateString.includes(' às ')) {
         return dateString;
       }
 
-      // Parse da data em formato ISO ou outro formato
-      const [datePart, timePart] = dateString.split(' ');
-      const date = new Date(datePart);
+      // Parse da data no novo formato YYYY-MM-DDThh:mm
+      const [datePart, timePart] = dateString.split('T');
+      const [year, month, day] = datePart.split('-').map(Number);
+
+      // Criar a data sem considerar o fuso horário
+      const date = new Date(Date.UTC(year, month - 1, day));
 
       if (isNaN(date.getTime())) {
         console.warn('Data inválida:', dateString);
@@ -241,14 +289,17 @@ export class LessonCardManagerComponent implements OnInit {
       }
 
       // Formatar a data para dd/MM/yyyy
-      const day = date.getDate().toString().padStart(2, '0');
-      const month = (date.getMonth() + 1).toString().padStart(2, '0');
-      const year = date.getFullYear();
+      const formattedDay = date.getUTCDate().toString().padStart(2, '0');
+      const formattedMonth = (date.getUTCMonth() + 1)
+        .toString()
+        .padStart(2, '0');
+      const formattedYear = date.getUTCFullYear();
 
       // Formatar a hora (assumindo que timePart está em formato HH:mm)
       const formattedTime = timePart ? timePart.substring(0, 5) : '00:00';
 
-      return `${day}/${month}/${year} às ${formattedTime}`;
+      // Retorna no formato de exibição dd/MM/yyyy às HH:mm
+      return `${formattedDay}/${formattedMonth}/${formattedYear} às ${formattedTime}`;
     } catch (error) {
       console.error('Erro ao formatar data:', dateString, error);
       return 'Ocorreu um erro ao formatar a data';
@@ -261,18 +312,44 @@ export class LessonCardManagerComponent implements OnInit {
    * Se um formulário de edição já estiver aberto, ele será fechado antes de abrir o novo.
    * @param request - Solicitação a ser editada.
    */
-  public onEditClick(request: any): void {
-    if (!request.classId) {
-      console.error('Tentativa de edição sem ID da solicitação:', request);
-      this.errorMessage = 'Tentativa de edição sem ID da solicitação';
-      return;
-    }
-    // Fechar qualquer modal aberto anteriormente
-    if (this.showEditForm) {
-      this.closeEditForm().subscribe(() => {
-        this.openEditForm(request);
-      });
+  public async onEditClick(request: ISelectedRequest): Promise<void> {
+    // Mostra modal de voluntários apenas quando o status for 'aceito' E
+    // estiver na visualização de "aceito"
+    this.isLoading = true;
+    const shouldShowVolunteers =
+      request.status === 'aceito' && this.status === 'aceito';
+
+    if (shouldShowVolunteers) {
+      try {
+        // Armazena a request selecionada antes de abrir o modal
+        this.selectedRequest = request;
+
+        const response = await this.lessonRequestService.getLessonRequestById(
+          request.classId
+        );
+        if (
+          response &&
+          response.lessonRequestTutors &&
+          response.lessonRequestTutors.length > 0
+        ) {
+          const tutor = response.lessonRequestTutors[0].tutor;
+          this.tutorData = {
+            ...tutor,
+            id: tutor.id.toString(), // Convertendo para string
+            chosenDate: response.lessonRequestTutors[0].chosenDate,
+          };
+          this.showTutorModal = true;
+        } else {
+          this.errorMessage = 'Dados do voluntário não encontrados';
+        }
+      } catch (error) {
+        console.error('Erro ao buscar dados do tutor:', error);
+        this.errorMessage = 'Erro ao carregar dados do voluntário';
+      } finally {
+        this.isLoading = false;
+      }
     } else {
+      // Abre o formulário de edição para os outros casos
       this.openEditForm(request);
     }
   }
@@ -294,6 +371,28 @@ export class LessonCardManagerComponent implements OnInit {
     this.isLoading = true;
     try {
       this.requestToDelete = classId;
+      const foundRequest = this.lessonRequests.find(
+        (request) => request.classId === classId
+      );
+
+      if (!foundRequest) {
+        console.error('Solicitação não encontrada para o classId:', classId);
+        this.errorMessage = 'Solicitação não encontrada';
+        return;
+      }
+
+      // Converter IMappedLessonRequest para ISelectedRequest
+      this.selectedRequest = {
+        classId: foundRequest.classId,
+        userName: foundRequest.userName,
+        educationLevel: foundRequest.educationLevel,
+        subject: foundRequest.subject,
+        reasonType: foundRequest.reasonType,
+        tutorDescription: foundRequest.tutorDescription,
+        availableSchedules: foundRequest.availableSchedules,
+        subjectId: foundRequest.subjectId,
+      };
+
       this.message =
         'Ao clicar em excluir, o pedido será apagado do sistema. Não poderá dar andamento para o agendamento, somente fazendo um novo pedido de aula.';
       this.showCloseButton = false;
@@ -322,16 +421,29 @@ export class LessonCardManagerComponent implements OnInit {
   public async handleConfirmDelete(): Promise<void> {
     this.isLoading = true;
     try {
-      if (!this.requestToDelete) {
-        console.error('ID da solicitação não encontrado');
-        this.errorMessage = 'ID da solicitação não encontrado';
+      // Obter o usuário logado
+      const currentUser = await this.authService.getCurrentUser();
+
+      if (!currentUser?.id || !this.selectedRequest?.classId) {
+        console.error('IDs não encontrados:', {
+          userId: currentUser?.id,
+          classId: this.selectedRequest?.classId,
+        });
+        this.errorMessage = 'IDs da solicitação não encontrados';
         return;
       }
 
-      await this.lessonRequestService.deleteLessonRequest(this.requestToDelete);
-      this.requestToDelete = null;
+      console.log('Enviando requisição de delete:', {
+        id: currentUser.id,
+        classId: this.selectedRequest.classId,
+      });
 
-      // Recarrega os dados após deletar
+      await this.lessonRequestService.deleteLessonRequest(
+        currentUser.id, // ID do usuário logado
+        this.selectedRequest.classId
+      );
+
+      this.selectedRequest = null;
       await this.loadUserData();
     } catch (error) {
       console.error('Erro ao deletar solicitação:', error);
@@ -345,7 +457,7 @@ export class LessonCardManagerComponent implements OnInit {
    * Abre o formulário de edição.
    * @param request - Solicitação a ser editada.
    */
-  private openEditForm(request: any): void {
+  private openEditForm(request: ISelectedRequest): void {
     try {
       if (!request) {
         console.error('Request inválido:', request);
@@ -397,11 +509,28 @@ export class LessonCardManagerComponent implements OnInit {
    * @returns Um objeto contendo os tipos de botões de edição e exclusão.
    */
   public get buttonTypes() {
-    const { EDIT, DELETE } = EnvironmentButton;
+    const { EDIT, DELETE, SCHEDULE } = EnvironmentButton;
     return {
       editRequest: EDIT,
       deleteRequest: DELETE,
+      scheduleClass: SCHEDULE,
     };
+  }
+
+  /**
+   * Retorna o texto do botão baseado no status da solicitação
+   * @param status Status da solicitação
+   * @returns Texto do botão
+   */
+  public getButtonLabel(status: string | undefined): string {
+    if (!status) return 'Editar';
+
+    // Mostra "Voluntários" apenas quando o status for 'aceito' E
+    // estiver na visualização de "aceito"
+    const shouldShowVolunteers =
+      status === 'aceito' && this.status === 'aceito';
+
+    return shouldShowVolunteers ? 'Voluntários' : 'Editar';
   }
 
   /**
@@ -434,5 +563,116 @@ export class LessonCardManagerComponent implements OnInit {
   public closeRegistrationSuccessDialog(): void {
     this.registrationSuccessModal.isOpen = false;
     this.closeModal.emit();
+  }
+
+  /**
+   * Fecha o modal do tutor
+   */
+  public closeTutorModal(): void {
+    this.showTutorModal = false;
+    this.tutorData = null;
+    this.selectedTutorId = null;
+  }
+
+  /**
+   * Calcula a idade do tutor baseado na data de nascimento.
+   *
+   * Este método recebe uma string representando a data de nascimento e calcula a idade
+   * atual do tutor, considerando a data atual. A idade é calculada subtraindo o ano de
+   * nascimento do ano atual e ajustando caso a data de nascimento ainda não tenha ocorrido
+   * no ano atual.
+   *
+   * @param birthDate - A data de nascimento do tutor no formato de string.
+   * @returns A idade do tutor em anos.
+   */
+  public calculateAge(birthDate: string): number {
+    const today = new Date();
+    const birth = new Date(birthDate);
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birth.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  }
+
+  /**
+   * Agenda uma aula com o tutor selecionado.
+   * Este método verifica se a solicitação de aula está disponível e, em seguida,
+   * confirma a aula com o tutor. Ele também gerencia o estado de carregamento e
+   * exibe mensagens de erro apropriadas em caso de falha.
+   *
+   * @param tutorId - O identificador único do tutor com quem a aula será agendada.
+   * @throws {Error} Se os IDs da solicitação ou do tutor forem inválidos.
+   * @returns {Promise<void>} Uma promessa que resolve quando a aula é agendada com sucesso.
+   */
+  public async scheduleClassWithTutor(tutorId: string): Promise<void> {
+    if (!this.selectedRequest?.classId) {
+      console.error('Solicitação não encontrada:', this.selectedRequest);
+      this.errorMessage = 'Erro: Solicitação de aula não encontrada';
+      return;
+    }
+
+    this.isLoading = true;
+    try {
+      // Garantir que os IDs são números
+      const lessonId = Number(this.selectedRequest.classId);
+      const parsedTutorId = Number(tutorId);
+
+      if (isNaN(lessonId) || isNaN(parsedTutorId)) {
+        throw new Error('IDs inválidos');
+      }
+
+      const response = await this.lessonRequestService.confirmLessonWithTutor(
+        lessonId,
+        parsedTutorId
+      );
+
+      this.message =
+        'Aula agendada! Um e-mail será enviado para você com um link de acesso e todos os detalhes para sua aula.';
+      this.showTutorModal = false;
+      this.showDeleteButtons = false;
+      this.showCloseButton = true;
+      this.openRegistrationSuccessDialog();
+      await this.loadUserData();
+    } catch (error: any) {
+      // Log mais detalhado do erro
+      console.error('Erro detalhado ao agendar aula:', {
+        error: {
+          status: error?.status,
+          message: error?.message,
+          error: error?.error,
+          stack: error?.stack,
+          fullError: error,
+        },
+        requestData: {
+          lessonId: this.selectedRequest.classId,
+          tutorId: tutorId,
+          fullRequest: this.selectedRequest,
+        },
+      });
+
+      // Mensagem de erro mais específica para o usuário
+      this.errorMessage = `Erro ao agendar aula: ${
+        error?.error?.message || error?.message || 'Erro desconhecido'
+      }`;
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  /**
+   * Seleciona um tutor com base no ID fornecido.
+   * Este método armazena o ID do tutor selecionado na propriedade `selectedTutorId`.
+   *
+   * @param tutorId - O identificador único do tutor a ser selecionado.
+   */
+  public selectTutor(tutorId: string): void {
+    this.selectedTutorId = tutorId;
   }
 }

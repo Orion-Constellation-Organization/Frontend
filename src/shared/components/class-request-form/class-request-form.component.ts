@@ -23,6 +23,7 @@ import { IRequestData } from '../../interfaces/class-request-data.interface';
 import { ISchedule } from '../../interfaces/schedule.interface';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { formatDateUtil } from 'src/utils/date/date-utils';
 /**
  * Componente responsável pelo formulário de solicitação de aulas.
  * Gerencia a criação, validação e submissão de pedidos de aulas.
@@ -382,8 +383,12 @@ export class ClassRequestFormComponent implements OnInit {
    * @private
    */
   private formatSchedule(date: Date, time: string): string {
-    const formattedDate = formatDate(date, 'dd/MM/yyyy', 'en-US');
-    return `${formattedDate} às ${time}`;
+    // Chama a função utilitária para formatar a data
+    const formattedDate = formatDateUtil(date);
+
+    // Remove qualquer segundo que possa vir no time e garante o formato HH:mm
+    const formattedTime = time.split(':').slice(0, 2).join(':');
+    return `${formattedDate}T${formattedTime}`;
   }
 
   /**
@@ -436,15 +441,29 @@ export class ClassRequestFormComponent implements OnInit {
    * @async
    */
   async onSubmit(): Promise<void> {
-    this.isLoading = true; // Inicia o loading
+    this.isLoading = true;
     try {
       if (this.classRequestForm.valid) {
         const requestData = this.prepareRequestData();
 
+        // Obter o usuário logado
+        const currentUser = await this.authService.getCurrentUser();
+
+        if (!currentUser?.id) {
+          throw new Error('Usuário não encontrado');
+        }
+
         // Verifica se está em modo de edição e se tem um ID válido
         if (this.editMode && this.requestData?.classId) {
+          console.log('Enviando requisição de update:', {
+            userId: currentUser.id,
+            lessonId: this.requestData.classId,
+            requestData,
+          });
+
           await this.lessonRequestService.updateLessonRequest(
-            this.requestData.classId,
+            currentUser.id, // ID do usuário logado
+            this.requestData.classId, // lessonId
             requestData
           );
           this.message = 'Seu pedido de aula foi atualizado com sucesso!';
@@ -484,7 +503,7 @@ export class ClassRequestFormComponent implements OnInit {
         this.conflictingSchedule = '';
       }
     } finally {
-      this.isLoading = false; // Finaliza o loading
+      this.isLoading = false;
     }
   }
 
