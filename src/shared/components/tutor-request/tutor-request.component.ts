@@ -47,7 +47,10 @@ export class TutorRequestComponent implements OnInit {
       const tutorData = await this.tutorService.getTutorById(currentUser.id);
       this.tutorSubjects = tutorData.subjects.map((subject: ISubjects) => subject.subjectName);
   
-      this.pendingRequests = await this.lessonRequestService.getLessonRequests(currentUser.id, 'pendente', true, 1, 10, 'ASC', 'classId');
+      const allRequests = await this.lessonRequestService.getLessonRequests(currentUser.id, 'pendente', true, 1, 10, 'ASC', 'classId');
+      this.pendingRequests = allRequests.filter(
+        (request) => this.tutorSubjects.includes(request.subject.subjectName)
+      );
 
       if (this.pendingRequests.length === 0) {
         this.messageUnavailable = "No momento, não há pedidos disponíveis que coincidem com a sua preferência.";

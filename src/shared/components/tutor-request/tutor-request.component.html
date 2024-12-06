@@ -1,4 +1,4 @@
-<ng-container *ngIf="!loadingService.isLoading()">
+<ng-container *ngIf="!loadingService.isLoading">
     <ng-container *ngIf="pendingRequests.length > 0; else noRequests">
         <div *ngFor="let request of pendingRequests" class="tutor-request">
             <div class="tutor-request__information">
