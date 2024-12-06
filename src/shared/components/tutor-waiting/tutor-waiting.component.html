@@ -1,4 +1,4 @@
-<ng-container *ngIf="!isLoading">
+<ng-container *ngIf="!loadingService.isLoading()">
     <ng-container *ngIf="waitingLessons.length > 0; else noLessons">
         <div *ngFor="let lesson of waitingLessons" class="tutor-waiting">
             <div class="tutor-waiting__information">

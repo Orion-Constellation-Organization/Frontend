@@ -1,5 +1,5 @@
 export interface ITutorAcceptLesson {
     lessonId: number,
-    tutorId: number,
+    id: number,
     chosenDate: string
 }

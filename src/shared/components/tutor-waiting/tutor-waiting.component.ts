@@ -11,13 +11,12 @@ import { LoadingService } from 'src/shared/providers/loading.service';
 })
 export class TutorWaitingComponent implements OnInit {
   waitingLessons: ITutorWaiting[] = [];
-  isLoading: boolean = true;
   messageUnavailable: string = '';
 
   constructor(
     private authService: AuthService,
     private tutorService: TutorService,
-    private loadingService: LoadingService
+    public loadingService: LoadingService
   ) {}
 
   public ngOnInit(): void {
@@ -30,7 +29,6 @@ export class TutorWaitingComponent implements OnInit {
    */
   public async fetchWaitingLessons(): Promise<void> {
     this.loadingService.show();
-    this.isLoading = true;
 
     try {
       const currentUser = await this.authService.getCurrentUser();
@@ -52,7 +50,6 @@ export class TutorWaitingComponent implements OnInit {
       this.messageUnavailable = "Erro ao carregar aulas";
     } finally {
       this.loadingService.hide();
-      this.isLoading = false;
     }
   }
 }
