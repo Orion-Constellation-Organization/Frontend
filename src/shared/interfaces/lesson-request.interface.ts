@@ -9,7 +9,7 @@ import { ITutorResponse } from './tutor-response.interface';
  */
 export interface ILessonRequest extends IClassRequest {
   /** ID da classe associada ao pedido de aula */
-  ClassId: number;
+  classId: number;
 
   /** Motivo do pedido de aula */
   reason: string[];

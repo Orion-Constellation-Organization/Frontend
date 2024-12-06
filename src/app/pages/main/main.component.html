@@ -37,6 +37,9 @@
     <div class="main-container-tutor-request" *ngIf="shouldShowComponent('second') && isTutor()">
         <app-tutor-request></app-tutor-request>
     </div>
+    <div class="main-container-tutor-waiting" *ngIf="shouldShowComponent('third') && isTutor()">
+        <app-tutor-waiting></app-tutor-waiting>
+    </div>
     <app-profile *ngIf="showProfile && !showPersonalData && !showSecurity"></app-profile>
     <div class="main-container-tutor-security" *ngIf="showProfile && showSecurity">
         <app-tutor-security></app-tutor-security>

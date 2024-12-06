@@ -1,11 +1,11 @@
 @import "src/app/styles/theme.scss";
 
-app-tutor-request {
+app-tutor-waiting {
     width: 60% !important;
     gap: 30px !important;
 }
 
-.tutor-request {
+.tutor-waiting {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -37,7 +37,7 @@ app-tutor-request {
 
     &__additional {
         margin-top: 19px;
-        margin-bottom: 36px;
+        margin-bottom: 110px;
     }
 
     &__time {

@@ -7,7 +7,7 @@
     </div>
     
     <div class="profile__info-section">
-        <p class="profile__info-title">Porque você escolheu esse projeto?</p>
+        <p class="profile__info-title">Por que você escolheu esse projeto?</p>
         <div class="profile__info-box">{{ projectReason }}</div>
     </div>
     
@@ -16,5 +16,5 @@
         <div class="profile__info-box">{{ subjects.join(', ') }}</div>
     </div>
     
-    <button class="profile__edit-button">Editar</button>
+    <button class="profile__edit-button" (click)="openEditModal()">Editar</button>
 </div>

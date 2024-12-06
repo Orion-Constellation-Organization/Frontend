@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { ILessonRequest } from '../interfaces/lesson-request.interface';
 import { IClassRequest } from '../interfaces/class-request.interface';
+import { ITutorAcceptLesson } from '../interfaces/ITutorAcceptLesson.interface';
 
 /**
  * Serviço responsável por gerenciar operações relacionadas a solicitações de aulas
@@ -15,18 +16,11 @@ export class LessonRequestService extends BaseService {
    * Obtém a lista de todas as solicitações de aula.
    * @returns Promise contendo um array de solicitações de aula
    */
-  async getLessonRequests(
-    status: string,
-    id: number,
-    filtered: boolean,
-    page: number,
-    size: number,
-    order: 'ASC' | 'DESC',
-    orderBy: string
-  ): Promise<ILessonRequest[]> {
+  async getLessonRequests(status: 'pendente',id: number, filtered: boolean, page: number, size: number, order: 'ASC' | 'DESC', orderBy: 'classId'): Promise<ILessonRequest[]> {
     const params = new URLSearchParams({
       status: status,
       id: String(id),
+      status: status,
       filtered: String(filtered),
       page: String(page),
       size: String(size),
@@ -98,5 +92,9 @@ export class LessonRequestService extends BaseService {
     };
 
     return this.call('POST', '/student-confirm-lesson', payload);
+  }
+
+  public async updateTutorAcceptLesson(data: ITutorAcceptLesson): Promise<ITutorAcceptLesson> {
+    return this.call('PATCH', '/tutor-accept-lesson', data)
   }
 }

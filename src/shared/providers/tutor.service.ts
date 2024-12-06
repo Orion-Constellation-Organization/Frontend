@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { ICreateTutor } from '../interfaces/tutor.interface';
 import { ITutorResponse } from '../interfaces/tutor-response.interface';
+import { ITutorPersonalData } from '../interfaces/ITutorPersonalData.interface';
 
 /**
  * Serviço de gerenciamento de tutores que estende as funcionalidades do serviço base.
@@ -36,5 +37,15 @@ export class TutorService extends BaseService {
    */
   async getTutorById(id: number): Promise<any> {
     return this.call('GET', `/tutor/${id}`);
+  }
+
+  /**
+   * Atualiza as informações pessoais do tutor.
+   * 
+   * @param data - Dados pessoais do tutor a serem atualizados
+   * @returns Promeise com os dados atualizados do tutor
+   */
+  public async updateTutorPersonalData(data: Partial<ITutorPersonalData>): Promise<ITutorPersonalData> {
+    return this.call('PATCH', '/tutor', data);
   }
 }

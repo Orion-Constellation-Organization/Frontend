@@ -28,6 +28,10 @@ export interface ISubjects {
   id: number;
   /** Nome da disciplina */
   name: string;
+  /** ID da disciplina */
+  subjectId: number;
+  /** Nome da disciplina */
+  subjectName: string;
 }
 
 /**
@@ -60,4 +64,11 @@ export interface ITutorData {
   projectReason?: string;
   /** Data escolhida para a aula */
   chosenDate?: string;
+}
+
+export interface ITutorPersonalModal {
+    username: string;
+    expertise: string;
+    projectReason: string;
+    selectedSubjects: string[];
 }

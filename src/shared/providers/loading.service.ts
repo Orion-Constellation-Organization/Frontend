@@ -14,7 +14,7 @@ export class LoadingService {
    * Checks the current loading state
    * @returns 'true' if loading is active, otherwise 'false'
    */
-  public isLoading(): boolean {
+  public get isLoading(): boolean {
     return this.loading;
   }
 

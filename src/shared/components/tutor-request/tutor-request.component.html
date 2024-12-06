@@ -1,4 +1,4 @@
-<ng-container *ngIf="!isLoading">
+<ng-container *ngIf="!loadingService.isLoading">
     <ng-container *ngIf="pendingRequests.length > 0; else noRequests">
         <div *ngFor="let request of pendingRequests" class="tutor-request">
             <div class="tutor-request__information">
@@ -18,13 +18,22 @@
                 <div class="tutor-request__time__dates">
                     <p>Horários disponíveis:</p>
                     <mat-radio-group>
-                        <mat-radio-button *ngFor="let date of request.preferredDates; let i = index" [value]="i">
+                        <mat-radio-button 
+                            *ngFor="let date of request.preferredDates; let i = index" 
+                            [value]="i"
+                            (change)="onDateSelect(request.classId, i)">
                             {{ date }}
                         </mat-radio-button>
                     </mat-radio-group>
                 </div>
                 <div class="tutor-request__time__buttons">
-                    <button mat-button class="tutor-request__time__buttons--accept">Aceitar</button>
+                    <button 
+                        mat-button 
+                        class="tutor-request__time__buttons--accept"
+                        (click)="acceptRequest(request)"
+                        [disabled]="!selectedDates[request.classId]">
+                        Aceitar
+                    </button>
                     <button mat-button class="tutor-request__time__buttons--reject">Recusar</button>
                 </div>
             </div>
