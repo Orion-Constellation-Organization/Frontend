@@ -22,7 +22,7 @@
                             *ngFor="let date of request.preferredDates; let i = index" 
                             [value]="i"
                             (change)="onDateSelect(request.classId, i)">
-                            {{ date }}
+                            {{ date | date }}
                         </mat-radio-button>
                     </mat-radio-group>
                 </div>
