@@ -34,7 +34,12 @@
                         [disabled]="!selectedDates[request.classId]">
                         Aceitar
                     </button>
-                    <button mat-button class="tutor-request__time__buttons--reject">Recusar</button>
+                    <button 
+                        mat-button 
+                        class="tutor-request__time__buttons--reject"
+                        (click)="rejectRequest(request)">
+                        Recusar
+                    </button>
                 </div>
             </div>
         </div>

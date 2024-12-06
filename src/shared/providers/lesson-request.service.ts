@@ -3,6 +3,7 @@ import { BaseService } from './base.service';
 import { ILessonRequest } from '../interfaces/lesson-request.interface';
 import { IClassRequest } from '../interfaces/class-request.interface';
 import { ITutorAcceptLesson } from '../interfaces/ITutorAcceptLesson.interface';
+import { ILessonRequestTutorReject } from '../interfaces/ILessonRequestTutorReject.interface';
 
 /**
  * Serviço responsável por gerenciar operações relacionadas a solicitações de aulas
@@ -16,18 +17,17 @@ export class LessonRequestService extends BaseService {
    * Obtém a lista de todas as solicitações de aula.
    * @returns Promise contendo um array de solicitações de aula
    */
-  async getLessonRequests(status: 'pendente',id: number, filtered: boolean, page: number, size: number, order: 'ASC' | 'DESC', orderBy: 'classId'): Promise<ILessonRequest[]> {
+  async getLessonRequests(id: number, status: string, filtered: boolean, page: number, size: number, order: 'ASC' | 'DESC', orderBy: 'classId'): Promise<ILessonRequest[]> {
     const params = new URLSearchParams({
-      status: status,
       id: String(id),
       status: status,
       filtered: String(filtered),
       page: String(page),
       size: String(size),
       order: order,
-      orderBy: orderBy,
+      orderBy: orderBy
     });
-
+  
     return this.call('GET', `/lessonrequest?${params.toString()}`);
   }
 
@@ -96,5 +96,19 @@ export class LessonRequestService extends BaseService {
 
   public async updateTutorAcceptLesson(data: ITutorAcceptLesson): Promise<ITutorAcceptLesson> {
     return this.call('PATCH', '/tutor-accept-lesson', data)
+  }
+
+  /**
+   * Recusa uma solicitação de aula
+   * @param lessonRequestId - ID da solicitação de aula
+   * @param tutorId - ID do tutor
+   * @returns Promise com a resposta da recusa
+   */
+  public async rejectLessonRequest(lessonRequestId: number, tutorId: number): Promise<ILessonRequestTutorReject> {
+    const payload = {
+      lessonRequestId,
+      id: tutorId
+    };
+    return this.call('POST', '/lessonrequest-decline', payload);
   }
 }
