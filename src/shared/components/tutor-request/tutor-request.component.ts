@@ -23,7 +23,7 @@ export class TutorRequestComponent implements OnInit {
     private lessonRequestService: LessonRequestService,
     private authService: AuthService,
     private tutorService: TutorService,
-    private loadingService: LoadingService,
+    public loadingService: LoadingService,
     private readonly dialogService: DialogService
   ) {}
 
@@ -37,7 +37,6 @@ export class TutorRequestComponent implements OnInit {
    */
   public async fetchPendingRequests(): Promise<void> {
     this.loadingService.show();
-    this.isLoading = true;
     try {
       const currentUser  = await this.authService.getCurrentUser();
       if (!currentUser ) {
@@ -46,11 +45,11 @@ export class TutorRequestComponent implements OnInit {
       }
   
       const tutorData = await this.tutorService.getTutorById(currentUser.id);
-      this.tutorSubjects = tutorData.subjects.map((subject: ISubjects) => subject.name);
+      this.tutorSubjects = tutorData.subjects.map((subject: ISubjects) => subject.subjectName);
   
-      const allRequests = await this.lessonRequestService.getLessonRequests(currentUser.id, true, 1, 10, 'ASC');
+      const allRequests = await this.lessonRequestService.getLessonRequests(currentUser.id, 'pendente', true, 1, 10, 'ASC', 'classId');
       this.pendingRequests = allRequests.filter(
-        (request) => request.status === 'pendente' && this.tutorSubjects.includes(request.subject.subjectName)
+        (request) => this.tutorSubjects.includes(request.subject.subjectName)
       );
 
       if (this.pendingRequests.length === 0) {
@@ -61,7 +60,6 @@ export class TutorRequestComponent implements OnInit {
       this.messageUnavailable = "Erro ao carregar pedidos";
     } finally {
       this.loadingService.hide();
-      this.isLoading = false;
     }
   }
 
@@ -71,7 +69,7 @@ export class TutorRequestComponent implements OnInit {
    * @param dateIndex O índice da data escolhida na lista de datas preferidas
    */
   public onDateSelect(requestId: number, dateIndex: number): void {
-    const request = this.pendingRequests.find(r => r.ClassId === requestId);
+    const request = this.pendingRequests.find(r => r.classId === requestId);
     if (request) {
       this.selectedDates[requestId] = request.preferredDates[dateIndex];
     }
@@ -85,7 +83,7 @@ export class TutorRequestComponent implements OnInit {
     this.loadingService.show();
     try {
 
-      const selectedDate = this.selectedDates[request.ClassId];
+      const selectedDate = this.selectedDates[request.classId];
       if (!selectedDate) {
         return;
       }
@@ -97,14 +95,14 @@ export class TutorRequestComponent implements OnInit {
       }
 
       const acceptLessonData = {
-        lessonId: request.ClassId,
-        tutorId: currentUser.id,
+        lessonId: request.classId,
+        id: currentUser.id,
         chosenDate: selectedDate
       };
 
       await this.lessonRequestService.updateTutorAcceptLesson(acceptLessonData);
-      this.pendingRequests = this.pendingRequests.filter(r => r.ClassId !== request.ClassId);
-      delete this.selectedDates[request.ClassId];
+      this.pendingRequests = this.pendingRequests.filter(r => r.classId !== request.classId);
+      delete this.selectedDates[request.classId];
 
       if (this.pendingRequests.length === 0) {
         this.messageUnavailable = "No momento, não há pedidos disponíveis que coincidem com a sua preferência.";

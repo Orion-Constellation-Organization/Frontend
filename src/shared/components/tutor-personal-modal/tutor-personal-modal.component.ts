@@ -119,7 +119,7 @@ export class TutorPersonalModalComponent implements OnInit {
         projectReason: this.tutorForm.get('projectReason')?.value || tutorData.projectReason,
         subject: subjectIds.length > 0 
           ? subjectIds 
-          : tutorData.subjects.map((subject: ISubjects) => subject.id)
+          : tutorData.subjects.map((subject: ISubjects) => subject.subjectId)
       };
 
       await this.tutorService.updateTutorPersonalData(payload);
@@ -130,7 +130,7 @@ export class TutorPersonalModalComponent implements OnInit {
         projectReason: payload.projectReason,
         selectedSubjects: this.tutorForm.get('subjects')?.value.length > 0 
           ? this.tutorForm.get('subjects')?.value 
-          : tutorData.subjects.map((subject: ISubjects) => subject.name)
+          : tutorData.subjects.map((subject: ISubjects) => subject.subjectName)
       };
 
       this.dialogRef.close(result);

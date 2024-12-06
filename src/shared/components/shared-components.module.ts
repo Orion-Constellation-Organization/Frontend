@@ -36,6 +36,7 @@ import { TutorSecurityComponent } from './tutor-security/tutor-security.componen
 import { TutorPersonalModalComponent } from './tutor-personal-modal/tutor-personal-modal.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { DialogService } from '../providers/dialog.service';
+import { TutorWaitingComponent } from './tutor-waiting/tutor-waiting.component';
 
 const COMPONENTS = [
   RegistrationSuccessModalComponent,
@@ -51,11 +52,12 @@ const COMPONENTS = [
   TutorSecurityComponent,
   TutorPersonalDataComponent,
   LoadingComponent,
-  DialogComponent
+  DialogComponent,
+  TutorWaitingComponent
 ] as const;
 
 @NgModule({
-  declarations: [...COMPONENTS, TutorBeginComponent, TutorPersonalDataComponent, TutorSecurityComponent, TutorPersonalModalComponent],
+  declarations: [...COMPONENTS, TutorBeginComponent, TutorPersonalDataComponent, TutorSecurityComponent, TutorPersonalModalComponent, TutorWaitingComponent],
   imports: [
     CommonModule,
     RouterModule,

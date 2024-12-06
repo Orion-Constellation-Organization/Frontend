@@ -1,0 +1,31 @@
+<ng-container *ngIf="!loadingService.isLoading">
+    <ng-container *ngIf="waitingLessons.length > 0; else noLessons">
+        <div *ngFor="let lesson of waitingLessons" class="tutor-waiting">
+            <div class="tutor-waiting__information">
+                <div class="tutor-waiting__information__student">
+                    <p>{{ lesson.lessonRequest.student.username }}</p>
+                    <p>{{ lesson.lessonRequest.student.educationLevel.levelType }}</p>
+                    <p>Aula de {{ lesson.lessonRequest.subject.subjectName }}</p>
+                </div>
+                <div class="tutor-waiting__information__reason">
+                    <p *ngFor="let reason of lesson.lessonRequest.reason">{{ reason }}</p>
+                </div>
+            </div>
+            <div class="tutor-waiting__additional">
+                <p>"{{ lesson.lessonRequest.additionalInfo }}"</p>
+            </div>
+            <div class="tutor-waiting__time">
+                <div class="tutor-waiting__time__dates">
+                    <p>{{ lesson.chosenDate }}</p>
+                </div>
+                <div class="tutor-waiting__time__buttons">
+                    <button mat-button class="tutor-waiting__time__buttons--reject">Desistir da aula</button>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+  
+    <ng-template #noLessons>
+        <p class="tutor-waiting__none">{{ messageUnavailable }}</p>
+    </ng-template>
+</ng-container>

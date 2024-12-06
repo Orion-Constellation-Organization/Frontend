@@ -11,8 +11,8 @@ export interface ITutorPersonalData {
 }
 
 export interface ISubjects {
-    id: number;
-    name: string;
+    subjectId: number;
+    subjectName: string;
 }
 
 export interface ILessonRequestTutors {
