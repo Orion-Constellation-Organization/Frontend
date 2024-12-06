@@ -14,7 +14,6 @@ import { DialogService } from 'src/shared/providers/dialog.service';
 })
 export class TutorRequestComponent implements OnInit {
   pendingRequests: ILessonRequest[] = [];
-  isLoading: boolean = true;
   messageUnavailable: string = '';
   tutorSubjects: string[] = [];
   selectedDates: { [key: number]: string } = {};
@@ -47,7 +46,7 @@ export class TutorRequestComponent implements OnInit {
       const tutorData = await this.tutorService.getTutorById(currentUser.id);
       this.tutorSubjects = tutorData.subjects.map((subject: ISubjects) => subject.subjectName);
   
-      const allRequests = await this.lessonRequestService.getLessonRequests(Number(currentUser.id), 'pendente', true, 1, 10, 'ASC', 'classId');
+      const allRequests = await this.lessonRequestService.getLessonRequests(currentUser.id, 'pendente', true, 1, 10, 'ASC', 'classId');
       this.pendingRequests = allRequests.filter(
         (request) => this.tutorSubjects.includes(request.subject.subjectName)
       );
@@ -111,6 +110,7 @@ export class TutorRequestComponent implements OnInit {
       return this.showMessage('Aula aceita com sucesso!');
     } catch (error) {
       console.error('Erro ao aceitar o pedido:', error);
+      this.showMessage('Erro ao aceitar o pedido');
     } finally {
       this.loadingService.hide();
     }
@@ -125,5 +125,35 @@ export class TutorRequestComponent implements OnInit {
       title: message,
       buttonText: 'Fechar'
     });
+  }
+
+    /**
+   * Recusa um pedido de aula
+   * @param request O pedido de aula a ser recusado
+   */
+  public async rejectRequest(request: ILessonRequest): Promise<void> {
+    this.loadingService.show();
+    try {
+      const currentUser = await this.authService.getCurrentUser();
+      if (!currentUser) {
+        this.messageUnavailable = "Usuário não encontrado";
+        return;
+      }
+
+      this.pendingRequests = this.pendingRequests.filter(r => r.classId !== request.classId);
+
+      delete this.selectedDates[request.classId];
+
+      if (this.pendingRequests.length === 0) {
+        this.messageUnavailable = "No momento, não há pedidos disponíveis que coincidam com a sua preferência.";
+      }
+
+      return this.showMessage('Aula recusada com sucesso!');
+    } catch (error) {
+      console.error('Erro ao recusar o pedido:', error);
+      this.showMessage('Erro ao recusar o pedido');
+    } finally {
+      this.loadingService.hide();
+    }
   }
 }
