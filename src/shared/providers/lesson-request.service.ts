@@ -90,11 +90,11 @@ export class LessonRequestService extends BaseService {
    */
   public confirmLessonWithTutor(
     lessonId: number,
-    tutorId: number
+    userId: number
   ): Promise<any> {
     const payload = {
       lessonId: Number(lessonId),
-      tutorId: Number(tutorId),
+      id: Number(userId),
     };
 
     return this.call('POST', '/student-confirm-lesson', payload);
