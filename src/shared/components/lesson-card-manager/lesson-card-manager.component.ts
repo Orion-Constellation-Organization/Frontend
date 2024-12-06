@@ -535,6 +535,7 @@ export class LessonCardManagerComponent implements OnInit {
   public closeTutorModal(): void {
     this.showTutorModal = false;
     this.tutorData = null;
+    this.selectedTutorId = null;
   }
 
   /**
@@ -617,5 +618,11 @@ export class LessonCardManagerComponent implements OnInit {
     } finally {
       this.isLoading = false;
     }
+  }
+
+  public selectedTutorId: string | null = null;
+
+  public selectTutor(tutorId: string): void {
+    this.selectedTutorId = tutorId;
   }
 }

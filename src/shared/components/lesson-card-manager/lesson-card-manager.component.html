@@ -65,7 +65,7 @@
             </button>
         </header>
 
-        <div class="tutor-modal__content__body">
+        <div class="tutor-modal__content__body" [class.selected]="selectedTutorId === tutorData.id" (click)="selectTutor(tutorData.id)">
             <div class="tutor-modal__content__body__profile">
                 <img [src]="tutorData.photoUrl || '../../../assets/images/tutor-foto.png'" alt="Foto do voluntário" class="tutor-modal__profile-photo">
             </div>
@@ -91,7 +91,7 @@
     </div>
     <!-- Novo botão de agendamento -->
     <div class="tutor-modal__content__body__actions">
-        <app-button [type]="buttonTypes.scheduleClass" [label]="'Agendar Aula'" (click)="scheduleClassWithTutor(tutorData.id)" class="tutor-modal__schedule-button">
+        <app-button [type]="buttonTypes.scheduleClass" [label]="'Agendar Aula'" (click)="scheduleClassWithTutor(tutorData.id)" [disabled]="selectedTutorId !== tutorData.id" class="tutor-modal__schedule-button">
         </app-button>
     </div>
 </div>
